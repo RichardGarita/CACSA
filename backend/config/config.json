@@ -1,0 +1,24 @@
+{
+    "development": {
+      "username": "RichardGarita",
+      "password": "R1c4aR9!",
+      "database": "CACSA",
+      "host": "LAPTOP-1AO05699",
+      "dialect": "mssql"
+    },
+    "test": {
+      "username": "RichardGarita",
+      "password": "R1c4aR9!",
+      "database": "CACSA",
+      "host": "LAPTOP-1AO05699",
+      "dialect": "mssql"
+    },
+    "production": {
+      "username": "RichardGarita",
+      "password": "R1c4aR9!",
+      "database": "CACSA",
+      "host": "LAPTOP-1AO05699",
+      "dialect": "mssql"
+    }
+  }
+  
