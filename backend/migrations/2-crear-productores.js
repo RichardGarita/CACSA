@@ -7,18 +7,22 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.STRING,
-        collate: 'SQL_Latin1_General_CP1_CS_AS', // Configura la colación como case sensitive
-        charset: 'utf8' // Define el conjunto de caracteres de la columna
+        collate: 'SQL_Latin1_General_CP1_CS_AS',
+        charset: 'utf8'
       },
       name: {
         allowNull: false,
         type: Sequelize.STRING,
-        collate: 'SQL_Latin1_General_CP1_CS_AS', // Configura la colación como case sensitive
-        charset: 'utf8' // Define el conjunto de caracteres de la columna
+        collate: 'SQL_Latin1_General_CP1_CS_AS',
+        charset: 'utf8'
       },
       date: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      fair: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
