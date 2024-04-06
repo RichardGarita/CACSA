@@ -32,11 +32,11 @@ const AddProducer = () => {
 
         if (fairParticipationChecked) {
           roles.push('permits', 'memos');
-          formData.append('fair', true);
           formData.append('images', data.permits[0]);
           formData.append('images', data.memos[0]);
         }
 
+        formData.append('fair', fairParticipationChecked);
         formData.append('roles', JSON.stringify(roles));
 
         for (const file of droppedFiles) {
@@ -55,7 +55,7 @@ const AddProducer = () => {
             'Content-Type': 'multipart/form-data'
           }
         }).then((response) => {
-          console.log('Respuesta del servidor: ', response.data.imageUrls);
+          console.log('Respuesta del servidor: ', response.data.message);
         });
       } catch (error) {
         console.error('Error al enviar el formulario:', error);

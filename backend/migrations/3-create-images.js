@@ -6,7 +6,8 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
         collate: 'SQL_Latin1_General_CP1_CS_AS', // Configura la colación como case sensitive
         charset: 'utf8' // Define el conjunto de caracteres de la columna
       },

@@ -10,12 +10,15 @@ const Producer = sequelize.define('Producer', {
   name: {
     allowNull: false,
     type: DataTypes.STRING,
-    allowNull: false
   },
   date: {
     type: DataTypes.DATE,
     allowNull: false,
     defaultValue: DataTypes.NOW
+  },
+  fair: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
   },
   createdAt: {
     type: DataTypes.DATE,
