@@ -1,0 +1,77 @@
+.add-producer {
+    width: 40%;
+}
+
+.progress-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.step {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.step.active {
+    background-color: #007bff; /* Change color as needed */
+}
+
+
+.progress {
+    height: 5px;
+    width: 100%;
+    background-color: #ccc;
+    border-radius: 40px;
+    margin-bottom: 3%;
+}
+
+.progress-bar {
+    height: 100%;
+	background-color: #5374B1;
+	border-radius: 40px;
+	text-align: right;
+}
+
+.add-producer .form-group {
+    text-align: left;
+}
+
+.add-producer .form-group label{
+    font-size: 1rem;
+}
+
+.error-text {
+    font-size: 1rem;
+    color: red;
+    margin-bottom: 0;
+}
+
+.add-producer .drop-zone {
+    border: 2px solid #5374B1;
+    padding: 10%;
+}
+
+.add-producer .button-section{
+    margin-top: 1%;
+    text-align: right;
+}
+
+.add-producer .continue{
+    background-color: #5374B1;
+    border-color: #5374B1;
+    color: #fff;
+    margin-left: 3%;
+}
+
+.add-producer .cancel{
+    border: 2px solid #5374B1;
+    background-color: #FFFFFF;
+    color: #000000;
+}

@@ -1,6 +1,8 @@
+import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';
 import AddProducer from './agregarProductor';
 import ViewProducer from './verProductor';
+
 
 function App() {
   return (
