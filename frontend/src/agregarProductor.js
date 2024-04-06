@@ -36,6 +36,10 @@ const AddProducer = () => {
         setFormStep(cur => cur - 1);
     }
 
+    const removeFile = (fileName) => {
+        setDroppedFiles(files => files.filter(file => file.name !== fileName));
+    }
+
     const renderPrevButton = () => {
         if (formStep === 0) {
             return (
@@ -254,14 +258,6 @@ const AddProducer = () => {
                             <p>Drag 'n' drop some files here, or click to select files</p>
                         }
                         </div>
-
-                        <ul>
-                            {droppedFiles.map(file => (
-                                <li key={file.name}>
-                                    <img src={file.preview} alt='' width={100} height={100} onLoad={() => {URL.revokeObjectURL(file.preview)}}></img>
-                                </li>
-                            ))}
-                        </ul>
                     </section>
                 )}
 
@@ -269,6 +265,20 @@ const AddProducer = () => {
                     {renderPrevButton()}
                     {renderNextButton()}
                 </div>
+
+                {formStep === 3 && droppedFiles.length >0 && (
+                    <div>
+                        <h4>Imagenes para enviar</h4>
+                        <ul className="list-unstyled row">
+                            {droppedFiles.map(file => (
+                                <div className="position-relative drop-images" width={25}>
+                                    <img src={file.preview} alt='' onLoad={() => {URL.revokeObjectURL(file.preview)}}/>
+                                    <span aria-hidden="true" className="position-absolute top-0 end-0" onClick={() => removeFile(file.name)}>&times;</span>
+                                </div>
+                            ))}
+                        </ul>
+                    </div>
+                )}
             </form>
         </div>
     );
