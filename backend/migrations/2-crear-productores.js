@@ -16,9 +16,21 @@ module.exports = {
         collate: 'SQL_Latin1_General_CP1_CS_AS',
         charset: 'utf8'
       },
+      category: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        collate: 'SQL_Latin1_General_CP1_CS_AS',
+        charset: 'utf8'
+      },
+      fairLocality: {
+        allowNull: true,
+        type: Sequelize.STRING,
+        collate: 'SQL_Latin1_General_CP1_CS_AS',
+        charset: 'utf8'
+      },
       date: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       fair: {
         allowNull: false,

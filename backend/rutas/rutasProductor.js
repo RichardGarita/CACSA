@@ -1,12 +1,12 @@
 const express = require('express');
 const multer = require('multer'); // Importa Multer
 const router = express.Router();
-const controladorProducto = require('../controladores/controladorProductor');
+const controladorProductor = require('../controladores/controladorProductor');
 
 // Configuración de Multer
 const upload = multer(); // Utiliza la configuración predeterminada de Multer para almacenar los archivos en memoria
 
-router.post('/create', upload.array('images'), controladorProducto.create)
+router.post('/create', upload.array('images'), controladorProductor.create)
 
 /**
 * @swagger
@@ -30,7 +30,35 @@ router.post('/create', upload.array('images'), controladorProducto.create)
 *       500:
 *         description: Error del servidor.
 */
-router.get('/getOne', controladorProducto.getOne);
+router.get('/getOne', controladorProductor.getOne);
+router.get('/getOneProducerImage', controladorProductor.getOneProducerImage);
+
+/**
+* @swagger
+* /api/productor/editOne:
+*   put:
+*     summary: Editar la información de un productor.
+*     description: Edita los datos de un productor, pero no edita las imágenes.
+*     parameters:
+*       - in: query
+*         name: id
+*         schema:
+*           type: string
+*         required: true
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*           schema:
+*             type: object
+*             properties:
+*               name:
+*                 type: string
+*               date:
+*                 type: string
+*                 format: date
+*/
+router.put('/editOne', controladorProductor.editOne);
 
 
 module.exports = router;

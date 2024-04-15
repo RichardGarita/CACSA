@@ -11,8 +11,16 @@ const Producer = sequelize.define('Producer', {
     allowNull: false,
     type: DataTypes.STRING,
   },
+  category: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  fairLocality: {
+    allowNull: true,
+    type: DataTypes.STRING,
+  },
   date: {
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
     allowNull: false,
     defaultValue: DataTypes.NOW
   },

@@ -6,17 +6,23 @@ const { v4: uuidv4 } = require('uuid');
 async function create(req, res) {
     try {
         // Procesar los datos del formulario
-        const { name, date, id, roles, fair } = req.body;
-        if (!name || !date || !id || !roles || !fair ) {
-            res.status(401).json({ error: 'All fields must be fullfiled' });
+        const { name, date, id, roles, fair, category, fairLocality } = req.body;
+        if (!name || !date || !id || !roles || !category || !fair || (!fair && !fairLocality) ) {
+            res.status(401).json({ error: 'Todos los campos son necesarios' });
             return;
         }
         const images = req.files;
         const rolesArray = JSON.parse(roles);
 
-        const producer = await Producer.create({name, date, id, fair});
+        const existed = await Producer.findOne({where: {id}})
+        if (existed) {
+            res.status(402).json({ error: 'Ya existe el productor' });
+            return;
+        }
+
+        const producer = await Producer.create({name, date, id, fair, category, fairLocality});
         if (!producer){
-            res.status(500).json({ error: 'Failed to create producer' });
+            res.status(501).json({ error: 'Falló al crear el productor' });
             return;
         }
 
@@ -44,6 +50,60 @@ async function create(req, res) {
 }
 
 async function getOne(req, res){
+    const id = req.query.id;
+    try {
+        const producer = await Producer.findByPk(id);
+        if (producer) {
+            res.status(200).json(producer);
+            return;
+        }
+        res.status(404).json({message: 'No se encontró el elemento'});
+    } catch (error) {
+        res.status(501).json({error: error.message});
+    }
+}
+
+async function getOneProducerImage(req, res){
+    const id = req.query.id;
+    const role = req.query.role;
+    try {
+        const producer = await Producer.findByPk(id);
+        if (!producer) {
+            res.status(404).json({message: 'No se encontró el recurso'});
+            return;
+        }
+        const newest = await Image.min('updatedAt', {where: {producerId: id, role: role}})
+        const image = await Image.findOne({where: {producerId: id, updatedAt: newest}});
+
+        if(image) {
+            const url = await GCS.getFile(image.path);
+            res.status(200).json({url});
+        } else {
+            res.status(204).json({message: 'No hay imagenes con ese rol'});
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+
+}
+
+async function editOne(req, res){
+    try {
+        const id = req.query.id;
+        const {name, date, fair} = req.body;
+        if (!id || !name || !date || !fair){
+            res.status(401).json({ error: 'No se encontraron los campos' });
+            return;
+        }
+        await Producer.update({name, date, fair}, {where: {id: id}});
+        res.status(200).json({message: 'Productor actualizado'});
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+    
+}
+
+async function getOneImage(req, res){
     const path = req.query.path;
     try {
         const url = await GCS.getFile(path);
@@ -56,5 +116,7 @@ async function getOne(req, res){
 
 module.exports = {
     create,
+    getOneProducerImage,
     getOne,
+    editOne,
 }
