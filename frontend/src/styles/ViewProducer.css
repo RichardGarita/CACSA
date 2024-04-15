@@ -1,0 +1,66 @@
+.view-producer {
+    text-align: left;
+    display: flex;
+    height: 100%;
+}
+
+.left-menu {
+    background-color: #5374B1;
+    color: #FFFFFF;
+    width: 30%;
+    margin-left: 0;
+    text-align: left;
+    display: inline-block;
+    overflow-y: auto;
+}
+
+.left-menu h2 {
+    margin-left: 1rem;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.left-menu p {
+    margin-left: 1rem;
+    margin-bottom: 0;
+}
+
+.left-menu .image-link:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.edit-profile h2, .edit-profile button {
+    display: inline;
+}
+
+.edit-profile button {
+    margin-left: 1rem;
+}
+
+.view-producer .profile-data {
+    margin-left: 1rem;
+}
+
+.view-producer .profile-data p {
+    margin-left: 0;
+    margin-right: 0.2rem;
+    display: inline;
+}
+
+.image-container {
+    width: 70%;
+    margin: auto;
+    text-align: center;
+}
+
+.edit-form {
+    padding-left: 1rem;
+    padding-right: 0.5rem;
+}
+
+.error-text {
+    font-size: 1rem;
+    color: red;
+    margin-bottom: 0;
+}
