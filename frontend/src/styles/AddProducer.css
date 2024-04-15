@@ -1,5 +1,8 @@
 .add-producer {
     width: 40%;
+    text-align: center;
+    color: #FFFFFF;
+    margin: auto;
 }
 
 .progress-indicator {

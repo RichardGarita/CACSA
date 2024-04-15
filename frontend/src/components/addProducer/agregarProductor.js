@@ -23,6 +23,7 @@ const AddProducer = () => {
         formData.append('name', data.name);
         formData.append('date', data.date);
         formData.append('id', data.id);
+        formData.append('category', data.category);
         
         for (const role of roles) {
             if (data[role]) {
@@ -34,6 +35,7 @@ const AddProducer = () => {
           roles.push('permits', 'memos');
           formData.append('images', data.permits[0]);
           formData.append('images', data.memos[0]);
+          formData.append('fairLocality', data.fairLocality);
         }
 
         formData.append('fair', fairParticipationChecked);
@@ -54,11 +56,15 @@ const AddProducer = () => {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
-        }).then((response) => {
-          console.log('Respuesta del servidor: ', response.data.message);
+        }).then(() => {
+            alert('Imágenes subidas correctamente');
         });
       } catch (error) {
-        console.error('Error al enviar el formulario:', error);
+        if (error.response && error.response.status === 402) {
+          alert('El productor ya existe');
+        } else {
+          console.error('Error al enviar el formulario:', error);
+        }
       }
     };
   
