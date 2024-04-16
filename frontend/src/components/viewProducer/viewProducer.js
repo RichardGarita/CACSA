@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import EditProfile from './editProfile';
+import AddFile from './addFile';
 import '../../styles/ViewProducer.css';
 
 const URL_API = 'http://localhost:4223/api/productor/getOne';
@@ -14,7 +15,15 @@ function ViewProducer () {
     const [images, setImages] = useState({});
     const [actualImage, setActualImage] = useState('');
     const [isEditing, setIsEditing] = useState(false);
-    const [editProps, setEditProps] = useState({})
+    const [editProps, setEditProps] = useState({});
+    const [actualComponent, setActualComponent] = useState('Image');
+
+    const handleComponentChange = (component) => {
+        if (actualComponent === component)
+            setActualComponent('Image');
+        else
+            setActualComponent(component);
+    }
 
     useEffect(() => {
         axios.get(`${URL_API}?id=${id}`).then((response) => {
@@ -95,9 +104,22 @@ function ViewProducer () {
                     </>
                 )}
             </div>
-            <div className='image-container'>
+            <div className='container'>
                 {images[actualImage] && (
-                    <img className='img-fluid' src={images[actualImage]} alt='No se encontró imagen'></img>
+                    <>
+                        <div className="edit-header">
+                            <button>Editar</button>
+                            <button onClick={() => handleComponentChange('AddImage')}>Agregar</button>
+                        </div>
+                        <div className='image-container'>
+                            {actualComponent === 'Image' && (
+                                    <img className='img-fluid' src={images[actualImage]} alt='No se encontró imagen'></img>
+                            )}
+                            {actualComponent === 'AddImage' && (
+                                <AddFile/>
+                            )}
+                        </div>
+                    </>
                 )}
             </div>
         </div>

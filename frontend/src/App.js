@@ -1,15 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';
-import AddProducer from './components/addProducer/agregarProductor';
-import ViewProducer from './verProductor';
+//import AddProducer from './components/addProducer/agregarProductor';
+import ViewProducer from './components/viewProducer/viewProducer';
 
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <AddProducer/>
-      </header>
+        <ViewProducer/>
     </div>
   );
 }

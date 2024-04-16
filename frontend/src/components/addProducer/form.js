@@ -1,5 +1,5 @@
 import React from "react";
-import DropZone from "./dropZone";
+import DropZone from "../../utils/dropZone";
 import ButtonsSection from "./buttonsSection";
 
 function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipationChecked, 
