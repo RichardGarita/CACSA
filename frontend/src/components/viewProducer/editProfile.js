@@ -45,9 +45,11 @@ function EditProfile ({props}) {
                 <div className='form-group'>
                     <label htmlFor="category">Categoría </label>
                     <select type="select" id='category' className='form-control'
+                        defaultValue={category === "agriculture" ? "agriculture" : category === "smallIndustry" ?
+                        "smallIndustry" : "Nulo"}
                         {...register('category', {required: {value: true, message: 'Por favor seleccione una opción'}})}>
-                        <option value={"agriculture"} selected={category === "agriculture"}>Agricultura</option>
-                        <option value={"smallIndustry"} selected={category === "smallIndustry"}>Pequeña Industria</option>
+                        <option value={"agriculture"}>Agricultura</option>
+                        <option value={"smallIndustry"}>Pequeña Industria</option>
                     </select>
                     {errors.category && <p className='error-text'>{errors.category.message}</p>}
                 </div>
@@ -65,9 +67,12 @@ function EditProfile ({props}) {
                 {fairParticipationChecked &&
                     <div className='form-group'>
                         <label htmlFor="fairLocality">Localidad de la feria </label>
-                        <select required type="select" id='fairLocality' className='form-control' {...register('fairLocality')}>
-                            <option value={"Santa Ana"} selected={fairLocality === "Santa Ana"}>Santa Ana </option>
-                            <option value={"Hatillo"} selected={fairLocality === "Hatillo"}>Hatillo</option>
+                        <select required defaultValue={fairLocality === "Hatillo" ?
+                            "Hatillo" : fairLocality === "Santa Ana" ?
+                            "Santa Ana" : "Nulo"} type="select" id='fairLocality' 
+                            className='form-control' {...register('fairLocality')}>
+                            <option value={"Santa Ana"}>Santa Ana </option>
+                            <option value={"Hatillo"}>Hatillo</option>
                         </select>
                     </div>
                 }

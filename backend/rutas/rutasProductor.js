@@ -7,6 +7,7 @@ const controladorProductor = require('../controladores/controladorProductor');
 const upload = multer(); // Utiliza la configuración predeterminada de Multer para almacenar los archivos en memoria
 
 router.post('/create', upload.array('images'), controladorProductor.create)
+router.post('/addImages', upload.array('images'), controladorProductor.addImages);
 
 /**
 * @swagger

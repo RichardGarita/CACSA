@@ -1,17 +1,43 @@
 import React, {useState} from "react";
+import axios from "axios";
 import DropZone from "../../utils/dropZone";
 
-function AddFile () {
+const URL_API = 'http://localhost:4223/api/productor/addImages';
+
+function AddFile ({id, role}) {
     const [droppedFiles, setDroppedFiles] = useState([]);
 
     const removeFile = (fileName) => {
         setDroppedFiles(files => files.filter(file => file.name !== fileName));
     }
 
-    const onSubmit = () => {
-        if (droppedFiles.length > 0) {
-            console.log(`Images: ${droppedFiles}`);
+    const onSubmit = async () => {
+        const formData = new FormData();
+
+        for (const file of droppedFiles) {
+            formData.append('images', file);
         }
+
+        formData.append('id', id);
+        formData.append('role', role);
+
+        try {
+            await axios.post(URL_API, formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            }).then(() => {
+                alert('Imágenes subidas correctamente');
+            });
+          } catch (error) {
+            if (error.response && error.response.status === 401) {
+              alert('Todos los campos son obligatorios');
+            } else if (error.response && error.response.status === 404) {
+                alert('No se encontró el recurso');
+            } else {
+              console.error('Error al enviar el formulario:', error);
+            }
+          }
     }
 
     return (

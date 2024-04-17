@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserPen } from '@fortawesome/free-solid-svg-icons'
 import EditProfile from './editProfile';
 import AddFile from './addFile';
 import '../../styles/ViewProducer.css';
@@ -53,7 +55,7 @@ function ViewProducer () {
             <div className='left-menu'>
                 <div className='edit-profile'>
                     <h2>Productor</h2>
-                    <button onClick={() => setIsEditing(!isEditing)}>Editar</button>
+                    <FontAwesomeIcon className='edit-icon' icon={faUserPen} onClick={() => setIsEditing(!isEditing)}/>
                 </div>
                 {!isEditing ? (
                     <>
@@ -116,7 +118,7 @@ function ViewProducer () {
                                     <img className='img-fluid' src={images[actualImage]} alt='No se encontró imagen'></img>
                             )}
                             {actualComponent === 'AddImage' && (
-                                <AddFile/>
+                                <AddFile id={id} role={actualImage}/>
                             )}
                         </div>
                     </>

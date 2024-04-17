@@ -30,12 +30,18 @@
     color: black;
 }
 
-.edit-profile h2, .edit-profile button {
+.edit-profile h2 {
     display: inline;
 }
 
-.edit-profile button {
+.edit-profile .edit-icon {
+    font-size: 1.5rem;
     margin-left: 1rem;
+    cursor: pointer;
+}
+
+.edit-profile .edit-icon:hover {
+    color: #000000;
 }
 
 .view-producer .profile-data {
@@ -67,6 +73,7 @@
 .image-container{
     text-align: center;
     margin: auto;
+    overflow-y: auto;
 }
 
 .drop-zone {
@@ -104,6 +111,19 @@
 .edit-form {
     padding-left: 1rem;
     padding-right: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-form button{
+    margin-top: 0.5rem;
+    background-color: #B9DEE4;
+    align-self: flex-end;
+}
+
+.edit-form button:hover{
+    background-color: #000;
+    color: #FFFFFF;
 }
 
 .error-text {

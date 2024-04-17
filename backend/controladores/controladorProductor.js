@@ -57,7 +57,7 @@ async function getOne(req, res){
             res.status(200).json(producer);
             return;
         }
-        res.status(404).json({message: 'No se encontró el elemento'});
+        res.status(404).json({error: 'No se encontró el elemento'});
     } catch (error) {
         res.status(501).json({error: error.message});
     }
@@ -69,17 +69,17 @@ async function getOneProducerImage(req, res){
     try {
         const producer = await Producer.findByPk(id);
         if (!producer) {
-            res.status(404).json({message: 'No se encontró el recurso'});
+            res.status(404).json({error: 'No se encontró el recurso'});
             return;
         }
-        const newest = await Image.min('updatedAt', {where: {producerId: id, role: role}})
+        const newest = await Image.max('updatedAt', {where: {producerId: id, role: role}})
         const image = await Image.findOne({where: {producerId: id, updatedAt: newest}});
 
         if(image) {
             const url = await GCS.getFile(image.path);
             res.status(200).json({url});
         } else {
-            res.status(204).json({message: 'No hay imagenes con ese rol'});
+            res.status(204).json({error: 'No hay imagenes con ese rol'});
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -103,6 +103,42 @@ async function editOne(req, res){
     
 }
 
+async function addImages(req, res){
+    try {
+        const {id, role} = req.body;
+        const images = req.files;
+        if (!id || !role || !images) {
+            res.status(401).json({error: "No se encontraron los campos necesarios"});
+            return;
+        }
+        const producer = await Producer.findByPk(id);
+        if (!producer) {
+            res.status(404).json({error: 'No se encontró el recurso'});
+            return;
+        }
+
+        // Iterar sobre las imágenes recibidas
+        for (let i = 0; i < images.length; i++) {
+            const image = images[i];
+            if (image) {
+                // Generar un nombre único para la imagen en GCS
+                const imageName = `${id}/${uuidv4()}_${image.originalname}`;
+                
+                // Subir el archivo a GCS
+                await GCS.uploadFile(image.buffer, imageName);
+
+                // Save the images information on the database
+                await Image.create({producerId: id, path: imageName, role});
+            }
+        }
+        // Responder al frontend con la URL de las imágenes o un mensaje de confirmación
+        res.status(200).json({ message: 'Imágenes subidas correctamente' });
+
+    } catch (error) {
+        res.status(500).json({error: error.message});
+    }
+}
+
 async function getOneImage(req, res){
     const path = req.query.path;
     try {
@@ -119,4 +155,5 @@ module.exports = {
     getOneProducerImage,
     getOne,
     editOne,
+    addImages,
 }
