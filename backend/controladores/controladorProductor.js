@@ -50,7 +50,7 @@ async function create(req, res) {
 }
 
 async function getOne(req, res){
-    const id = req.query.id;
+    const id = req.params.id;
     try {
         const producer = await Producer.findByPk(id);
         if (producer) {
@@ -64,7 +64,7 @@ async function getOne(req, res){
 }
 
 async function getOneProducerImage(req, res){
-    const id = req.query.id;
+    const id = req.params.id;
     const role = req.query.role;
     try {
         const producer = await Producer.findByPk(id);
@@ -87,9 +87,31 @@ async function getOneProducerImage(req, res){
 
 }
 
+async function getProducerRoleImages (req, res){
+    try {
+        const id = req.params.id;
+        const role = req.query.role;
+        if (!id || !role) {
+            res.status(401).json({ error: 'Todos los campos son necesarios' });
+            return;
+        }
+        const images = await Image.findAll({where: {producerId: id, role}});
+        var response = [];
+        if (images) {
+            for (let image of images) {
+                const url = await GCS.getFile(image.path);
+                response = [...response, {url, id: image.id}];
+            }
+        }
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 async function editOne(req, res){
     try {
-        const id = req.query.id;
+        const id = req.params.id;
         const {name, date, fair} = req.body;
         if (!id || !name || !date || !fair){
             res.status(401).json({ error: 'No se encontraron los campos' });
@@ -139,6 +161,31 @@ async function addImages(req, res){
     }
 }
 
+async function deleteImage(req, res) {
+    try {
+        const id = req.params.id;
+        if (!id) {
+            res.status(401).json({error: "No se encontraron los campos necesarios"});
+            return;
+        }
+
+        const image = await Image.findByPk(id);
+        if (!image) {
+            res.status(402).json({error: 'No se encontró el recurso'});
+            return;
+        }
+
+        await GCS.deleteFile(image.path);
+
+        await image.destroy();
+
+        res.status(200).json({ message: 'Imágen eliminada correctamente' });
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 async function getOneImage(req, res){
     const path = req.query.path;
     try {
@@ -154,6 +201,8 @@ module.exports = {
     create,
     getOneProducerImage,
     getOne,
+    getProducerRoleImages,
     editOne,
     addImages,
+    deleteImage,
 }

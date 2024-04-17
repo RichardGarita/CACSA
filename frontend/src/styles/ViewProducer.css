@@ -70,6 +70,35 @@
     align-items: center;
 }
 
+.edit-header .add-icon, .edit-header .edit-icon{
+    font-size: 2rem;
+    color: #FFF;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.edit-header .add-icon:hover, .edit-header .edit-icon:hover{
+    cursor: pointer;
+    color: #000;
+}
+
+.add-image{
+    display: flex;
+    flex-direction: column;
+}
+
+.add-button, .add-button:disabled {
+    background-color: #5374B1;
+    color: #FFF;
+    width: 30%;
+    align-self: flex-end;
+}
+
+.add-button:hover {
+    background-color: #B9DEE4;
+    color: #000;
+}
+
 .image-container{
     text-align: center;
     margin: auto;
@@ -82,26 +111,38 @@
     color: #FFFFFF;
 }
 
-.drop-images {
+.drop-images, .role-images {
     padding: 0;
     width: 25%;
+}
+
+.drop-images .remove-icon, .role-images .remove-icon {
+    border-radius: 50%;
+    font-size: 2rem;
+    color: red;
+    background-color: #FFF;
+}
+
+.drop-images .remove-icon:hover, .role-images .remove-icon:hover {
+    cursor: pointer;
+    color: darkred;
 }
 
 .files-dropped h4 {
     color: #FFFFFF;
 }
 
-.files-dropped ul{
+.files-dropped ul, .role-images ul{
     margin: auto;
 }
 
-.drop-images img{
+.drop-images img, .role-images img{
     padding: 0;
     width: 100%;
     height: 100%;
 }
 
-.drop-images span{
+.drop-images span, .role-images span{
     padding: 0;
     line-height: 0;
     font-size: 2rem;

@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserPen } from '@fortawesome/free-solid-svg-icons'
+import { faUserPen, faFileCirclePlus, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import EditProfile from './editProfile';
 import AddFile from './addFile';
+import EditImages from './editImages';
 import '../../styles/ViewProducer.css';
 
-const URL_API = 'http://localhost:4223/api/productor/getOne';
-const URL_IMAGES = 'http://localhost:4223/api/productor/getOneProducerImage';
+const URL_API = 'http://localhost:4223/api/productor';
+const URL_IMAGES = 'http://localhost:4223/api/productor/images/latest';
 
 const id = '12345';
 
@@ -28,7 +29,7 @@ function ViewProducer () {
     }
 
     useEffect(() => {
-        axios.get(`${URL_API}?id=${id}`).then((response) => {
+        axios.get(`${URL_API}/${id}`).then((response) => {
             setData(response.data);
             setEditProps({name: response.data.name, date: response.data.date, 
                 id, fair: response.data.fair, category: response.data.category, fairLocality: response.data.fairLocality});
@@ -39,7 +40,7 @@ function ViewProducer () {
 
     const getImage = async (role) => {
         if (!images[role]) {
-            await axios.get(`${URL_IMAGES}?id=${id}&role=${role}`).then(response => {
+            await axios.get(`${URL_IMAGES}/${id}?role=${role}`).then(response => {
                 setImages(prevImages => {
                     return {...prevImages, [role]: response.data.url};
                 })
@@ -110,8 +111,8 @@ function ViewProducer () {
                 {images[actualImage] && (
                     <>
                         <div className="edit-header">
-                            <button>Editar</button>
-                            <button onClick={() => handleComponentChange('AddImage')}>Agregar</button>
+                            <FontAwesomeIcon className='edit-icon' icon={faPenToSquare} onClick={() => handleComponentChange('EditImages')}/>
+                            <FontAwesomeIcon className='add-icon' icon={faFileCirclePlus} onClick={() => handleComponentChange('AddImage')}/>
                         </div>
                         <div className='image-container'>
                             {actualComponent === 'Image' && (
@@ -119,6 +120,9 @@ function ViewProducer () {
                             )}
                             {actualComponent === 'AddImage' && (
                                 <AddFile id={id} role={actualImage}/>
+                            )}
+                            {actualComponent === 'EditImages' && (
+                                <EditImages id={id} role={actualImage}/>
                             )}
                         </div>
                     </>

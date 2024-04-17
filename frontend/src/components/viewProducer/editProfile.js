@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import {useForm} from 'react-hook-form';
 
-const URL_API = 'http://localhost:4223/api/productor/editOne';
+const URL_API = 'http://localhost:4223/api/productor';
 
 function EditProfile ({props}) {
     const {name, date, fair, id, category, fairLocality} = props;
@@ -16,7 +16,7 @@ function EditProfile ({props}) {
         formData.append('fair', fairParticipationChecked);
         console.log(`Locality: ${fairLocality}`);
         try{
-            axios.put(`${URL_API}?id=${id}`, formData, {
+            axios.put(`${URL_API}/${id}`, formData, {
                 headers: {
                   'Content-Type': 'application/json'
                 }}).then(() => {

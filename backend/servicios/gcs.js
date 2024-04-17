@@ -44,7 +44,21 @@ async function getFile(fileName){
     }
 }
 
+async function deleteFile (fileName) {
+    const projectId = process.env.PROJECT_ID;
+    const keyFilename = path.join(__dirname, process.env.KEY_FILE_NAME);
+    const storage = new Storage({projectId, keyFilename, autoRetry: false});
+    const bucket = storage.bucket(process.env.BUCKET_NAME);
+
+    try {
+        await bucket.file(fileName).delete();
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     uploadFile,
     getFile,
+    deleteFile,
 }

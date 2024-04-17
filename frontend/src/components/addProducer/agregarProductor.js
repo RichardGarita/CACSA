@@ -7,7 +7,7 @@ import '../../styles/AddProducer.css'
 
 const MAX_STEPS = 4;
 
-const URL_API = 'http://localhost:4223/api/productor/create'; // URL de la ruta de carga del servidor
+const URL_API = 'http://localhost:4223/api/productor'; // URL de la ruta de carga del servidor
 
 const AddProducer = () => {
     const {register, handleSubmit, formState: { errors, isValid },  } = useForm({mode: "all"});
