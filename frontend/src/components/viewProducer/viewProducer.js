@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserPen, faFileCirclePlus, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import EditProfile from './editProfile';
@@ -12,9 +13,9 @@ import '../../styles/ViewProducer.css';
 const URL_API = `${BASE_URL}productor`;
 const URL_IMAGES = `${BASE_URL}productor/images/latest`;
 
-const id = '12345';
-
 function ViewProducer () {
+
+    const { id } = useParams();
 
     const [data, setData] = useState({});
     const [images, setImages] = useState({});

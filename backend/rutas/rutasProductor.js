@@ -12,6 +12,19 @@ router.post('/images', upload.array('images'), controladorProductor.addImages);
 
 /**
 * @swagger
+* /api/productor:
+*   get:
+*     summary: Obtener productores
+*     description: Brinda los datos de todos los productores
+*     responses:
+*       200:
+*         description: Operación exitosa.
+*       500:
+*         description: Error del servidor.
+*/
+router.get('/', jwtHelper.verifyToken, controladorProductor.getAll);
+/**
+* @swagger
 * /api/productor/{id}:
 *   get:
 *     summary: Obtener productor

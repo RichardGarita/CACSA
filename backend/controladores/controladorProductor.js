@@ -2,6 +2,7 @@ var GCS = require('../servicios/gcs');
 var Producer = require('../modelos/producers');
 var Image = require('../modelos/images');
 const { v4: uuidv4 } = require('uuid');
+const { get } = require('jquery');
 
 async function create(req, res) {
     try {
@@ -46,6 +47,15 @@ async function create(req, res) {
         res.status(200).json({ message: 'Imágenes subidas correctamente' });
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+}
+
+async function getAll(req, res){
+    try {
+        const producers = await Producer.findAll();
+        res.status(200).json(producers);
+    } catch(error) {
+        res.status(500).json({error: error.message});
     }
 }
 
@@ -199,6 +209,7 @@ async function getOneImage(req, res){
 
 module.exports = {
     create,
+    getAll,
     getOneProducerImage,
     getOne,
     getProducerRoleImages,

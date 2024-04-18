@@ -1,0 +1,7 @@
+.page-item span {
+    cursor: pointer;
+}
+
+tbody tr {
+    cursor: pointer;
+}

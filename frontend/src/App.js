@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import AddProducer from './components/addProducer/agregarProductor';
 import ViewProducer from './components/viewProducer/viewProducer';
 import Login from './components/login';
@@ -10,7 +10,6 @@ import './App.css';
 
 function App() {
   const {loading, token} = useContext(AuthContext);
-  const navigate = useNavigate();
 
   if(loading)
     return <h1>Cargando mi negro</h1>
@@ -21,12 +20,12 @@ function App() {
         {!token ? (
           <>
             <Route path='/' element={<Login/>}/>
-            <Route path='/*' element={navigate('/')}/>
+            <Route path='/*' element={<Navigate to={'/'}/>}/>
           </>
         ):
           <>
             <Route path='/' element={<Index/>}/>
-            <Route path='/producer' element={<ViewProducer/>}/>
+            <Route path='/producer/:id' element={<ViewProducer/>}/>
             <Route path='/newProducer' element={<AddProducer/>}/>
           </>
         }
