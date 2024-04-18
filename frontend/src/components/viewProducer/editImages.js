@@ -37,22 +37,29 @@ function EditImages ({id, role}) {
     }
 
     return (
-        <div className="files-dropped">
-            <ul className="list-unstyled row">
-                {images.map((image) => (
-                    <li key={image.id} className="position-relative role-images" width={25}>
-                        <Modal launchModal={
-                            <img src={image.url[0]} alt='' onLoad={() => {URL.revokeObjectURL(image.url[0])}}/>
-                        } content={
-                            <img src={image.url[0]} alt='' onLoad={() => {URL.revokeObjectURL(image.url[0])}}/>
-                        }/>
-                        <FontAwesomeIcon icon={faCircleXmark} aria-hidden="true"
-                        className="position-absolute top-0 end-0 remove-icon" 
-                        onClick={() => deleteImage(image.id)}
-                        />
-                    </li>
+        <div className="row dropped-images p-1" >
+                {images.map((image, index) => (
+                    <div key={index} className="col-2">
+                        <div className="card added-image">
+                            <Modal launchModal={
+                                <img src={image.url[0]} alt='' onLoad={() => {URL.revokeObjectURL(image.url[0])}} className="card-img"/>
+                            } content={
+                                <img src={image.url[0]} alt='' onLoad={() => {URL.revokeObjectURL(image.url[0])}} className="card-img"/>
+                            }/>
+                            <Modal launchModal={
+                                <FontAwesomeIcon icon={faCircleXmark} aria-hidden="true"
+                                className="position-absolute top-0 end-0 remove-icon" 
+                                />
+                            } content={
+                                <p>¿Está seguro de querer eliminar esta imágen? <br/><strong>Esta acción es irreversible</strong></p>
+                            } continueButton={
+                                <button className="btn delete-button" onClick={() => deleteImage(image.id)}>Borrar</button>
+                            } titulo={
+                                "Borrar Imagen"
+                            }/>
+                        </div>
+                    </div>
                 ))}
-            </ul>
         </div>
     );
 }

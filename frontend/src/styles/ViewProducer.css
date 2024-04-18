@@ -14,9 +14,9 @@
     overflow-y: auto;
 }
 
-.left-menu h2 {
+.left-menu h4 {
     margin-left: 1rem;
-    margin-top: 0;
+    margin-top: 0.5rem;
     margin-bottom: 0;
 }
 
@@ -30,7 +30,7 @@
     color: black;
 }
 
-.edit-profile h2 {
+.edit-profile h4 {
     display: inline;
 }
 
@@ -86,12 +86,26 @@
 .add-image{
     display: flex;
     flex-direction: column;
+    width: 40rem;
+    margin: auto;
+}
+
+.dropped-images {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.added-image {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5) !important; 
 }
 
 .add-button, .add-button:disabled {
-    background-color: #5374B1;
-    color: #FFF;
-    width: 30%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: #5374B1 !important;
+    color: #FFF !important;
+    width: 30% !important;
     align-self: flex-end;
 }
 
@@ -117,23 +131,19 @@
     width: 25% !important;
 }
 
-.drop-images .remove-icon, .role-images .remove-icon {
+.dropped-images .remove-icon, .role-images .remove-icon {
     border-radius: 50%;
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: red;
     background-color: #FFF;
 }
 
-.drop-images .remove-icon:hover, .role-images .remove-icon:hover {
+.dropped-images .remove-icon:hover, .role-images .remove-icon:hover {
     cursor: pointer;
     color: darkred;
 }
 
-.files-dropped h4 {
-    color: #FFFFFF;
-}
-
-.files-dropped ul, .role-images ul{
+.role-images ul{
     margin: auto;
 }
 
@@ -159,17 +169,27 @@
 
 .edit-form button{
     margin-top: 0.5rem;
-    background-color: #B9DEE4;
+    background-color: #5374B1;
+    color: #FFFFFF;
     align-self: flex-end;
 }
 
 .edit-form button:hover{
-    background-color: #000;
-    color: #FFFFFF;
+    background-color: #B9DEE4;
 }
 
 .error-text {
     font-size: 1rem;
     color: red;
     margin-bottom: 0;
+}
+
+.delete-button {
+    background-color: red !important;
+    color: #FFF !important;
+}
+
+.delete-button:hover {
+    background-color: darkred !important;
+    color: #FFF !important;
 }

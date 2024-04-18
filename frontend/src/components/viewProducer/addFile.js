@@ -3,15 +3,17 @@ import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import DropZone from "../../utils/dropZone";
+import Modal from "../../utils/modal";
 import BASE_URL from "../../utils/apiConfig";
+import { Mod } from "@tensorflow/tfjs";
 
 const URL_API = `${BASE_URL}productor/images`;
 
 function AddFile ({id, role}) {
     const [droppedFiles, setDroppedFiles] = useState([]);
 
-    const removeFile = (fileName) => {
-        setDroppedFiles(files => files.filter(file => file.name !== fileName));
+    const removeFile = (index) => {
+        setDroppedFiles(files => files.filter((_, fileIndex) => fileIndex !== index));
     }
 
     const onSubmit = async () => {
@@ -44,26 +46,30 @@ function AddFile ({id, role}) {
     }
 
     return (
-        <div className="add-image">
-            <DropZone setDroppedFiles={setDroppedFiles} />
+        <>
+            <div className="add-image">
+                <DropZone setDroppedFiles={setDroppedFiles} />
 
-            {<button className="btn add-button" disabled={droppedFiles.length <= 0} onClick={() => onSubmit()}>Agregar</button>}
+                {<button className="btn add-button" disabled={droppedFiles.length <= 0} onClick={() => onSubmit()}>Agregar</button>}
 
+            </div>
             {droppedFiles.length >0 && (
-                <div className="files-dropped">
-                    <h4>Imagenes para enviar</h4>
-                    <ul className="list-unstyled row">
-                        {droppedFiles.map(file => (
-                            <li key={file.name} className="position-relative drop-images" width={25}>
-                                <img src={file.preview} alt='' onLoad={() => {URL.revokeObjectURL(file.preview)}}/>
-                                <FontAwesomeIcon icon={faCircleXmark} aria-hidden="true" className="position-absolute top-0 end-0 remove-icon" onClick={() => removeFile(file.name)}/>
-                            </li>
-                        ))}
-                    </ul>
+                <div className="row dropped-images" >
+                    {droppedFiles.map((file, index) => (
+                        <div key={index} className="col-2">
+                            <div className="card added-image">
+                                    <Modal
+                                        launchModal={<img src={file.preview} alt='' className="card-img"/>}
+                                        titulo={file.name}
+                                        content={<img src={file.preview} alt='' className="card-img"/>}
+                                    />
+                                    <FontAwesomeIcon icon={faCircleXmark} aria-hidden="true" className="position-absolute top-0 end-0 remove-icon" onClick={() => removeFile(index)}/>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             )}
-
-        </div>
+        </>
     )
 }
 

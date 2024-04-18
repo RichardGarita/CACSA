@@ -7,6 +7,7 @@ import EditProfile from './editProfile';
 import AddFile from './addFile';
 import EditImages from './editImages';
 import { AuthContext } from '../../utils/authContext';
+import Modal from '../../utils/modal';
 import BASE_URL from '../../utils/apiConfig';
 import '../../styles/ViewProducer.css';
 
@@ -21,7 +22,6 @@ function ViewProducer () {
     const [data, setData] = useState({});
     const [images, setImages] = useState({});
     const [actualImage, setActualImage] = useState('');
-    const [isEditing, setIsEditing] = useState(false);
     const [editProps, setEditProps] = useState({});
     const [actualComponent, setActualComponent] = useState('Image');
 
@@ -66,66 +66,64 @@ function ViewProducer () {
             })
         }
         setActualImage(role);
+        setActualComponent('Image');
     }
 
     return (
         <div className='view-producer'>
             <div className='left-menu'>
                 <div className='edit-profile'>
-                    <h2>Productor</h2>
-                    <FontAwesomeIcon className='edit-icon' icon={faUserPen} onClick={() => setIsEditing(!isEditing)}/>
+                    <h4>Productor</h4>
+                    <Modal
+                        titulo={"Actualizar Productor"}
+                        launchModal={<FontAwesomeIcon className='edit-icon' icon={faUserPen}/>} 
+                        content={<EditProfile props={editProps}/>} />
                 </div>
-                {!isEditing ? (
-                    <>
-                        <div className='profile-data'>
-                            <p>Nombre de la persona:</p>
-                            <p>{data.name}</p>
-                        </div>
-                        <div className='profile-data'>
-                            <p>Cédula:</p>
-                            <p>{data.id}</p>
-                        </div>
-                        <div className='profile-data'>
-                            <p>Fecha de expiración del carnet:</p>
-                            <p>{data.date}</p>
-                        </div>
-                        <div className='profile-data'>
-                            <p>Categoría:</p>
-                            <p>{data.category === 'smallIndustry' ? 'Pequeña Industria' : data.category === 'agriculture' ? 'Agricultura' : ''}</p>
-                        </div>
-                        <div className='profile-data'>
-                            <p>Permiso de feria:</p>
-                            <p>{data.fair ? 'Sí' : 'No'}</p>
-                        </div>
-                        {data.fair && (
-                            <div className='profile-data'>
-                                <p>Localidad:</p>
-                                <p>{data.fairLocality}</p>
-                            </div>
-                        )}
-                    </>
-                ) : (
-                    <EditProfile props={editProps}/>
+                <div className='profile-data'>
+                    <p>Nombre:</p>
+                    <p>{data.name}</p>
+                </div>
+                <div className='profile-data'>
+                    <p>Cédula:</p>
+                    <p>{data.id}</p>
+                </div>
+                <div className='profile-data'>
+                    <p>Expiración del carnet:</p>
+                    <p>{data.date}</p>
+                </div>
+                <div className='profile-data'>
+                    <p>Categoría:</p>
+                    <p>{data.category === 'smallIndustry' ? 'Pequeña Industria' : data.category === 'agriculture' ? 'Agricultura' : ''}</p>
+                </div>
+                <div className='profile-data'>
+                    <p>Permiso de feria:</p>
+                    <p>{data.fair ? 'Sí' : 'No'}</p>
+                </div>
+                {data.fair && (
+                    <div className='profile-data'>
+                        <p>Localidad:</p>
+                        <p>{data.fairLocality}</p>
+                    </div>
                 )}
-                <h2>Imágenes Generales</h2>
+                <h4>Imágenes Generales</h4>
                 <p className='image-link' onClick={() => getImage('idScreenShot')}>Cédula</p>
                 <p className='image-link' onClick={() => getImage('foodHandling')}>Carnet de manipulación de alimentos</p>
                 <p className='image-link' onClick={() => getImage('fairPass')}>Carnet de ferias</p>
-                <h2>Carnet de Ferias</h2>
+                <h4>Carnet de Ferias</h4>
                 <p className='image-link' onClick={() => getImage('propertyTitle')}>Contrato de arrendamiento/titulo de propiedad</p>
                 <p className='image-link' onClick={() => getImage('products')}>Foto de los productos</p>
                 <p className='image-link' onClick={() => getImage('inspection')}>Foto de la inspección</p>
                 <p className='image-link' onClick={() => getImage('profilePic')}>Foto de la persona</p>
                 {data.fair && (
                     <>
-                        <h2>Participación en Ferias</h2>
+                        <h4>Participación en Ferias</h4>
                         <p className='image-link' onClick={() => getImage('permits')}>Foto de los permisos</p>
                         <p className='image-link' onClick={() => getImage('memos')}>Foto de los memos</p>
                     </>
                 )}
             </div>
             <div className='container'>
-                {images[actualImage] && (
+                {actualImage && (
                     <>
                         <div className="edit-header">
                             <FontAwesomeIcon className='edit-icon' icon={faPenToSquare} onClick={() => handleComponentChange('EditImages')}/>
@@ -133,7 +131,7 @@ function ViewProducer () {
                         </div>
                         <div className='image-container'>
                             {actualComponent === 'Image' && (
-                                    <img className='img-fluid' src={images[actualImage]} alt='No se encontró imagen'></img>
+                                    <img className='img-fluid' src={images[actualImage]} alt='No se encontró imagen. Recargue la página por favor.'></img>
                             )}
                             {actualComponent === 'AddImage' && (
                                 <AddFile id={id} role={actualImage}/>

@@ -15,7 +15,6 @@ function EditProfile ({props}) {
         formData.append('name', data.name);
         formData.append('date', data.date);
         formData.append('fair', fairParticipationChecked);
-        console.log(`Locality: ${fairLocality}`);
         try{
             axios.put(`${URL_API}/${id}`, formData, {
                 headers: {
