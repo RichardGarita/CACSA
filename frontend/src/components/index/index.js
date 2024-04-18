@@ -1,5 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../utils/authContext";
 import { useNavigate } from "react-router-dom";
 import Filter from "./filter";
@@ -57,7 +59,10 @@ function Index () {
     return (
         <>
             <h1>Inicio bro</h1>
-            <Filter elements={producers} setElements={setFilteredProducers}/>
+            <div className="search-section">
+                <Filter elements={producers} setElements={setFilteredProducers}/>
+                <FontAwesomeIcon className="add-icon" onClick={() => navigate('/newProducer')} icon={faUserPlus}/>
+            </div>
             <table className="table table-dark table-striped table-hover w-75 mx-auto">
                 <thead>
                     <tr>

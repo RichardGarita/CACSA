@@ -11,10 +11,16 @@ const verifyToken = (req, res, next) => {
     if (!token)
         res.status(401).json({error: "Token Invalido"});
     else {
-        if (jwt.verify(token, SECRET_KEY))
-            next();
-        else
-        res.status(401).json({error: "Token Invalido"});
+        try{
+            jwt.verify(token, SECRET_KEY);
+            next();    
+        } catch (error) {
+            if (error.name === "TokenExpiredError" || error.name === "JsonWebTokenError")
+                res.status(401).json({error: "Token Invalido"});
+            else {
+                res.status(500).json({error: error.message});
+            }
+        }
     }
 };
 module.exports = { generateToken, verifyToken };

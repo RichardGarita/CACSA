@@ -60,6 +60,7 @@
     width: 70%;
     padding: 0;
     text-align: center;
+    padding: 0 !important;
 }
 
 .edit-header {
@@ -113,7 +114,7 @@
 
 .drop-images, .role-images {
     padding: 0;
-    width: 25%;
+    width: 25% !important;
 }
 
 .drop-images .remove-icon, .role-images .remove-icon {

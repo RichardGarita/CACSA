@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import Modal from "../../utils/modal";
 import BASE_URL from "../../utils/apiConfig";
 
 const URL_API = `${BASE_URL}productor`;
@@ -40,7 +41,11 @@ function EditImages ({id, role}) {
             <ul className="list-unstyled row">
                 {images.map((image) => (
                     <li key={image.id} className="position-relative role-images" width={25}>
-                        <img src={image.url[0]} alt='' onLoad={() => {URL.revokeObjectURL(image.url[0])}}/>
+                        <Modal launchModal={
+                            <img src={image.url[0]} alt='' onLoad={() => {URL.revokeObjectURL(image.url[0])}}/>
+                        } content={
+                            <img src={image.url[0]} alt='' onLoad={() => {URL.revokeObjectURL(image.url[0])}}/>
+                        }/>
                         <FontAwesomeIcon icon={faCircleXmark} aria-hidden="true"
                         className="position-absolute top-0 end-0 remove-icon" 
                         onClick={() => deleteImage(image.id)}

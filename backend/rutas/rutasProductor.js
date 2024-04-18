@@ -19,6 +19,8 @@ router.post('/images', upload.array('images'), controladorProductor.addImages);
 *     responses:
 *       200:
 *         description: Operación exitosa.
+*       401:
+*         description: Token inválido.
 *       500:
 *         description: Error del servidor.
 */

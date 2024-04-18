@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserPen, faFileCirclePlus, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import EditProfile from './editProfile';
@@ -16,6 +16,7 @@ const URL_IMAGES = `${BASE_URL}productor/images/latest`;
 function ViewProducer () {
 
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [data, setData] = useState({});
     const [images, setImages] = useState({});
@@ -45,6 +46,8 @@ function ViewProducer () {
         }).catch((error) => {
             if(error.response && error.response.status === 401) {
                 alert('Token Invalido');
+                localStorage.removeItem('token');
+                navigate('/')
             } else {
                 console.error(error);
                 alert('Algo salió mal. Intente de nuevo');
