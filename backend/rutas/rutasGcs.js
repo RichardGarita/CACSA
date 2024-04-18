@@ -26,7 +26,7 @@ const upload = multer(); // Utiliza la configuración predeterminada de Multer p
 *     responses:
 *       200:
 *         description: Inicio de sesión exitoso.
-*       401:
+*       400:
 *         description: Debe llenar los campos obligatorios.
 *       402:
 *         description: No se encontró el usuario.

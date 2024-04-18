@@ -6,7 +6,7 @@ router.get('/', controladorUsuario.getAllUsers);
 
 /**
 * @swagger
-* /api/usuario/login:
+* /api/user/login:
 *   post:
 *     summary: Inicia sesión
 *     description: Valida el nombre y la contraseña de un usuario.
@@ -24,7 +24,7 @@ router.get('/', controladorUsuario.getAllUsers);
 *     responses:
 *       200:
 *         description: Inicio de sesión exitoso.
-*       401:
+*       400:
 *         description: Debe llenar los campos obligatorios.
 *       402:
 *         description: No se encontró el usuario.

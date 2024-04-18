@@ -1,14 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserPen, faFileCirclePlus, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import EditProfile from './editProfile';
 import AddFile from './addFile';
 import EditImages from './editImages';
+import { AuthContext } from '../../utils/authContext';
+import BASE_URL from '../../utils/apiConfig';
 import '../../styles/ViewProducer.css';
 
-const URL_API = 'http://localhost:4223/api/productor';
-const URL_IMAGES = 'http://localhost:4223/api/productor/images/latest';
+const URL_API = `${BASE_URL}productor`;
+const URL_IMAGES = `${BASE_URL}productor/images/latest`;
 
 const id = '12345';
 
@@ -21,6 +23,8 @@ function ViewProducer () {
     const [editProps, setEditProps] = useState({});
     const [actualComponent, setActualComponent] = useState('Image');
 
+    const {token} = useContext(AuthContext);
+
     const handleComponentChange = (component) => {
         if (actualComponent === component)
             setActualComponent('Image');
@@ -29,12 +33,21 @@ function ViewProducer () {
     }
 
     useEffect(() => {
-        axios.get(`${URL_API}/${id}`).then((response) => {
+        axios.get(`${URL_API}/${id}`, {
+            headers: {
+                'access-token': token
+            }
+        }).then((response) => {
             setData(response.data);
             setEditProps({name: response.data.name, date: response.data.date, 
                 id, fair: response.data.fair, category: response.data.category, fairLocality: response.data.fairLocality});
         }).catch((error) => {
-            console.error(error);
+            if(error.response && error.response.status === 401) {
+                alert('Token Invalido');
+            } else {
+                console.error(error);
+                alert('Algo salió mal. Intente de nuevo');
+            }
         })
     }, []);
 

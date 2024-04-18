@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer'); // Importa Multer
 const router = express.Router();
 const controladorProductor = require('../controladores/controladorProductor');
+const jwtHelper = require('../utils/jwtHelper');
 
 // Configuración de Multer
 const upload = multer(); // Utiliza la configuración predeterminada de Multer para almacenar los archivos en memoria
@@ -24,14 +25,14 @@ router.post('/images', upload.array('images'), controladorProductor.addImages);
 *     responses:
 *       200:
 *         description: Operación exitosa.
-*       401:
+*       400:
 *         description: Debe llenar los campos obligatorios.
 *       402:
 *         description: No se encontró el recurso.
 *       500:
 *         description: Error del servidor.
 */
-router.get('/:id', controladorProductor.getOne);
+router.get('/:id', jwtHelper.verifyToken, controladorProductor.getOne);
 router.get('/images/latest/:id', controladorProductor.getOneProducerImage);
 
 /**
@@ -54,7 +55,7 @@ router.get('/images/latest/:id', controladorProductor.getOneProducerImage);
 *     responses:
 *       200:
 *         description: Operación exitosa.
-*       401:
+*       400:
 *         description: Debe llenar los campos obligatorios.
 *       402:
 *         description: No se encontró el recurso.
@@ -105,7 +106,7 @@ router.put('/:id', controladorProductor.editOne);
 *     responses:
 *       200:
 *         description: Operación exitosa.
-*       401:
+*       400:
 *         description: Debe llenar los campos obligatorios.
 *       402:
 *         description: No se encontró el recurso.

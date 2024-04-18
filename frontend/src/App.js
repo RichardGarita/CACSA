@@ -1,13 +1,36 @@
+import { useContext } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import AddProducer from './components/addProducer/agregarProductor';
+import ViewProducer from './components/viewProducer/viewProducer';
+import Login from './components/login';
+import Index from './components/index';
+import { AuthContext } from './utils/authContext';
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';
-//import AddProducer from './components/addProducer/agregarProductor';
-import ViewProducer from './components/viewProducer/viewProducer';
-
 
 function App() {
+  const {loading, token} = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  if(loading)
+    return <h1>Cargando mi negro</h1>
+
   return (
     <div className="App">
-        <ViewProducer/>
+      <Routes>
+        {!token ? (
+          <>
+            <Route path='/' element={<Login/>}/>
+            <Route path='/*' element={navigate('/')}/>
+          </>
+        ):
+          <>
+            <Route path='/' element={<Index/>}/>
+            <Route path='/producer' element={<ViewProducer/>}/>
+            <Route path='/newProducer' element={<AddProducer/>}/>
+          </>
+        }
+      </Routes>
     </div>
   );
 }

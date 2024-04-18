@@ -2,9 +2,9 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
-import { error } from "jquery";
+import BASE_URL from "../../utils/apiConfig";
 
-const URL_API = 'http://localhost:4223/api/productor';
+const URL_API = `${BASE_URL}productor`;
 
 function EditImages ({id, role}) {
     const [images, setImages] = useState([]);

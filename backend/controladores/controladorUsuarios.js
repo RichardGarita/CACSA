@@ -1,22 +1,25 @@
 var User = require('../modelos/users');
+const jwt = require('../utils/jwtHelper');
 
 async function loginUsuario(req, res) {
     const {userName, password} = req.body;
     if (!userName || !password) {
-        res.status(401).json({ error: 'All fields must be fullfiled' });
+        res.status(400).json({ error: 'Debes llenar todos los campos' });
         return;
     }
     try {
-        const usuario = await User.findOne({
+        const user = await User.findOne({
             where: {
               userName: userName,
               password: password
             }
           });
-        if (usuario)
-            res.status(200).json(usuario);
+        if (user){
+            const token = jwt.generateToken(user);
+            res.status(200).json({token: token, userId: user.id});
+        }
         else
-            res.status(402).json({error: 'User not found'});
+            res.status(402).json({error: 'Usuario no encontrado'});
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

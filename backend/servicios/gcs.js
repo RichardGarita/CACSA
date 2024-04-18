@@ -1,6 +1,5 @@
 require('dotenv').config();
 const {Storage} = require('@google-cloud/storage');
-const { sign } = require('crypto');
 const path = require('path');
 
 async function uploadFile(fileBuffer, fileName) {

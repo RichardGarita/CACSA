@@ -3,8 +3,9 @@ import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import DropZone from "../../utils/dropZone";
+import BASE_URL from "../../utils/apiConfig";
 
-const URL_API = 'http://localhost:4223/api/productor/images';
+const URL_API = `${BASE_URL}productor/images`;
 
 function AddFile ({id, role}) {
     const [droppedFiles, setDroppedFiles] = useState([]);
@@ -32,7 +33,7 @@ function AddFile ({id, role}) {
                 alert('Imágenes subidas correctamente');
             });
           } catch (error) {
-            if (error.response && error.response.status === 401) {
+            if (error.response && error.response.status === 400) {
               alert('Todos los campos son obligatorios');
             } else if (error.response && error.response.status === 404) {
                 alert('No se encontró el recurso');

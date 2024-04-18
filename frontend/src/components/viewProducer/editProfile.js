@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {useForm} from 'react-hook-form';
+import BASE_URL from "../../utils/apiConfig";
 
-const URL_API = 'http://localhost:4223/api/productor';
+const URL_API = `${BASE_URL}productor`;
 
 function EditProfile ({props}) {
     const {name, date, fair, id, category, fairLocality} = props;

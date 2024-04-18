@@ -3,11 +3,12 @@ import { useForm } from 'react-hook-form';
 import Form from './form';
 import Progress from './progress';
 import axios from 'axios';
+import BASE_URL from '../../utils/apiConfig';
 import '../../styles/AddProducer.css'
 
 const MAX_STEPS = 4;
 
-const URL_API = 'http://localhost:4223/api/productor'; // URL de la ruta de carga del servidor
+const URL_API = `${BASE_URL}productor`; // URL de la ruta de carga del servidor
 
 const AddProducer = () => {
     const {register, handleSubmit, formState: { errors, isValid },  } = useForm({mode: "all"});

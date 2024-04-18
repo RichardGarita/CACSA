@@ -8,7 +8,7 @@ async function create(req, res) {
         // Procesar los datos del formulario
         const { name, date, id, roles, fair, category, fairLocality } = req.body;
         if (!name || !date || !id || !roles || !category || !fair || (!fair && !fairLocality) ) {
-            res.status(401).json({ error: 'Todos los campos son necesarios' });
+            res.status(400).json({ error: 'Todos los campos son necesarios' });
             return;
         }
         const images = req.files;
@@ -92,7 +92,7 @@ async function getProducerRoleImages (req, res){
         const id = req.params.id;
         const role = req.query.role;
         if (!id || !role) {
-            res.status(401).json({ error: 'Todos los campos son necesarios' });
+            res.status(400).json({ error: 'Todos los campos son necesarios' });
             return;
         }
         const images = await Image.findAll({where: {producerId: id, role}});
@@ -114,7 +114,7 @@ async function editOne(req, res){
         const id = req.params.id;
         const {name, date, fair} = req.body;
         if (!id || !name || !date || !fair){
-            res.status(401).json({ error: 'No se encontraron los campos' });
+            res.status(400).json({ error: 'No se encontraron los campos' });
             return;
         }
         await Producer.update({name, date, fair}, {where: {id: id}});
@@ -130,7 +130,7 @@ async function addImages(req, res){
         const {id, role} = req.body;
         const images = req.files;
         if (!id || !role || !images) {
-            res.status(401).json({error: "No se encontraron los campos necesarios"});
+            res.status(400).json({error: "No se encontraron los campos necesarios"});
             return;
         }
         const producer = await Producer.findByPk(id);
@@ -165,7 +165,7 @@ async function deleteImage(req, res) {
     try {
         const id = req.params.id;
         if (!id) {
-            res.status(401).json({error: "No se encontraron los campos necesarios"});
+            res.status(400).json({error: "No se encontraron los campos necesarios"});
             return;
         }
 
