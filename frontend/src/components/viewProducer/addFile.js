@@ -11,6 +11,8 @@ const URL_API = `${BASE_URL}productor/images`;
 
 function AddFile ({id, role}) {
     const [droppedFiles, setDroppedFiles] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState(<></>)
 
     const removeFile = (index) => {
         setDroppedFiles(files => files.filter((_, fileIndex) => fileIndex !== index));
@@ -55,15 +57,21 @@ function AddFile ({id, role}) {
             </div>
             {droppedFiles.length >0 && (
                 <div className="row dropped-images" >
+                    <Modal
+                        showModal={showModal}
+                        setShowModal={setShowModal}
+                        content={modalContent}
+                    />
                     {droppedFiles.map((file, index) => (
                         <div key={index} className="col-2">
                             <div className="card added-image">
-                                    <Modal
-                                        launchModal={<img src={file.preview} alt='' className="card-img"/>}
-                                        titulo={file.name}
-                                        content={<img src={file.preview} alt='' className="card-img"/>}
-                                    />
-                                    <FontAwesomeIcon icon={faCircleXmark} aria-hidden="true" className="position-absolute top-0 end-0 remove-icon" onClick={() => removeFile(index)}/>
+                                <img src={file.preview} alt='' className="card-img"
+                                    onClick={() => {
+                                        setShowModal(true);
+                                        setModalContent(<img src={file.preview} alt='' className="card-img"/>)
+                                    }
+                                }/>
+                                <FontAwesomeIcon icon={faCircleXmark} aria-hidden="true" className="position-absolute top-0 end-0 remove-icon" onClick={() => removeFile(index)}/>
                             </div>
                         </div>
                     ))}

@@ -24,6 +24,8 @@ function ViewProducer () {
     const [actualImage, setActualImage] = useState('');
     const [editProps, setEditProps] = useState({});
     const [actualComponent, setActualComponent] = useState('Image');
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState(<></>);
 
     const {token} = useContext(AuthContext);
 
@@ -71,13 +73,21 @@ function ViewProducer () {
 
     return (
         <div className='view-producer'>
+            <Modal
+                showModal={showModal}
+                setShowModal={setShowModal}
+                content={modalContent}
+                titulo={"Actualizar Productor"}
+            />
             <div className='left-menu'>
                 <div className='edit-profile'>
                     <h4>Productor</h4>
-                    <Modal
-                        titulo={"Actualizar Productor"}
-                        launchModal={<FontAwesomeIcon className='edit-icon' icon={faUserPen}/>} 
-                        content={<EditProfile props={editProps}/>} />
+                    <FontAwesomeIcon className='edit-icon' icon={faUserPen}
+                        onClick={() => {
+                            setShowModal(true);
+                            setModalContent(<EditProfile props={editProps}/>);
+                        }}
+                    />
                 </div>
                 <div className='profile-data'>
                     <p>Nombre:</p>
