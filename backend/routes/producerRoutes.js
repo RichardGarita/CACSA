@@ -1,14 +1,14 @@
 const express = require('express');
 const multer = require('multer'); // Importa Multer
 const router = express.Router();
-const controladorProductor = require('../controladores/controladorProductor');
+const producerController = require('../controllers/producerController');
 const jwtHelper = require('../utils/jwtHelper');
 
 // Configuración de Multer
 const upload = multer(); // Utiliza la configuración predeterminada de Multer para almacenar los archivos en memoria
 
-router.post('/', upload.array('images'), controladorProductor.create)
-router.post('/images', upload.array('images'), controladorProductor.addImages);
+router.post('/', jwtHelper.verifyToken, upload.array('images'), producerController.create)
+router.post('/images', jwtHelper.verifyToken, upload.array('images'), producerController.addImages);
 
 /**
 * @swagger
@@ -24,7 +24,7 @@ router.post('/images', upload.array('images'), controladorProductor.addImages);
 *       500:
 *         description: Error del servidor.
 */
-router.get('/', jwtHelper.verifyToken, controladorProductor.getAll);
+router.get('/', jwtHelper.verifyToken, producerController.getAll);
 /**
 * @swagger
 * /api/productor/{id}:
@@ -47,8 +47,8 @@ router.get('/', jwtHelper.verifyToken, controladorProductor.getAll);
 *       500:
 *         description: Error del servidor.
 */
-router.get('/:id', jwtHelper.verifyToken, controladorProductor.getOne);
-router.get('/images/latest/:id', controladorProductor.getOneProducerImage);
+router.get('/:id', jwtHelper.verifyToken, producerController.getOne);
+router.get('/images/latest/:id', jwtHelper.verifyToken, producerController.getOneProducerImage);
 
 /**
 * @swagger
@@ -77,7 +77,7 @@ router.get('/images/latest/:id', controladorProductor.getOneProducerImage);
 *       500:
 *         description: Error del servidor.
 */
-router.get('/images/all/:id', controladorProductor.getProducerRoleImages);
+router.get('/images/all/:id', jwtHelper.verifyToken, producerController.getProducerRoleImages);
 
 /**
 * @swagger
@@ -104,7 +104,7 @@ router.get('/images/all/:id', controladorProductor.getProducerRoleImages);
 *                 type: string
 *                 format: date
 */
-router.put('/:id', controladorProductor.editOne);
+router.put('/:id', jwtHelper.verifyToken, producerController.editOne);
 
 /**
 * @swagger
@@ -128,7 +128,7 @@ router.put('/:id', controladorProductor.editOne);
 *       500:
 *         description: Error del servidor.
 */
-router.delete('/images/:id', controladorProductor.deleteImage);
+router.delete('/images/:id', jwtHelper.verifyToken, producerController.deleteImage);
 
 
 module.exports = router;

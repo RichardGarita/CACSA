@@ -1,14 +1,16 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import axios from "axios";
 import {useForm} from 'react-hook-form';
+import {AuthContext} from '../../utils/authContext';
 import BASE_URL from "../../utils/apiConfig";
 
-const URL_API = `${BASE_URL}productor`;
+const URL_API = `${BASE_URL}producer`;
 
 function EditProfile ({props}) {
     const {name, date, fair, id, category, fairLocality} = props;
     const [fairParticipationChecked, setFairParticipationChecked] = useState(fair);
     const {register, handleSubmit, formState: { errors },  } = useForm({mode: "all"});
+    const {token} = useContext(AuthContext);
 
     const onSubmit = async (data) => {
         const formData = new FormData();
@@ -18,7 +20,8 @@ function EditProfile ({props}) {
         try{
             axios.put(`${URL_API}/${id}`, formData, {
                 headers: {
-                  'Content-Type': 'application/json'
+                    'access-token': token,
+                    'Content-Type': 'application/json'
                 }}).then(() => {
                 alert('Formulario actualizado');
             });

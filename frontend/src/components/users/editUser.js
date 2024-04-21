@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPen, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { AuthContext } from "../../utils/authContext";
+import axios from "axios";
 import Modal from "../../utils/modal";
 import BASE_URL from "../../utils/apiConfig";
 
@@ -11,10 +14,33 @@ export default function EditUser({user}) {
     const [showModal, setShowModal] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
+    const {token} = useContext(AuthContext);
+    const navigate = useNavigate();
+
     const {register, handleSubmit, formState: { errors, isValid },  } = useForm({mode: "all"});
 
     const onSubmit = (data) => {
-        console.log(data);
+        const formData = {
+            ...data,
+            id: user.id,
+        }
+        axios.put(URL_API, formData, {
+            headers: {
+                'access-token': token
+            }
+        }).then(() => {
+            alert('Usuario actualizado');
+            setShowModal(false);
+            window.location.reload();
+        }).catch (error => {
+            if (error.response && error.response.status === 401) {
+                alert('Sesión Expirada');
+                navigate('/');
+            } else {
+                alert('Error al actualizar el usuario');
+                console.error(error);
+            }
+        })
     }
 
 

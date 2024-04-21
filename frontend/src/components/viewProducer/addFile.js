@@ -1,17 +1,20 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import {AuthContext} from '../../utils/authContext';
 import DropZone from "../../utils/dropZone";
 import Modal from "../../utils/modal";
 import BASE_URL from "../../utils/apiConfig";
 
-const URL_API = `${BASE_URL}productor/images`;
+const URL_API = `${BASE_URL}producer/images`;
 
 function AddFile ({id, role}) {
     const [droppedFiles, setDroppedFiles] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState(<></>)
+
+    const {token} = useContext(AuthContext);
 
     const removeFile = (index) => {
         setDroppedFiles(files => files.filter((_, fileIndex) => fileIndex !== index));
@@ -30,6 +33,7 @@ function AddFile ({id, role}) {
         try {
             await axios.post(URL_API, formData, {
               headers: {
+                'access-token': token,
                 'Content-Type': 'multipart/form-data'
               }
             }).then(() => {
@@ -60,6 +64,7 @@ function AddFile ({id, role}) {
                         showModal={showModal}
                         setShowModal={setShowModal}
                         content={modalContent}
+                        size={"xl"}
                     />
                     {droppedFiles.map((file, index) => (
                         <div key={index} className="col-2">

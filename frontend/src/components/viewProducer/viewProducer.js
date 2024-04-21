@@ -11,8 +11,8 @@ import Modal from '../../utils/modal';
 import BASE_URL from '../../utils/apiConfig';
 import '../../styles/ViewProducer.css';
 
-const URL_API = `${BASE_URL}productor`;
-const URL_IMAGES = `${BASE_URL}productor/images/latest`;
+const URL_API = `${BASE_URL}producer`;
+const URL_IMAGES = `${BASE_URL}producer/images/latest`;
 
 function ViewProducer () {
 
@@ -59,7 +59,11 @@ function ViewProducer () {
 
     const getImage = async (role) => {
         if (!images[role]) {
-            await axios.get(`${URL_IMAGES}/${id}?role=${role}`).then(response => {
+            await axios.get(`${URL_IMAGES}/${id}?role=${role}`, {
+                headers: {
+                    'access-token': token,
+                }
+            }).then(response => {
                 setImages(prevImages => {
                     return {...prevImages, [role]: response.data.url};
                 })

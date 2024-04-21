@@ -2,7 +2,6 @@ var GCS = require('../servicios/gcs');
 var Producer = require('../modelos/producers');
 var Image = require('../modelos/images');
 const { v4: uuidv4 } = require('uuid');
-const { get } = require('jquery');
 
 async function create(req, res) {
     try {

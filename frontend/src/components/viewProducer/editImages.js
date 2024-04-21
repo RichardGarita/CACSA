@@ -1,21 +1,27 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import {AuthContext} from '../../utils/authContext';
 import Modal from "../../utils/modal";
 import BASE_URL from "../../utils/apiConfig";
 
-const URL_API = `${BASE_URL}productor`;
+const URL_API = `${BASE_URL}producer`;
 
 function EditImages ({id, role}) {
     const [images, setImages] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState(<></>);
+    const {token} = useContext(AuthContext);
     const ROLE_URL = `${URL_API}/images/all/${id}?role=${role}`;
     const DELETE_URL = `${URL_API}/images`;
 
     useEffect(() => {
-        axios.get(ROLE_URL).then((response) => {
+        axios.get(ROLE_URL, {
+            headers: {
+                'access-token': token,
+            }
+        }).then((response) => {
             setImages(response.data);
         }).catch((error) => {
             console.error(error);
@@ -25,7 +31,11 @@ function EditImages ({id, role}) {
 
     const deleteImage = async (id) => {
         try {
-            axios.delete(`${DELETE_URL}/${id}`).then(() => {
+            axios.delete(`${DELETE_URL}/${id}`, {
+                headers: {
+                    'access-token': token
+                }
+            }).then(() => {
                 alert('Imágen borrada efectivamente');
                 setImages(prevImages => prevImages.filter(image => image.id !== id));
                 setShowModal(false);
@@ -45,6 +55,7 @@ function EditImages ({id, role}) {
                 showModal={showModal}
                 setShowModal={setShowModal}
                 content={modalContent}
+                size={"xl"}
             />
             {images.map((image, index) => (
                 <div key={index} className="col-2">

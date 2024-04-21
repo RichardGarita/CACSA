@@ -1,13 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import DropZone from "../../utils/dropZone";
 import ButtonsSection from "./buttonsSection";
+import Modal from "../../utils/modal";
 
 function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipationChecked, 
             setFairParticipationChecked, setDroppedFiles, droppedFiles, MAX_STEPS, isValid }) {
     
-    const removeFile = (fileName) => {
-        setDroppedFiles(files => files.filter(file => file.name !== fileName));
+    const removeFile = (index) => {
+        setDroppedFiles(files => files.filter((_, fileIndex) => fileIndex !== index));
     }
+
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState(<></>);
 
     return (
         <form onSubmit={onSubmit}>
@@ -29,7 +35,11 @@ function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipa
                         <div className='form-group'>
                             <label htmlFor="id">Número de cédula: </label>
                             <input type="text" placeholder="X-XXXX-XXXX" className='form-control' id="id"
-                                {...register('id', {required: {value: true, message: 'Por favor escriba cédula'}})} />
+                                {...register('id', {required: {value: true, message: 'Por favor escriba cédula'},
+                                pattern: {
+                                    value: /^\d-\d{4}-\d{4}$/,
+                                    message: "La cédula debe poseer 9 dígitos, incluya guiones y ceros"
+                                }})} />
                             {errors.id && <p className='error-text'>{errors.id.message}</p>}
                         </div>
                         <div className='form-group'>
@@ -148,16 +158,26 @@ function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipa
                 />
 
                 {formStep === 3 && droppedFiles.length >0 && (
-                    <div>
+                    <div className="row dropped-images" >
+                        <Modal
+                            showModal={showModal}
+                            setShowModal={setShowModal}
+                            content={modalContent}
+                            size={"xl"}
+                        />
                         <h4>Imagenes para enviar</h4>
-                        <ul className="list-unstyled row">
-                            {droppedFiles.map(file => (
-                                <li key={file.name} className="position-relative drop-images" width={25}>
-                                    <img src={file.preview} alt='' onLoad={() => {URL.revokeObjectURL(file.preview)}}/>
-                                    <span aria-hidden="true" className="position-absolute top-0 end-0" onClick={() => removeFile(file.name)}>&times;</span>
-                                </li>
+                            {droppedFiles.map((file, index) => (
+                                <div key={index} className="col-4">
+                                    <div className="card added-image">
+                                        <img src={file.preview} alt='' className="card-img"
+                                        onClick={() => {
+                                            setShowModal(true)
+                                            setModalContent(<img src={file.preview} alt='' className="card-img"/>)
+                                        }}/>
+                                        <FontAwesomeIcon icon={faCircleXmark} aria-hidden="true" className="position-absolute top-0 end-0 remove-icon" onClick={() => removeFile(index)}/>
+                                    </div>
+                                </div>
                             ))}
-                        </ul>
                     </div>
                 )}
             </form>

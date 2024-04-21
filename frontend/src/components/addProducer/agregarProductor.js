@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { AuthContext } from '../../utils/authContext';
+import { useNavigate } from 'react-router-dom';
 import Form from './form';
 import Progress from './progress';
 import axios from 'axios';
 import BASE_URL from '../../utils/apiConfig';
-import '../../styles/AddProducer.css'
+import '../../styles/AddProducer.css';
 
 const MAX_STEPS = 4;
 
-const URL_API = `${BASE_URL}productor`; // URL de la ruta de carga del servidor
+const URL_API = `${BASE_URL}producer`; // URL de la ruta de carga del servidor
 
 const AddProducer = () => {
     const {register, handleSubmit, formState: { errors, isValid },  } = useForm({mode: "all"});
     const [formStep, setFormStep] = useState(0);
     const [fairParticipationChecked, setFairParticipationChecked] = useState(false);
     const [droppedFiles, setDroppedFiles] = useState([]);
+
+    const {token} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const roles = ['idScreenShot', 'fairPass', 'foodHandling',
                   'profilePic', 'propertyTitle', 'products', 'inspection'];
@@ -55,14 +60,19 @@ const AddProducer = () => {
       try {
         await axios.post(URL_API, formData, {
           headers: {
+            'access-token': token,
             'Content-Type': 'multipart/form-data'
           }
         }).then(() => {
             alert('Imágenes subidas correctamente');
+            navigate('/');
         });
       } catch (error) {
         if (error.response && error.response.status === 402) {
           alert('El productor ya existe');
+        } else if (error.response && error.response.status === 401) {
+          alert('Sesión Expirada');
+          navigate('/');
         } else {
           console.error('Error al enviar el formulario:', error);
         }

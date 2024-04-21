@@ -8,7 +8,7 @@ import Filter from "./filter";
 import BASE_URL from "../../utils/apiConfig";
 import '../../styles/Index.css';
 
-const URL_API = `${BASE_URL}productor`;
+const URL_API = `${BASE_URL}producer`;
 
 function Index () {
     const {token} = useContext(AuthContext);

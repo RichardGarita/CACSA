@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const controladorUsuario = require('../controladores/controladorUsuarios');
+const userController = require('../controllers/userController');
 const jwtHelper = require('../utils/jwtHelper');
 
-router.get('/', jwtHelper.verifyToken, controladorUsuario.getAllUsers);
+router.get('/', jwtHelper.verifyToken, userController.getAllUsers);
 
 /**
 * @swagger
@@ -27,7 +27,7 @@ router.get('/', jwtHelper.verifyToken, controladorUsuario.getAllUsers);
 *       500:
 *         description: Error del servidor.
 */
-router.get('/:id', jwtHelper.verifyToken, controladorUsuario.getProfile);
+router.get('/:id', jwtHelper.verifyToken, userController.getProfile);
 
 /**
 * @swagger
@@ -56,6 +56,12 @@ router.get('/:id', jwtHelper.verifyToken, controladorUsuario.getProfile);
 *       500:
 *         description: Error del servidor.
 */
-router.post('/login', controladorUsuario.loginUsuario);
+router.post('/login', userController.loginUser);
+
+router.post('/', jwtHelper.verifyToken, userController.addUser);
+
+router.put('/', jwtHelper.verifyToken, userController.editUser);
+
+router.delete('/:id', jwtHelper.verifyToken, userController.deleteUser);
 
 module.exports = router;
