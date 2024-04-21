@@ -32,6 +32,7 @@ function Index () {
                 setFilteredProducers(response.data);
                 setTotalPages(Math.ceil(response.data.length / producersPerPage));
             }).catch((error) => {
+                console.log(error.response.status);
                 if (error.response && error.response.status === 401) {
                     localStorage.removeItem('token');
                     alert('Sesión expirada');
@@ -58,12 +59,11 @@ function Index () {
 
     return (
         <>
-            <h1>Inicio bro</h1>
             <div className="search-section">
                 <Filter elements={producers} setElements={setFilteredProducers}/>
                 <FontAwesomeIcon className="add-icon" onClick={() => navigate('/newProducer')} icon={faUserPlus}/>
             </div>
-            <table className="table table-dark table-striped table-hover w-75 mx-auto">
+            <table className="table table-striped table-hover w-75 mx-auto">
                 <thead>
                     <tr>
                         <th>Cédula</th>

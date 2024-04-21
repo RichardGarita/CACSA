@@ -1,8 +1,23 @@
 .login {
-    width: 40%;
+    width: 60%;
     text-align: center;
-    color: #FFFFFF;
+    color: #000;
     margin: auto;
+    margin-top: 5%;
+    display: flex;
+}
+
+.login form {
+    width: 60%;
+    align-self: center;
+}
+
+.login .login-logo {
+    width: 40%;
+}
+
+.login .login-logo img {
+    width: 100%;
 }
 
 .login .form-group {
@@ -11,6 +26,7 @@
 
 .login .form-group label{
     font-size: 1rem;
+    font-weight: bold;
 }
 
 .login .error-text {
@@ -20,8 +36,8 @@
 }
 
 .login .continue{
-    background-color: #5374B1;
-    border-color: #5374B1;
-    color: #fff;
+    background-color: #5374B1 !important;
+    border-color: #5374B1 !important;
+    color: #fff !important;
     margin-top: 1rem;
 }

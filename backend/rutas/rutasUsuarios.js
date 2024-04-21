@@ -1,8 +1,33 @@
 const express = require('express');
 const router = express.Router();
 const controladorUsuario = require('../controladores/controladorUsuarios');
+const jwtHelper = require('../utils/jwtHelper');
 
-router.get('/', controladorUsuario.getAllUsers);
+router.get('/', jwtHelper.verifyToken, controladorUsuario.getAllUsers);
+
+/**
+* @swagger
+* /api/user/{id}:
+*   get:
+*     summary: Obtener perfil
+*     description: Obtiene el nombre y rol del usuario.
+*     parameters:
+*       - in: path
+*         name: id
+*         schema:
+*           type: string
+*         required: true
+*     responses:
+*       200:
+*         description: Operación exitosa.
+*       400:
+*         description: Debe llenar los campos obligatorios.
+*       402:
+*         description: No se encontró el recurso.
+*       500:
+*         description: Error del servidor.
+*/
+router.get('/:id', jwtHelper.verifyToken, controladorUsuario.getProfile);
 
 /**
 * @swagger

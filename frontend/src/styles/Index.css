@@ -2,6 +2,7 @@
     display: inline-flex;
     width: 75%;
     margin-bottom: 1%;
+    margin-top: 2%;
 }
 
 .search-section select{
@@ -20,12 +21,12 @@
 .search-section .add-icon{
     display: inline;
     font-size: 2rem;
-    color: #FFF;
+    color: #000;
     width: 8%;
 }
 
 .search-section .add-icon:hover{
-    color: #000;
+    color: #5374B1;
     cursor: pointer;
 }
 

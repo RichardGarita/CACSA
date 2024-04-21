@@ -1,0 +1,51 @@
+.header {
+    height: 15%;
+    display: flex;
+    flex-direction: row;
+    background-color: #5374B1;
+}
+
+.header .profile{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    color: #FFF;
+}
+
+.header .profile:hover{
+    cursor: pointer;
+    color: #000;
+}
+
+.profile p {
+    align-self:baseline;
+    font-size: 1.5rem;
+}
+
+.profile svg {
+    font-size: 3rem;
+}
+
+.logo {
+    height: 100% !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logo img {
+    height: 100%;
+}
+
+.link {
+    margin-top: 1%;
+}
+
+.link a{
+    text-decoration: none;
+    color: #000;
+}
+
+.link:hover, .link a:hover {
+    cursor: pointer;
+    color: #5374B1;
+}

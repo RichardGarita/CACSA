@@ -25,6 +25,24 @@ async function loginUsuario(req, res) {
     }
 }
 
+async function getProfile(req, res) {
+    try {
+        const id = req.params.id;
+        if (!id) {
+            res.status(400).json({message: 'Todos los campos son necesarios'});
+            return;
+        }
+        const usuario = await User.findByPk(id, {attributes: ['name', 'userName', 'admin']});
+        if (usuario) {
+            res.status(200).json(usuario);
+        }
+        else 
+            res.status(402).json({message: 'No se encontró el recurso'});
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 async function getAllUsers(req, res) {
     try {
         const usuarios = await User.findAll({raw:true});
@@ -37,4 +55,5 @@ async function getAllUsers(req, res) {
 module.exports = {
     loginUsuario,
     getAllUsers,
+    getProfile,
 };

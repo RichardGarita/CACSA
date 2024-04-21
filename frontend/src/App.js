@@ -4,6 +4,8 @@ import AddProducer from './components/addProducer/agregarProductor';
 import ViewProducer from './components/viewProducer/viewProducer';
 import Login from './components/login';
 import Index from './components/index';
+import Header from './components/header';
+import ViewUsers from './components/users';
 import { AuthContext } from './utils/authContext';
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';
@@ -16,20 +18,24 @@ function App() {
 
   return (
     <div className="App">
-      <Routes>
         {!token ? (
           <>
-            <Route path='/' element={<Login/>}/>
-            <Route path='/*' element={<Navigate to={'/'}/>}/>
+            <Routes>
+              <Route path='/' element={<Login/>}/>
+              <Route path='/*' element={<Navigate to={'/'}/>}/>
+            </Routes>
           </>
         ):
           <>
-            <Route path='/' element={<Index/>}/>
-            <Route path='/producer/:id' element={<ViewProducer/>}/>
-            <Route path='/newProducer' element={<AddProducer/>}/>
+            <Header/>
+            <Routes>
+              <Route path='/' element={<Index/>}/>
+              <Route path='/users' element={<ViewUsers/>}/>
+              <Route path='/producer/:id' element={<ViewProducer/>}/>
+              <Route path='/newProducer' element={<AddProducer/>}/>
+            </Routes>
           </>
         }
-      </Routes>
     </div>
   );
 }

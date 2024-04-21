@@ -9,15 +9,15 @@ const URL_API = `${BASE_URL}user/login`
 
 function Login () {
     const {register, handleSubmit, formState: { errors, isValid },  } = useForm({mode: "all"});
-    const { setToken } = useContext(AuthContext);
+    const { signIn } = useContext(AuthContext);
 
     const onSubmit = async (data) => {
         try {
             await axios.post(URL_API, data, {headers: {
                 'Content-Type': 'application/json'
             }}).then((response) => {
-                setToken(response.data.token);
                 localStorage.setItem('token', response.data.token);
+                signIn();
                 alert('Se ha inciado sesión correctamente');
             })
         } catch (error) {
@@ -32,6 +32,9 @@ function Login () {
 
     return (
         <div className="login">
+            <figure className="login-logo">
+                <img src="cacsa-logo.png"></img>
+            </figure>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='form-group'>
                     <label>Nombre de usuario: </label>

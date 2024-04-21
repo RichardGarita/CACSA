@@ -1,0 +1,71 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPen, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import Modal from "../../utils/modal";
+import BASE_URL from "../../utils/apiConfig";
+
+const URL_API = `${BASE_URL}user`;
+
+export default function EditUser({user}) {
+    const [showModal, setShowModal] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
+    const {register, handleSubmit, formState: { errors, isValid },  } = useForm({mode: "all"});
+
+    const onSubmit = (data) => {
+        console.log(data);
+    }
+
+
+    return (
+        <>
+            <FontAwesomeIcon className="edit-icon" icon={faUserPen} onClick={() => setShowModal(true)}/>
+
+            <Modal
+                showModal={showModal}
+                setShowModal={setShowModal}
+                titulo={"Editar Usuario"}
+                content={
+                    <>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <div className='form-group'>
+                                <label htmlFor="name">Nombre:</label>
+                                <input type="text" className='form-control' id="name"
+                                    {...register('name', {required: {value: true, message: 'Por favor ingrese un nombre'}})}
+                                    defaultValue={user.name} />
+                                {errors.name && <p className='error-text'>{errors.name.message}</p>}
+                            </div>
+
+                            <div className='form-group'>
+                                <label htmlFor="userName">Nombre de usuario:</label>
+                                <input type="text" className='form-control' id="userName"
+                                    {...register('userName', {required: {value: true, message: 'Por favor ingrese un nombre de usuario'}})}
+                                    defaultValue={user.userName} />
+                                {errors.userName && <p className='error-text'>{errors.userName.message}</p>}
+                            </div>
+
+                            <div className='form-group'>
+                                <label htmlFor="password">Contraseña:</label>
+                                <div className="input-group">
+                                    <input type={showPassword ? 'text' : 'password'} className='form-control' id="password"
+                                        {...register('password', {required: {value: true, message: 'Por favor ingrese una contraseña'}})}
+                                        defaultValue={user.password} />
+                                    <div className="input-group-addon">
+                                        { showPassword ?
+                                            <FontAwesomeIcon className="show-icon" icon={faEye} onClick={() => setShowPassword(false)}/>
+                                            :
+                                            <FontAwesomeIcon className="show-icon" icon={faEyeSlash} onClick={() => setShowPassword(true)}/>
+                                        }
+                                    </div>
+                                </div>
+                                {errors.password && <p className='error-text'>{errors.password.message}</p>}
+                            </div>
+                            <button type="submit" className="btn edit-button">Confirmar</button>
+                        </form>
+                    </>
+                }
+            />
+        </>
+    )
+}

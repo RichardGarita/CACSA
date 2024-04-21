@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function ButtonsSection ({MAX_STEPS, formStep, setFormStep, setDroppedFiles, isValid}) {
 
@@ -14,7 +15,7 @@ function ButtonsSection ({MAX_STEPS, formStep, setFormStep, setDroppedFiles, isV
     const renderPrevButton = () => {
         if (formStep === 0) {
             return (
-                <button type="button" className='btn cancel'>Cancelar</button>
+                <Link to={'/'} className='btn cancel'>Cancelar</Link>
             )
         } else {
             return (

@@ -1,14 +1,13 @@
-import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
-export default function Modal({showModal, setShowModal, titulo, content}) {
+export default function Modal({showModal, setShowModal, titulo, content, size}) {
 
     return (
         <>
             {showModal && (
                 <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
-                    <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div className={`modal-dialog modal-dialog-centered modal-dialog-scrollable modal-${size}`}>
                         <div className="modal-content">
                             <div className="modal-header">
                                 {titulo && <h1 className="modal-title fs-5">{titulo}</h1>}

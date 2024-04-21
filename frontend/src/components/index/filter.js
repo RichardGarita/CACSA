@@ -15,7 +15,8 @@ function Filter ({elements, setElements}) {
                 <option value={'name'}>Nombre</option>
                 <option value={'id'}>Cédula</option>
             </select>
-            <input type="text" onChange={(event) => handleFilter(event.target.value)} className="form-control d-inline"/>
+            <input type="text" onChange={(event) => handleFilter(event.target.value)}
+                className="form-control d-inline" placeholder="Buscar aquí..."/>
         </>
     )
 }

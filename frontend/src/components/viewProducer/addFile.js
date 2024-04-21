@@ -5,7 +5,6 @@ import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import DropZone from "../../utils/dropZone";
 import Modal from "../../utils/modal";
 import BASE_URL from "../../utils/apiConfig";
-import { Mod } from "@tensorflow/tfjs";
 
 const URL_API = `${BASE_URL}productor/images`;
 

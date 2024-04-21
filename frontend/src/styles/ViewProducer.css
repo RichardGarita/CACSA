@@ -1,11 +1,11 @@
 .view-producer {
     text-align: left;
     display: flex;
-    height: 100%;
+    height: 85%;
 }
 
 .left-menu {
-    background-color: #5374B1;
+    background-color: #B9DEE4;
     color: #FFFFFF;
     width: 30%;
     margin-left: 0;
@@ -18,16 +18,23 @@
     margin-left: 1rem;
     margin-top: 0.5rem;
     margin-bottom: 0;
+    font-size: 1.2rem;
+    color: #000;
 }
 
 .left-menu p {
     margin-left: 1rem;
     margin-bottom: 0;
+    color: #000;
 }
 
 .left-menu .image-link:hover {
     cursor: pointer;
-    color: black;
+    color: #5374B1;
+}
+
+.edit-profile {
+    margin-top: .2rem;
 }
 
 .edit-profile h4 {
@@ -38,10 +45,11 @@
     font-size: 1.5rem;
     margin-left: 1rem;
     cursor: pointer;
+    color: #000;
 }
 
 .edit-profile .edit-icon:hover {
-    color: #000000;
+    color: #5374B1;
 }
 
 .view-producer .profile-data {
@@ -64,7 +72,7 @@
 }
 
 .edit-header {
-    background-color: #5374B1;
+    background-color: #B9DEE4;
     height: 2.5rem;
     display: flex;
     justify-content: end;
@@ -73,14 +81,14 @@
 
 .edit-header .add-icon, .edit-header .edit-icon{
     font-size: 2rem;
-    color: #FFF;
+    color: #000;
     margin-right: 0.5rem;
     margin-left: 0.5rem;
 }
 
 .edit-header .add-icon:hover, .edit-header .edit-icon:hover{
     cursor: pointer;
-    color: #000;
+    color: #5374B1;
 }
 
 .add-image{
@@ -123,7 +131,7 @@
 .drop-zone {
     border: 2px solid #5374B1;
     padding: 5%;
-    color: #FFFFFF;
+    color: #000;
 }
 
 .drop-images, .role-images {
