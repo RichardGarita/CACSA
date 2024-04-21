@@ -1,5 +1,7 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import { useForm } from 'react-hook-form';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { AuthContext } from "../../utils/authContext";
 import BASE_URL from "../../utils/apiConfig";
@@ -9,6 +11,7 @@ const URL_API = `${BASE_URL}user/login`
 
 function Login () {
     const {register, handleSubmit, formState: { errors, isValid },  } = useForm({mode: "all"});
+    const [showPassword, setShowPassword] = useState(false);
     const { signIn } = useContext(AuthContext);
 
     const onSubmit = async (data) => {
@@ -37,19 +40,27 @@ function Login () {
             </figure>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='form-group'>
-                    <label>Nombre de usuario: </label>
-                    <input type="text" className='form-control' autoComplete="username"
+                    <label htmlFor="userName">Nombre de usuario: </label>
+                    <input type="text" className='form-control' autoComplete="username" id="userName"
                     {...register('userName', {required: {value: true, message: 'Por favor escriba el nombre'}})} />
                     {errors.userName && <p className='error-text'>{errors.userName.message}</p>}
                 </div>
 
                 <div className='form-group'>
-                    <label>Contraseña</label>
-                    <input type="text" className='form-control' autoComplete="password"
-                    {...register('password', {required: {value: true, message: 'Por favor escriba la contraseña'}})} />
+                    <label htmlFor="password">Contraseña:</label>
+                    <div className="input-group">
+                        <input type={showPassword ? 'text' : 'password'} className='form-control' id="password" placeholder="Contraseña"
+                            {...register('password', {required: {value: true, message: 'Por favor ingrese una contraseña'}})}/>
+                        <div className="input-group-addon">
+                            { showPassword ?
+                                <FontAwesomeIcon className="show-icon" icon={faEye} onClick={() => setShowPassword(false)}/>
+                                :
+                                <FontAwesomeIcon className="show-icon" icon={faEyeSlash} onClick={() => setShowPassword(true)}/>
+                            }
+                        </div>
+                    </div>
                     {errors.password && <p className='error-text'>{errors.password.message}</p>}
                 </div>
-
                 <button disabled={!isValid} type="submit" className='btn continue'>Iniciar Sesión</button>
             </form>
         </div>
