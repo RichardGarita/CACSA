@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../utils/authContext";
 import { useNavigate } from "react-router-dom";
-import Filter from "./filter";
+import Filter from "./components/filter";
 import BASE_URL from "../../utils/apiConfig";
 import '../../styles/Index.css';
 

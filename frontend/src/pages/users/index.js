@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useContext} from "react";
 import axios from "axios";
-import EditUser from "./editUser";
-import DeleteUser from "./deleteUser";
-import FilterUser from "./filter";
-import AddUser from "./addUser";
+import EditUser from "./components/editUser";
+import DeleteUser from "./components/deleteUser";
+import FilterUser from "./components/filter";
+import AddUser from "./components/addUser";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../utils/authContext";
 import BASE_URL from "../../utils/apiConfig";

@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../utils/authContext";
+import { AuthContext } from "../../../utils/authContext";
 import axios from "axios";
-import Modal from "../../utils/modal";
-import BASE_URL from "../../utils/apiConfig";
+import Modal from "../../../utils/modal";
+import BASE_URL from "../../../utils/apiConfig";
 
 const URL_API = `${BASE_URL}user`;
 

@@ -3,9 +3,9 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserPen, faFileCirclePlus, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import EditProfile from './editProfile';
-import AddFile from './addFile';
-import EditImages from './editImages';
+import EditProfile from './components/editProfile';
+import AddFile from './components/addFile';
+import EditImages from './components/editImages';
 import { AuthContext } from '../../utils/authContext';
 import Modal from '../../utils/modal';
 import BASE_URL from '../../utils/apiConfig';

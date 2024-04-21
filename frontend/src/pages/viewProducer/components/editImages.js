@@ -2,9 +2,9 @@ import React, {useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
-import {AuthContext} from '../../utils/authContext';
-import Modal from "../../utils/modal";
-import BASE_URL from "../../utils/apiConfig";
+import {AuthContext} from '../../../utils/authContext';
+import Modal from "../../../utils/modal";
+import BASE_URL from "../../../utils/apiConfig";
 
 const URL_API = `${BASE_URL}producer`;
 

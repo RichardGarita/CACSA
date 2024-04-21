@@ -1,12 +1,11 @@
 import { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { AuthContext } from "../../utils/authContext";
+import { AuthContext } from "../../../utils/authContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Modal from "../../utils/modal";
-import BASE_URL from "../../utils/apiConfig";
-import { error } from "jquery";
+import Modal from "../../../utils/modal";
+import BASE_URL from "../../../utils/apiConfig";
 
 const URL_API = `${BASE_URL}user/`;
 

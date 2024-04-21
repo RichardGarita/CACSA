@@ -1,8 +1,8 @@
 import React, {useState, useContext} from "react";
 import axios from "axios";
 import {useForm} from 'react-hook-form';
-import {AuthContext} from '../../utils/authContext';
-import BASE_URL from "../../utils/apiConfig";
+import {AuthContext} from '../../../utils/authContext';
+import BASE_URL from "../../../utils/apiConfig";
 
 const URL_API = `${BASE_URL}producer`;
 

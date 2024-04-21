@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import AddProducer from './components/addProducer';
-import ViewProducer from './components/viewProducer';
-import Login from './components/login';
-import Index from './components/index';
 import Header from './components/header';
-import ViewUsers from './components/users';
-import NotFound from './components/notFound';
+import AddProducer from './pages/addProducer';
+import ViewProducer from './pages/viewProducer';
+import Login from './pages/login';
+import Index from './pages/index';
+import ViewUsers from './pages/users';
+import NotFound from './pages/notFound';
 import { AuthContext } from './utils/authContext';
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';

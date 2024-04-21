@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
-import DropZone from "../../utils/dropZone";
+import DropZone from "../../../utils/dropZone";
 import ButtonsSection from "./buttonsSection";
-import Modal from "../../utils/modal";
+import Modal from "../../../utils/modal";
 
 function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipationChecked, 
             setFairParticipationChecked, setDroppedFiles, droppedFiles, MAX_STEPS, isValid }) {
