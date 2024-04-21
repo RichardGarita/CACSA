@@ -45,7 +45,7 @@ export default function ViewUsers () {
             alert('Error al obtener los usuarios');
             console.error(error);
         })
-    }, [])
+    }, [navigate, token])
 
     useEffect(() => {
         const startIndex = (currentPage - 1) * usersPerPage;

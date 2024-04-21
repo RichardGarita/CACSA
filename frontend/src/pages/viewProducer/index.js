@@ -57,7 +57,7 @@ function ViewProducer () {
                 alert('Algo salió mal. Intente de nuevo');
             }
         })
-    }, []);
+    }, [id, navigate, token]);
 
     const getImage = async (role) => {
         if (!images[role]) {

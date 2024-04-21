@@ -44,7 +44,7 @@ function Index () {
                     alert('Hubo un error al tratar de obtener los productores. Intente de nuevo');
                 }
             })
-    }, [])
+    }, [token])
 
     useEffect(() => {
         const startIndex = (currentPage - 1) * producersPerPage;

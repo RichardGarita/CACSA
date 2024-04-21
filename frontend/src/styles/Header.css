@@ -41,6 +41,10 @@
     margin-top: 1%;
 }
 
+.link p{
+    display: inline;
+}
+
 .link a{
     text-decoration: none;
     color: #000;

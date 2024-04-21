@@ -81,7 +81,7 @@ export default function AddUser () {
                             </div>
                             {errors.password && <p className='error-text'>{errors.password.message}</p>}
                         </div>
-                        <button type="submit" className="btn edit-button">Confirmar</button>
+                        <button type="submit" disabled={!isValid} className="btn edit-button">Confirmar</button>
                     </form>
                 }
             />

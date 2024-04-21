@@ -11,7 +11,7 @@ function DropZone({setDroppedFiles}) {
                 )
             ])
         }
-    }, [])
+    }, [setDroppedFiles])
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
 

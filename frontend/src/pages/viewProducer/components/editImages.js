@@ -28,7 +28,7 @@ function EditImages ({id, role}) {
             console.error(error);
             alert('Error al obtener las imágenes del productor');
         })
-    }, []);
+    }, [ROLE_URL, token]);
 
     const deleteImage = async (id) => {
         try {

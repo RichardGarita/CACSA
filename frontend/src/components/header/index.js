@@ -30,7 +30,7 @@ function Header () {
             alert('Error inesperado');
             console.error(error);
         })
-    }, [id])
+    }, [id, token])
 
     const signOut = () => {
         localStorage.removeItem('token');
@@ -41,7 +41,7 @@ function Header () {
     return (
         <nav className='header'>
             <Link to={'/'} className='logo'>
-                <img src='/cacsa-logo.png'></img>
+                <img src='/cacsa-logo.png' alt='Logo de CACSA. Volver al Inicio'></img>
             </Link>
             <section className='profile' onClick={() => setShowModal(true)}>
                 <p>{data.name}</p>
@@ -63,7 +63,7 @@ function Header () {
                         </section>
                         <section className='link'>
                             <FontAwesomeIcon className='me-2' icon={faArrowRightFromBracket} />
-                            <a onClick={() => signOut()}>Cerrar Sesión</a>
+                            <p onClick={() => signOut()}>Cerrar Sesión</p>
                         </section>
                         {data.admin === true && (
                             <section className='link'>

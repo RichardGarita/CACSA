@@ -36,7 +36,7 @@ function Login () {
     return (
         <div className="login">
             <figure className="login-logo">
-                <img src="cacsa-logo.png"></img>
+                <img src="cacsa-logo.png" alt="Logo de CACSA"></img>
             </figure>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='form-group'>

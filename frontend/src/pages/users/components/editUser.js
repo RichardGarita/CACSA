@@ -87,7 +87,7 @@ export default function EditUser({user}) {
                                 </div>
                                 {errors.password && <p className='error-text'>{errors.password.message}</p>}
                             </div>
-                            <button type="submit" className="btn edit-button">Confirmar</button>
+                            <button disabled={!isValid} type="submit" className="btn edit-button">Confirmar</button>
                         </form>
                     </>
                 }
