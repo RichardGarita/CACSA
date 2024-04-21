@@ -2,7 +2,9 @@ import React, {useState, useContext} from "react";
 import axios from "axios";
 import {useForm} from 'react-hook-form';
 import {AuthContext} from '../../../utils/authContext';
+import {ToastContainer, toast} from 'react-toastify';
 import BASE_URL from "../../../utils/apiConfig";
+import "react-toastify/dist/ReactToastify.css";
 
 const URL_API = `${BASE_URL}producer`;
 
@@ -23,7 +25,9 @@ function EditProfile ({props}) {
                     'access-token': token,
                     'Content-Type': 'application/json'
                 }}).then(() => {
-                alert('Formulario actualizado');
+                toast.success('Productor actualizado', {
+                    autoClose: 2000,
+                });
             });
         } catch (error) {
             console.error('Error al enviar el formulario:', error);
@@ -32,6 +36,7 @@ function EditProfile ({props}) {
 
     return (
         <>
+            <ToastContainer/>
             <form className="edit-form" onSubmit={handleSubmit(onSubmit)}>
                 <div className='form-group'>
                     <label htmlFor="name">Nombre de la persona: </label>

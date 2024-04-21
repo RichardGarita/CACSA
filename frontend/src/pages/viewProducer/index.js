@@ -3,12 +3,14 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserPen, faFileCirclePlus, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import {ToastContainer, toast} from 'react-toastify';
 import EditProfile from './components/editProfile';
 import AddFile from './components/addFile';
 import EditImages from './components/editImages';
 import { AuthContext } from '../../utils/authContext';
 import Modal from '../../utils/modal';
 import BASE_URL from '../../utils/apiConfig';
+import "react-toastify/dist/ReactToastify.css";
 import '../../styles/ViewProducer.css';
 
 const URL_API = `${BASE_URL}producer`;
@@ -47,14 +49,20 @@ function ViewProducer () {
                 id, fair: response.data.fair, category: response.data.category, fairLocality: response.data.fairLocality});
         }).catch((error) => {
             if(error.response && error.response.status === 401) {
-                alert('Token Invalido');
-                localStorage.removeItem('token');
-                navigate('/');
+                toast.info('Sesión Expirada', {
+                    autoClose: 2000,
+                    onClose: () => {
+                        localStorage.removeItem('token');
+                        navigate('/');
+                    }
+                });
             } else if(error.response && error.response.status === 404) {
                 navigate('/404');
             } else {
                 console.error(error);
-                alert('Algo salió mal. Intente de nuevo');
+                toast.error('Algo salió mal. Intente de nuevo', {
+                    autoClose: 2000,
+                });
             }
         })
     }, [id, navigate, token]);
@@ -79,6 +87,7 @@ function ViewProducer () {
 
     return (
         <div className='view-producer'>
+            <ToastContainer/>
             <Modal
                 showModal={showModal}
                 setShowModal={setShowModal}

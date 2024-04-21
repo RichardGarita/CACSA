@@ -2,10 +2,12 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import {ToastContainer, toast} from 'react-toastify';
 import { AuthContext } from "../../utils/authContext";
 import { useNavigate } from "react-router-dom";
 import Filter from "./components/filter";
 import BASE_URL from "../../utils/apiConfig";
+import "react-toastify/dist/ReactToastify.css";
 import '../../styles/Index.css';
 
 const URL_API = `${BASE_URL}producer`;
@@ -35,13 +37,17 @@ function Index () {
                 console.log(error.response.status);
                 if (error.response && error.response.status === 401) {
                     localStorage.removeItem('token');
-                    alert('Sesión expirada');
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 2000);
+                    toast.info('Sesión expirada', {
+                        autoClose: 2000,
+                        onClose: () => {
+                            window.location.reload();
+                        }
+                    });
                 } else {
                     console.error(error);
-                    alert('Hubo un error al tratar de obtener los productores. Intente de nuevo');
+                    toast.error('Hubo un error al tratar de obtener los productores. Intente de nuevo', {
+                        autoClose: 2000,
+                    });
                 }
             })
     }, [token])
@@ -59,6 +65,7 @@ function Index () {
 
     return (
         <>
+            <ToastContainer/>
             <div className="search-section">
                 <Filter elements={producers} setElements={setFilteredProducers}/>
                 <FontAwesomeIcon className="add-icon" onClick={() => navigate('/newProducer')} icon={faUserPlus}/>

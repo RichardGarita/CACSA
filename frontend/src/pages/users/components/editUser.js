@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPen, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../../utils/authContext";
+import {ToastContainer, toast} from 'react-toastify';
 import axios from "axios";
 import Modal from "../../../utils/modal";
 import BASE_URL from "../../../utils/apiConfig";
+import "react-toastify/dist/ReactToastify.css";
 
 const URL_API = `${BASE_URL}user`;
 
@@ -29,15 +31,23 @@ export default function EditUser({user}) {
                 'access-token': token
             }
         }).then(() => {
-            alert('Usuario actualizado');
-            setShowModal(false);
-            window.location.reload();
+            toast.success('Usuario actualizado', {
+                autoClose: 2000,
+                onClose: () => {
+                    setShowModal(false);
+                    window.location.reload();
+                }
+            });
         }).catch (error => {
             if (error.response && error.response.status === 401) {
-                alert('Sesión Expirada');
-                navigate('/');
+                toast.info('Sesión Expirada', {
+                    autoClose: 2000,
+                    onClose: () => {
+                        navigate('/');
+                    }
+                });
             } else {
-                alert('Error al actualizar el usuario');
+                toast.error('Error al actualizar el usuario. Intente de nuevo');
                 console.error(error);
             }
         })
@@ -46,6 +56,7 @@ export default function EditUser({user}) {
 
     return (
         <>
+            <ToastContainer/>
             <FontAwesomeIcon className="edit-icon" icon={faUserPen} onClick={() => setShowModal(true)}/>
 
             <Modal

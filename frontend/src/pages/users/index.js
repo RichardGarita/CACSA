@@ -6,8 +6,10 @@ import FilterUser from "./components/filter";
 import AddUser from "./components/addUser";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../utils/authContext";
+import {ToastContainer, toast} from 'react-toastify';
 import BASE_URL from "../../utils/apiConfig";
 import '../../styles/Users.css'
+import "react-toastify/dist/ReactToastify.css";
 
 const URL_API = `${BASE_URL}user`;
 
@@ -38,11 +40,17 @@ export default function ViewUsers () {
             setTotalPages(Math.ceil(response.data.length / usersPerPage));
         }).catch(error => {
             if (error.response && error.response.status === 401) {
-                alert('Sesión expirada');
-                localStorage.removeItem('token');
-                navigate('/');
+                toast.info('Sesión expirada', {
+                    autoClose: 2000,
+                    onClose: () => {
+                        localStorage.removeItem('token');
+                        navigate('/');
+                    }
+                });
             }
-            alert('Error al obtener los usuarios');
+            toast.error('Error al obtener los usuarios', {
+                autoClose: 2000,
+            });
             console.error(error);
         })
     }, [navigate, token])
@@ -56,6 +64,7 @@ export default function ViewUsers () {
 
     return (
         <>
+            <ToastContainer/>
             <div className="search-section">
                 <FilterUser elements={users} setElements={setFilteredUsers}/>     
                 <AddUser/>           

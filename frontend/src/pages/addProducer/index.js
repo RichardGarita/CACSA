@@ -2,10 +2,12 @@ import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../utils/authContext';
 import { useNavigate } from 'react-router-dom';
+import {ToastContainer, toast} from 'react-toastify';
 import Form from './components/form';
 import Progress from './components/progress';
 import axios from 'axios';
 import BASE_URL from '../../utils/apiConfig';
+import "react-toastify/dist/ReactToastify.css";
 import '../../styles/AddProducer.css';
 
 const MAX_STEPS = 4;
@@ -58,21 +60,34 @@ const AddProducer = () => {
       const formData = prepareFormData(data);
 
       try {
+        toast.info('Agregando. Espera por favor', {
+          autoClose: 3000,
+        })
         await axios.post(URL_API, formData, {
           headers: {
             'access-token': token,
             'Content-Type': 'multipart/form-data'
           }
         }).then(() => {
-            alert('Imágenes subidas correctamente');
-            navigate('/');
+            toast.success('Imágenes subidas correctamente', {
+              autoClose: 2000,
+              onClose: () => {
+                navigate('/');
+              }
+            });
         });
       } catch (error) {
         if (error.response && error.response.status === 402) {
-          alert('El productor ya existe');
+          toast.warning('El productor ya existe', {
+            autoClose: 2000,
+          });
         } else if (error.response && error.response.status === 401) {
-          alert('Sesión Expirada');
-          navigate('/');
+          toast.info('Sesión Expirada', {
+            autoClose: 2000,
+            onClose: () => {
+              navigate('/');
+            }
+          });
         } else {
           console.error('Error al enviar el formulario:', error);
         }
@@ -81,6 +96,7 @@ const AddProducer = () => {
   
     return (
         <div className='add-producer'>
+            <ToastContainer/>
             <Progress
                 formStep={formStep}
                 MAX_STEPS={MAX_STEPS}

@@ -2,11 +2,13 @@ import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import {ToastContainer, toast} from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../utils/authContext";
 import axios from "axios";
 import Modal from "../../../utils/modal";
 import BASE_URL from "../../../utils/apiConfig";
+import "react-toastify/dist/ReactToastify.css";
 
 const URL_API = `${BASE_URL}user`;
 
@@ -24,17 +26,29 @@ export default function AddUser () {
                 'access-token': token,
             }
         }).then(() => {
-            alert('Usuario agregado');
-            setShowModal(false);
-            window.location.reload();
+            toast.success('Usuario agregado', {
+                autoClose: 2000,
+                onClose: () => {
+                    setShowModal(false);
+                    window.location.reload();
+                }
+            });
         }).catch((error) => {
             if (error.response && error.response.status === 401) {
-                alert('Sesión Expirada');
-                navigate('/');
+                toast.info('Sesión Expirada', {
+                    autoClose: 2000,
+                    onClose: () => {
+                        navigate('/');
+                    }
+                });
             } else if (error.response && error.response.status === 402) {
-                alert('Ya existe el usuario');
+                toast.warning('Ya existe el usuario', {
+                    autoClose: 2000,
+                });
             } else {
-                alert('Error Inesperado');
+                toast.error('Error Inesperado', {
+                    autoClose: 2000,
+                });
                 console.error(error);
             }
         })
@@ -42,6 +56,7 @@ export default function AddUser () {
 
     return (
         <>
+            <ToastContainer/>
             <FontAwesomeIcon className="add-icon" onClick={() => setShowModal(true)} icon={faUserPlus}/>
             <Modal
                 showModal={showModal}

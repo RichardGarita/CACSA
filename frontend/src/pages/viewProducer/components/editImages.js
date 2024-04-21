@@ -3,8 +3,10 @@ import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import {AuthContext} from '../../../utils/authContext';
+import {ToastContainer, toast} from 'react-toastify';
 import Modal from "../../../utils/modal";
 import BASE_URL from "../../../utils/apiConfig";
+import "react-toastify/dist/ReactToastify.css";
 
 const URL_API = `${BASE_URL}producer`;
 
@@ -26,7 +28,9 @@ function EditImages ({id, role}) {
             setImages(response.data);
         }).catch((error) => {
             console.error(error);
-            alert('Error al obtener las imágenes del productor');
+            toast.error('Error al obtener las imágenes del productor', {
+                autoClose: 2000,
+            });
         })
     }, [ROLE_URL, token]);
 
@@ -37,21 +41,30 @@ function EditImages ({id, role}) {
                     'access-token': token
                 }
             }).then(() => {
-                alert('Imágen borrada efectivamente');
-                setImages(prevImages => prevImages.filter(image => image.id !== id));
-                setShowModal(false);
+                toast.success('Imágen borrada efectivamente', {
+                    autoClose: 2000,
+                    onClose: () => {
+                        setImages(prevImages => prevImages.filter(image => image.id !== id));
+                        setShowModal(false);
+                    }
+                });
             }).catch ((error) => {
                 console.error(error);
-                alert('Error al borrar la imágen');
+                toast.error('Error al borrar la imágen. Intente de nuevo', {
+                    autoClose: 2000, 
+                });
             }) 
         } catch (error) {
             console.error(error);
-            alert('Error al eliminar la imágen');
+            toast.error('Error al borrar la imágen. Intente de nuevo', {
+                autoClose: 2000, 
+            });
         }
     }
 
     return (
         <div className="row dropped-images p-1" >
+            <ToastContainer/>
             <Modal
                 showModal={showModal}
                 setShowModal={setShowModal}

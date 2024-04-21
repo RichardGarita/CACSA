@@ -3,9 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../../utils/authContext";
 import { useNavigate } from "react-router-dom";
+import {ToastContainer, toast} from 'react-toastify';
 import axios from "axios";
 import Modal from "../../../utils/modal";
 import BASE_URL from "../../../utils/apiConfig";
+import "react-toastify/dist/ReactToastify.css";
 
 const URL_API = `${BASE_URL}user/`;
 
@@ -21,14 +23,24 @@ export default function DeleteUser ({id}) {
                 'access-token': token,
             }
         }).then(() => {
-            alert('Usuario eliminado');
-            window.location.reload()
+            toast.success('Usuario eliminado', {
+                autoClose: 2000,
+                onClose: () => {
+                    window.location.reload();
+                }
+            });
         }).catch(error => {
             if (error.response && error.response.status === 401) {
-                alert('Sesión expirada');
-                navigate('/');
+                toast.info('Sesión expirada', {
+                    autoClose: 2000,
+                    onClose: () => {
+                        navigate('/');
+                    }
+                });
             } else {
-                alert('Error Inesperado');
+                toast.error('Error Inesperado', {
+                    autoClose: 2000
+                });
                 console.error(error);
             }
         })
@@ -36,6 +48,7 @@ export default function DeleteUser ({id}) {
 
     return (
         <>
+            <ToastContainer/>
             <FontAwesomeIcon onClick={() => setShowModal(true)} className="delete-icon" icon={faTrash}/>
 
             <Modal

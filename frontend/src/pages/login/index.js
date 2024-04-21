@@ -1,10 +1,12 @@
 import React, {useContext, useState} from "react";
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {ToastContainer, toast} from 'react-toastify';
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { AuthContext } from "../../utils/authContext";
 import BASE_URL from "../../utils/apiConfig";
+import "react-toastify/dist/ReactToastify.css";
 import '../../styles/Login.css';
 
 const URL_API = `${BASE_URL}user/login`
@@ -20,21 +22,30 @@ function Login () {
                 'Content-Type': 'application/json'
             }}).then((response) => {
                 localStorage.setItem('token', response.data.token);
-                signIn();
-                alert('Se ha inciado sesión correctamente');
+                toast.success('Se ha inciado sesión correctamente', {
+                    autoClose: 2000,
+                    onClose: () => {
+                        signIn();
+                    }
+                });
             })
         } catch (error) {
             if (error.response && error.response.status === 402) {
-                alert('Usuario o contraseña incorrectas');
+                toast.error('Usuario o contraseña incorrectas', {
+                    autoClose: 2000,
+                });
               } else {
                 console.error('Error al enviar el formulario:', error);
-                alert('Algo salió mal, intenta de nuevo');
+                toast.error('Algo salió mal, intenta de nuevo', {
+                    autoClose: 2000,
+                });
               }
         }
     }
 
     return (
         <div className="login">
+            <ToastContainer/>
             <figure className="login-logo">
                 <img src="cacsa-logo.png" alt="Logo de CACSA"></img>
             </figure>
