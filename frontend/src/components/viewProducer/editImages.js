@@ -12,6 +12,7 @@ function EditImages ({id, role}) {
     const [images, setImages] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState(<></>);
+    const [modalSize, setModalSize] = useState('xl');
     const {token} = useContext(AuthContext);
     const ROLE_URL = `${URL_API}/images/all/${id}?role=${role}`;
     const DELETE_URL = `${URL_API}/images`;
@@ -55,15 +56,16 @@ function EditImages ({id, role}) {
                 showModal={showModal}
                 setShowModal={setShowModal}
                 content={modalContent}
-                size={"xl"}
+                size={modalSize}
             />
             {images.map((image, index) => (
-                <div key={index} className="col-2">
+                <div key={index} className="col-3">
                     <div className="card added-image">
                         <img src={image.url[0]} alt=''
                             onLoad={() => {URL.revokeObjectURL(image.url[0])}} className="card-img"
                             onClick={() => {
                                 setShowModal(true);
+                                setModalSize('xl')
                                 setModalContent(
                                     <img src={image.url[0]} alt='' onLoad={() => {URL.revokeObjectURL(image.url[0])}} className="card-img"/>
                                 )
@@ -72,6 +74,7 @@ function EditImages ({id, role}) {
                             className="position-absolute top-0 end-0 remove-icon" 
                             onClick={() => {
                                 setShowModal(true);
+                                setModalSize('md')
                                 setModalContent(<>
                                     <p>¿Está seguro de querer eliminar esta imágen? <br/><strong>Esta acción es irreversible</strong></p>
                                     <button className="btn delete-button" onClick={() => deleteImage(image.id)}>Borrar</button>

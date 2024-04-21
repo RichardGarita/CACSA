@@ -41,7 +41,7 @@ function Header () {
     return (
         <nav className='header'>
             <Link to={'/'} className='logo'>
-                <img src='cacsa-logo.png'></img>
+                <img src='/cacsa-logo.png'></img>
             </Link>
             <section className='profile' onClick={() => setShowModal(true)}>
                 <p>{data.name}</p>

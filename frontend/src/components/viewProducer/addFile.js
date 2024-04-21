@@ -38,6 +38,7 @@ function AddFile ({id, role}) {
               }
             }).then(() => {
                 alert('Imágenes subidas correctamente');
+                window.location.reload();
             });
           } catch (error) {
             if (error.response && error.response.status === 400) {
@@ -67,7 +68,7 @@ function AddFile ({id, role}) {
                         size={"xl"}
                     />
                     {droppedFiles.map((file, index) => (
-                        <div key={index} className="col-2">
+                        <div key={index} className="col-3">
                             <div className="card added-image">
                                 <img src={file.preview} alt='' className="card-img"
                                     onClick={() => {

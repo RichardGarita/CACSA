@@ -28,7 +28,8 @@
 
 .logo {
     height: 100% !important;
-    margin-left: auto;
+    width: 20%;
+    margin-left: 40%;
     margin-right: auto;
 }
 

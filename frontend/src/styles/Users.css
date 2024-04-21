@@ -13,7 +13,7 @@
     color: red;
 }
 
-tbody tr {
+.users-table tr {
     cursor: default !important;
 }
 

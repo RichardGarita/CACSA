@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../utils/authContext";
 import BASE_URL from "../../utils/apiConfig";
 import '../../styles/Users.css'
-import { Add } from "@tensorflow/tfjs";
 
 const URL_API = `${BASE_URL}user`;
 
@@ -70,7 +69,7 @@ export default function ViewUsers () {
                         <td>Acciones</td>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="users-table">
                     {currentUsers.map((user, index) => (
                         <tr key={index}>
                             <td>{user.name}</td>
