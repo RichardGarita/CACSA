@@ -6,6 +6,7 @@ import Login from './components/login';
 import Index from './components/index';
 import Header from './components/header';
 import ViewUsers from './components/users';
+import NotFound from './components/notFound';
 import { AuthContext } from './utils/authContext';
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';
@@ -22,13 +23,14 @@ function App() {
           <>
             <Routes>
               <Route path='/' element={<Login/>}/>
-              <Route path='/*' element={<Navigate to={'/'}/>}/>
+              <Route path='*' element={<Navigate to={'/'}/>}/>
             </Routes>
           </>
         ):
           <>
             <Header/>
             <Routes>
+              <Route path='*' element={<NotFound/>}/>
               <Route path='/' element={<Index/>}/>
               <Route path='/users' element={<ViewUsers/>}/>
               <Route path='/producer/:id' element={<ViewProducer/>}/>
