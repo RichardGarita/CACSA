@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../sequelize'); // Importa la instancia de Sequelize
+const sequelize = require('../utils/sequelize'); // Importa la instancia de Sequelize
 var Producer = require('./producers');
 
     const Image = sequelize.define('Image', {

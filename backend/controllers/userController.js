@@ -1,5 +1,5 @@
 const { add } = require('@tensorflow/tfjs');
-var User = require('../modelos/users');
+var User = require('../models/users');
 const jwt = require('../utils/jwtHelper');
 
 async function loginUser(req, res) {

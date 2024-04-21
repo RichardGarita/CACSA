@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize');
-const config = require('./config/config.json');
+const config = require('../config/config.json');
 
 // Obtiene la configuración correspondiente al entorno de la aplicación (development, test, production, etc.)
 const env = process.env.NODE_ENV || 'development';

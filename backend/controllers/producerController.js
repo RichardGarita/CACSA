@@ -1,6 +1,6 @@
-var GCS = require('../servicios/gcs');
-var Producer = require('../modelos/producers');
-var Image = require('../modelos/images');
+var GCS = require('../services/gcs');
+var Producer = require('../models/producers');
+var Image = require('../models/images');
 const { v4: uuidv4 } = require('uuid');
 
 async function create(req, res) {
