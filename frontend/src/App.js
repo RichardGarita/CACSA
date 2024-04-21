@@ -9,13 +9,13 @@ import ViewUsers from './pages/users';
 import NotFound from './pages/notFound';
 import { AuthContext } from './utils/authContext';
 import 'bootstrap/dist/css/bootstrap.css'
-import './App.css';
+import './styles/App.css';
 
 function App() {
   const {loading, token} = useContext(AuthContext);
 
   if(loading)
-    return <h1>Cargando mi negro</h1>
+    return <h1>Cargando...</h1>
 
   return (
     <div className="App">

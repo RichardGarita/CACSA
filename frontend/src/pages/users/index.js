@@ -65,6 +65,7 @@ export default function ViewUsers () {
     return (
         <>
             <ToastContainer/>
+            <h2>Usuarios</h2>
             <div className="search-section">
                 <FilterUser elements={users} setElements={setFilteredUsers}/>     
                 <AddUser/>           

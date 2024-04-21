@@ -66,6 +66,7 @@ function Index () {
     return (
         <>
             <ToastContainer/>
+            <h2>Productores</h2>
             <div className="search-section">
                 <Filter elements={producers} setElements={setFilteredProducers}/>
                 <FontAwesomeIcon className="add-icon" onClick={() => navigate('/newProducer')} icon={faUserPlus}/>

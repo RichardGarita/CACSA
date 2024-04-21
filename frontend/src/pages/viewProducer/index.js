@@ -146,6 +146,7 @@ function ViewProducer () {
                         <p className='image-link' onClick={() => getImage('memos')}>Foto de los memos</p>
                     </>
                 )}
+                <p className='image-link' onClick={() => getImage('Other')}>Otros</p>
             </div>
             <div className='container'>
                 {actualImage && (
