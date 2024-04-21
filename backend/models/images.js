@@ -10,7 +10,7 @@ var Producer = require('./producers');
         autoIncrement: true,
       },
       producerId: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false
       },
       path: {

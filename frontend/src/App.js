@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import AddProducer from './components/addProducer/agregarProductor';
-import ViewProducer from './components/viewProducer/viewProducer';
+import AddProducer from './components/addProducer';
+import ViewProducer from './components/viewProducer';
 import Login from './components/login';
 import Index from './components/index';
 import Header from './components/header';

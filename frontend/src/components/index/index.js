@@ -75,7 +75,7 @@ function Index () {
                 <tbody>
                     {currentProducers.map((producer) => (
                         <tr key={producer.id} onClick={() => navigate(`/producer/${producer.id}`)}>
-                            <td>{producer.id}</td>
+                            <td>{producer.identification}</td>
                             <td>{producer.name}</td>
                             <td>{producer.date}</td>
                             <td>{producer.fair ? 'Sí' : 'No'}</td>

@@ -33,14 +33,14 @@ function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipa
                             {errors.date && <p className='error-text'>{errors.date.message}</p>}
                         </div>
                         <div className='form-group'>
-                            <label htmlFor="id">Número de cédula: </label>
-                            <input type="text" placeholder="X-XXXX-XXXX" className='form-control' id="id"
-                                {...register('id', {required: {value: true, message: 'Por favor escriba cédula'},
+                            <label htmlFor="identification">Número de cédula: </label>
+                            <input type="text" placeholder="X-XXXX-XXXX" className='form-control' id="identification"
+                                {...register('identification', {required: {value: true, message: 'Por favor escriba cédula'},
                                 pattern: {
                                     value: /^\d-\d{4}-\d{4}$/,
                                     message: "La cédula debe poseer 9 dígitos, incluya guiones y ceros"
                                 }})} />
-                            {errors.id && <p className='error-text'>{errors.id.message}</p>}
+                            {errors.identification && <p className='error-text'>{errors.identification.message}</p>}
                         </div>
                         <div className='form-group'>
                             <label htmlFor="idScreenShot" className='form-label'>Foto de la cédula: </label>

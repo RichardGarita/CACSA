@@ -6,21 +6,21 @@ const { v4: uuidv4 } = require('uuid');
 async function create(req, res) {
     try {
         // Procesar los datos del formulario
-        const { name, date, id, roles, fair, category, fairLocality } = req.body;
-        if (!name || !date || !id || !roles || !category || !fair || (!fair && !fairLocality) ) {
+        const { name, date, identification, roles, fair, category, fairLocality } = req.body;
+        if (!name || !date || !identification || !roles || !category || !fair || (!fair && !fairLocality) ) {
             res.status(400).json({ error: 'Todos los campos son necesarios' });
             return;
         }
         const images = req.files;
         const rolesArray = JSON.parse(roles);
 
-        const existed = await Producer.findOne({where: {id}})
+        const existed = await Producer.findOne({where: {identification}})
         if (existed) {
             res.status(402).json({ error: 'Ya existe el productor' });
             return;
         }
 
-        const producer = await Producer.create({name, date, id, fair, category, fairLocality});
+        const producer = await Producer.create({name, date, identification, fair, category, fairLocality});
         if (!producer){
             res.status(501).json({ error: 'Falló al crear el productor' });
             return;
@@ -31,7 +31,7 @@ async function create(req, res) {
             const image = images[i];
             if (image) {
                 // Generar un nombre único para la imagen en GCS
-                const imageName = `${id}/${uuidv4()}_${image.originalname}`;
+                const imageName = `${producer.id}/${uuidv4()}_${image.originalname}`;
 
                 const role = i < rolesArray.length ? rolesArray[i] : 'Other';
                 
@@ -39,7 +39,7 @@ async function create(req, res) {
                 await GCS.uploadFile(image.buffer, imageName);
 
                 // Save the images information on the database
-                await Image.create({producerId: id, path: imageName, role});
+                await Image.create({producerId: producer.id, path: imageName, role});
             }
         }
         // Responder al frontend con la URL de las imágenes o un mensaje de confirmación

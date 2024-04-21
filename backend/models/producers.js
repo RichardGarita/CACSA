@@ -5,6 +5,11 @@ const Producer = sequelize.define('Producer', {
   id: {
     allowNull: false,
     primaryKey: true,
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+  },
+  identification: {
+    allowNull: false,
     type: DataTypes.STRING,
   },
   name: {

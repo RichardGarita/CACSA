@@ -28,7 +28,7 @@ const AddProducer = () => {
         const formData = new FormData();
         formData.append('name', data.name);
         formData.append('date', data.date);
-        formData.append('id', data.id);
+        formData.append('identification', data.identification);
         formData.append('category', data.category);
         
         for (const role of roles) {

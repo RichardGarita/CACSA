@@ -13,7 +13,7 @@ module.exports = {
       },
       producerId: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         references: {
           model: 'Producers', // name of the target table
           key: 'id' // key in the target table

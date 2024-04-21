@@ -49,7 +49,9 @@ function ViewProducer () {
             if(error.response && error.response.status === 401) {
                 alert('Token Invalido');
                 localStorage.removeItem('token');
-                navigate('/')
+                navigate('/');
+            } else if(error.response && error.response.status === 404) {
+                navigate('/404');
             } else {
                 console.error(error);
                 alert('Algo salió mal. Intente de nuevo');
@@ -99,7 +101,7 @@ function ViewProducer () {
                 </div>
                 <div className='profile-data'>
                     <p>Cédula:</p>
-                    <p>{data.id}</p>
+                    <p>{data.identification}</p>
                 </div>
                 <div className='profile-data'>
                     <p>Expiración del carnet:</p>

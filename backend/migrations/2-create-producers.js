@@ -6,6 +6,13 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        collate: 'SQL_Latin1_General_CP1_CS_AS',
+        charset: 'utf8'
+      },
+      identification: {
+        allowNull: false,
         type: Sequelize.STRING,
         collate: 'SQL_Latin1_General_CP1_CS_AS',
         charset: 'utf8'
