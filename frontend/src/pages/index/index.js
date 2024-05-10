@@ -3,6 +3,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import {ToastContainer, toast} from 'react-toastify';
+import ClipLoader from "react-spinners/ClipLoader";
 import { AuthContext } from "../../utils/authContext";
 import { useNavigate } from "react-router-dom";
 import Filter from "./components/filter";
@@ -20,6 +21,8 @@ function Index () {
     const [currentProducers, setCurrentProducers] = useState([]);
     const [filteredProducers, setFilteredProducers] = useState([]);
 
+    const [loading, setLoading] = useState(true);
+
     const navigate = useNavigate();
 
     const producersPerPage = 5;
@@ -33,6 +36,7 @@ function Index () {
                 setProducers(response.data);
                 setFilteredProducers(response.data);
                 setTotalPages(Math.ceil(response.data.length / producersPerPage));
+                setLoading(false);
             }).catch((error) => {
                 console.log(error.response.status);
                 if (error.response && error.response.status === 401) {
@@ -71,26 +75,30 @@ function Index () {
                 <Filter elements={producers} setElements={setFilteredProducers}/>
                 <FontAwesomeIcon className="add-icon" onClick={() => navigate('/newProducer')} icon={faUserPlus}/>
             </div>
-            <table className="table table-striped table-hover w-75 mx-auto">
-                <thead>
-                    <tr>
-                        <th>Cédula</th>
-                        <th>Nombre</th>
-                        <th>Fecha de expiración del carnet</th>
-                        <th>Participa en ferias</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentProducers.map((producer) => (
-                        <tr key={producer.id} onClick={() => navigate(`/producer/${producer.id}`)}>
-                            <td>{producer.identification}</td>
-                            <td>{producer.name}</td>
-                            <td>{producer.date}</td>
-                            <td>{producer.fair ? 'Sí' : 'No'}</td>
+            {!loading ? (
+                <table className="table table-striped table-hover w-75 mx-auto">
+                    <thead>
+                        <tr>
+                            <th>Cédula</th>
+                            <th>Nombre</th>
+                            <th>Fecha de expiración del carnet</th>
+                            <th>Participa en ferias</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {currentProducers.map((producer) => (
+                            <tr key={producer.id} onClick={() => navigate(`/producer/${producer.id}`)}>
+                                <td>{producer.identification}</td>
+                                <td>{producer.name}</td>
+                                <td>{producer.date}</td>
+                                <td>{producer.fair ? 'Sí' : 'No'}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>) : 
+            (
+                <div><ClipLoader loading={loading} size={300} color="blue" /></div>
+            )}
             <nav>
                 <ul className="pagination justify-content-center">
                     <li key={'prev'} className="page-item">

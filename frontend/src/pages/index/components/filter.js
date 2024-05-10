@@ -13,7 +13,7 @@ function Filter ({elements, setElements}) {
         <>
             <select className="form-control d-inline" onChange={(event) => setSelectedOption(event.target.value)}>
                 <option value={'name'}>Nombre</option>
-                <option value={'id'}>Cédula</option>
+                <option value={'identification'}>Cédula</option>
             </select>
             <input type="text" onChange={(event) => handleFilter(event.target.value)}
                 className="form-control d-inline" placeholder="Buscar aquí..."/>

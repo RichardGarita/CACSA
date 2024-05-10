@@ -7,6 +7,7 @@ import AddUser from "./components/addUser";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../utils/authContext";
 import {ToastContainer, toast} from 'react-toastify';
+import ClipLoader from "react-spinners/ClipLoader";
 import BASE_URL from "../../utils/apiConfig";
 import '../../styles/Users.css'
 import "react-toastify/dist/ReactToastify.css";
@@ -19,6 +20,8 @@ export default function ViewUsers () {
     const [totalPages, setTotalPages] = useState(0);
     const [currentUsers, setCurrentUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
+
+    const [loading, setLoading] = useState(true);
 
     const usersPerPage = 5;
 
@@ -38,6 +41,7 @@ export default function ViewUsers () {
             setUsers(response.data);
             setFilteredUsers(response.data);
             setTotalPages(Math.ceil(response.data.length / usersPerPage));
+            setLoading(false);
         }).catch(error => {
             if (error.response && error.response.status === 401) {
                 toast.info('Sesión expirada', {
@@ -70,31 +74,35 @@ export default function ViewUsers () {
                 <FilterUser elements={users} setElements={setFilteredUsers}/>     
                 <AddUser/>           
             </div>
-            <table className="table table-striped table-hover w-75 mx-auto">
-                <thead>
-                    <tr>
-                        <td>Nombre</td>
-                        <td>Nombre de usuario</td>
-                        <td>Administrador</td>
-                        <td>Acciones</td>
-                    </tr>
-                </thead>
-                <tbody className="users-table">
-                    {currentUsers.map((user, index) => (
-                        <tr key={index}>
-                            <td>{user.name}</td>
-                            <td>{user.userName}</td>
-                            <td>{user.admin ? 'Sí': 'No'}</td>
-                            <td>
-                                <EditUser user={user}/>
-                                {!user.admin && (
-                                    <DeleteUser id={user.id}/>
-                                )}
-                            </td>
+            {!loading ? (
+                <table className="table table-striped table-hover w-75 mx-auto">
+                    <thead>
+                        <tr>
+                            <td>Nombre</td>
+                            <td>Nombre de usuario</td>
+                            <td>Administrador</td>
+                            <td>Acciones</td>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody className="users-table">
+                        {currentUsers.map((user, index) => (
+                            <tr key={index}>
+                                <td>{user.name}</td>
+                                <td>{user.userName}</td>
+                                <td>{user.admin ? 'Sí': 'No'}</td>
+                                <td>
+                                    <EditUser user={user}/>
+                                    {!user.admin && (
+                                        <DeleteUser id={user.id}/>
+                                    )}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>) :
+            (
+                <div><ClipLoader loading={loading} size={300} color="blue" /></div>
+            )}
             <nav>
                 <ul className="pagination justify-content-center">
                     <li key={'prev'} className="page-item">

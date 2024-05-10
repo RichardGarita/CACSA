@@ -27,6 +27,7 @@ function EditProfile ({props}) {
                 }}).then(() => {
                 toast.success('Productor actualizado', {
                     autoClose: 2000,
+                    onClose: () => window.location.reload()
                 });
             });
         } catch (error) {

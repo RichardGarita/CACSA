@@ -157,7 +157,7 @@ function ViewProducer () {
                         </div>
                         <div className='image-container'>
                             {actualComponent === 'Image' && (
-                                    <img className='img-fluid' src={images[actualImage]} alt='No se encontró imagen. Recargue la página por favor.'></img>
+                                    <img className='img-fluid' src={images[actualImage] ? images[actualImage] : '/noImage.png' } alt='No se encontró imagen para esta categoría. Recargue la página por favor.'></img>
                             )}
                             {actualComponent === 'AddImage' && (
                                 <AddFile id={id} role={actualImage}/>
