@@ -36,3 +36,13 @@
 tbody tr {
     cursor: pointer;
 }
+
+.delete-button {
+    background-color: red !important;
+    color: #FFF !important;
+}
+
+.delete-button:hover {
+    background-color: darkred !important;
+    color: #FFF !important;
+}

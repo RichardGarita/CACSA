@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../../utils/authContext";
 import { useNavigate } from "react-router-dom";
-import {ToastContainer, toast} from 'react-toastify';
+import { toast} from 'react-toastify';
 import axios from "axios";
 import Modal from "../../../utils/modal";
 import BASE_URL from "../../../utils/apiConfig";
@@ -48,9 +48,6 @@ export default function DeleteUser ({id}) {
 
     return (
         <>
-            <ToastContainer/>
-            <FontAwesomeIcon onClick={() => setShowModal(true)} className="delete-icon" icon={faTrash}/>
-
             <Modal
                 showModal={showModal}
                 setShowModal={setShowModal}
@@ -63,6 +60,7 @@ export default function DeleteUser ({id}) {
                     </>
                 }
             />
+            <FontAwesomeIcon onClick={() => setShowModal(true)} className="delete-icon" icon={faTrash}/>
         </>
     )
 }

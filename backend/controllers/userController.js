@@ -17,7 +17,7 @@ async function loginUser(req, res) {
           });
         if (user){
             const token = jwt.generateToken(user);
-            res.status(200).json({token: token, userId: user.id});
+            res.status(200).json({token: token});
         }
         else
             res.status(402).json({error: 'Usuario no encontrado'});

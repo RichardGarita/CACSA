@@ -2,6 +2,7 @@ var GCS = require('../services/gcs');
 var Producer = require('../models/producers');
 var Image = require('../models/images');
 const { v4: uuidv4 } = require('uuid');
+const User = require('../models/users');
 
 async function create(req, res) {
     try {
@@ -199,6 +200,34 @@ async function deleteImage(req, res) {
     }
 }
 
+async function deleteOne(req, res) {
+    try {
+        const id = req.params.id;
+        const admin = req.decoded.admin;
+
+        if (!id) {
+            res.status(400).json({error: "No se encontraron los campos necesarios"});
+            return;
+        }
+
+        if (!admin) {
+            res.status(401).json({error: "No está autorizado"});
+            return;
+        }
+
+        const producer = await Producer.findByPk(id);
+        if (producer) {
+            await producer.destroy();
+            res.status(200).json({ message: 'Productor eliminado correctamente' });
+        } else {
+            res.status(404).json({error: 'No se encontró el recurso'});
+        }
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 async function getOneImage(req, res){
     const path = req.query.path;
     try {
@@ -219,4 +248,5 @@ module.exports = {
     editOne,
     addImages,
     deleteImage,
+    deleteOne,
 }

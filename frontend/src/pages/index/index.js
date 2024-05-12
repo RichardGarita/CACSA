@@ -7,6 +7,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { AuthContext } from "../../utils/authContext";
 import { useNavigate } from "react-router-dom";
 import Filter from "./components/filter";
+import DeleteProducer from "./components/delete";
 import BASE_URL from "../../utils/apiConfig";
 import "react-toastify/dist/ReactToastify.css";
 import '../../styles/Index.css';
@@ -14,7 +15,7 @@ import '../../styles/Index.css';
 const URL_API = `${BASE_URL}producer`;
 
 function Index () {
-    const {token} = useContext(AuthContext);
+    const {token, admin} = useContext(AuthContext);
     const [producers, setProducers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
@@ -84,16 +85,28 @@ function Index () {
                             <th>Fecha de expiración del carnet</th>
                             <th>Categoría</th>
                             <th>Participa en ferias</th>
+                            {admin && <th>Acciones</th>}
                         </tr>
                     </thead>
                     <tbody>
                         {currentProducers.map((producer) => (
-                            <tr key={producer.id} onClick={() => navigate(`/producer/${producer.id}`)}>
-                                <td>{producer.identification}</td>
-                                <td>{producer.name}</td>
-                                <td>{producer.date}</td>
-                                <td>{producer.category}</td>
-                                <td>{producer.fair ? 'Sí' : 'No'}</td>
+                            <tr key={producer.id}>
+                                <td onClick={() => navigate(`/producer/${producer.id}`)}>
+                                    {producer.identification}
+                                </td>
+                                <td onClick={() => navigate(`/producer/${producer.id}`)}>
+                                    {producer.name}
+                                </td>
+                                <td onClick={() => navigate(`/producer/${producer.id}`)}>
+                                    {producer.date}
+                                </td>
+                                <td onClick={() => navigate(`/producer/${producer.id}`)}>
+                                    {producer.category}
+                                </td>
+                                <td onClick={() => navigate(`/producer/${producer.id}`)}>
+                                    {producer.fair ? 'Sí' : 'No'}
+                                </td>
+                                {admin && <td><DeleteProducer id={producer.id}/></td>}
                             </tr>
                         ))}
                     </tbody>

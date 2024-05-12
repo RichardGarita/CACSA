@@ -106,6 +106,7 @@ router.get('/images/all/:id', jwtHelper.verifyToken, producerController.getProdu
 */
 router.put('/:id', jwtHelper.verifyToken, producerController.editOne);
 
+router.delete('/:id', jwtHelper.verifyToken, producerController.deleteOne);
 /**
 * @swagger
 * /api/productor/images/{id}:

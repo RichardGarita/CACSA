@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [id, setId] = useState('');
+  const [admin, setAdmin] = useState(false);
   const [loading, setLoading] = useState(true); 
 
   const signIn = () => {
@@ -13,9 +14,10 @@ export const AuthProvider = ({ children }) => {
     if (storedToken) {
       try {
         const decodedToken = jwtDecode(storedToken);
-        const { id } = decodedToken;
+        const { id, admin } = decodedToken;
         setToken(storedToken);
         setId(id);
+        setAdmin(admin);
       } catch (error) {
         console.error("Error al decodificar el token:", error);
       }
@@ -28,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ token, setToken, loading, id, signIn }}>
+    <AuthContext.Provider value={{ token, setToken, loading, id, admin, signIn }}>
       {children}
     </AuthContext.Provider>
   );
