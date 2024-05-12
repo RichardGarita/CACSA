@@ -70,8 +70,9 @@ function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipa
                             <label htmlFor="category">Categoría </label>
                             <select type="select" id='category' className='form-control'
                                 {...register('category', {required: {value: true, message: 'Por favor seleccione una opción'}})}>
-                                <option value={"agriculture"}>Agricultura</option>
-                                <option value={"smallIndustry"}>Pequeña Industria</option>
+                                <option value={"Agricultura"}>Agricultura</option>
+                                <option value={"Pequeña Industria"}>Pequeña Industria</option>
+                                <option value={"AgroIndustria"}>AgroIndustria</option>
                             </select>
                             {errors.category && <p className='error-text'>{errors.category.message}</p>}
                         </div>
@@ -84,20 +85,17 @@ function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipa
                         <div className='form-group'>
                             <label htmlFor="propertyTitle">Foto del título de propiedad, contrato de arrendamiento o plano: </label>
                             <input type="file" id="propertyTitle" className='form-control'
-                                {...register('propertyTitle', {required: {value: true, message: 'Por favor seleccione un archivo'}})} />
-                            {errors.propertyTitle && <p className='error-text'>{errors.propertyTitle.message}</p>}
+                                {...register('propertyTitle')} />
                         </div>
                         <div className='form-group'>
                             <label htmlFor="products">Foto de los productos: </label>
                             <input type="file" id="products" className='form-control'
-                                {...register('products', {required: {value: true, message: 'Por favor seleccione un archivo'}})} />
-                            {errors.products && <p className='error-text'>{errors.products.message}</p>}
+                                {...register('products')} />
                         </div>
                         <div className='form-group'>
                             <label htmlFor="inspection">Foto de la inspección: </label>
                             <input type="file" id="inspection" className='form-control'
-                                {...register('inspection', {required: {value: true, message: 'Por favor seleccione un archivo'}})} />
-                            {errors.inspection && <p className='error-text'>{errors.inspection.message}</p>}
+                                {...register('inspection')} />
                         </div>
                     </section>
                 )}
@@ -128,14 +126,12 @@ function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipa
                         <div className='form-group'>
                             <label htmlFor="permits">Foto de los permisos: </label>
                             <input type="file" id="permits" className='form-control'
-                                {...register('permits', {required: {value: true, message: 'Por favor seleccione un archivo'}})} />
-                            {errors.permits && <p className='error-text'>{errors.permits.message}</p>}
+                                {...register('permits')} />
                         </div>
                         <div className='form-group'>
                             <label htmlFor="memos">Foto de los memos: </label>
                             <input type="file" id="memos" className='form-control'
-                                {...register('memos', {required: {value: true, message: 'Por favor seleccione un archivo'}})} />
-                            {errors.memos && <p className='error-text'>{errors.memos.message}</p>}
+                                {...register('memos')} />
                         </div>
                         </div>
                     }

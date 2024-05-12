@@ -70,7 +70,7 @@ function Index () {
     return (
         <>
             <ToastContainer/>
-            <h2>Productores</h2>
+            <h2>Emisión de Carnet</h2>
             <div className="search-section">
                 <Filter elements={producers} setElements={setFilteredProducers}/>
                 <FontAwesomeIcon className="add-icon" onClick={() => navigate('/newProducer')} icon={faUserPlus}/>
@@ -82,6 +82,7 @@ function Index () {
                             <th>Cédula</th>
                             <th>Nombre</th>
                             <th>Fecha de expiración del carnet</th>
+                            <th>Categoría</th>
                             <th>Participa en ferias</th>
                         </tr>
                     </thead>
@@ -91,6 +92,7 @@ function Index () {
                                 <td>{producer.identification}</td>
                                 <td>{producer.name}</td>
                                 <td>{producer.date}</td>
+                                <td>{producer.category}</td>
                                 <td>{producer.fair ? 'Sí' : 'No'}</td>
                             </tr>
                         ))}

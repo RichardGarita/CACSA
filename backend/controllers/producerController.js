@@ -121,12 +121,16 @@ async function getProducerRoleImages (req, res){
 async function editOne(req, res){
     try {
         const id = req.params.id;
-        const {name, date, fair} = req.body;
-        if (!id || !name || !date || !fair){
+        const {name, date, category, fair, fairLocality} = req.body;
+        if (!id || !name || !date || !category || !(fair === true ? fairLocality : true)){
             res.status(400).json({ error: 'No se encontraron los campos' });
             return;
         }
-        await Producer.update({name, date, fair}, {where: {id: id}});
+        const updateValues = {name, date, category, fair};
+        if (fair) {
+            updateValues.fairLocality = fairLocality;
+        }
+        await Producer.update(updateValues, {where: {id: id}});
         res.status(200).json({message: 'Productor actualizado'});
     } catch (error) {
         res.status(500).json({ error: error.message });

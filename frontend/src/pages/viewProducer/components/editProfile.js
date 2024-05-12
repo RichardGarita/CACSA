@@ -1,4 +1,5 @@
-import React, {useState, useContext} from "react";
+import React, {useState, useContext, useEffect} from "react";
+import Select from 'react-select';
 import axios from "axios";
 import {useForm} from 'react-hook-form';
 import {AuthContext} from '../../../utils/authContext';
@@ -11,14 +12,35 @@ const URL_API = `${BASE_URL}producer`;
 function EditProfile ({props}) {
     const {name, date, fair, id, category, fairLocality} = props;
     const [fairParticipationChecked, setFairParticipationChecked] = useState(fair);
-    const {register, handleSubmit, formState: { errors },  } = useForm({mode: "all"});
+    const [actualFairLocality, setActualFairLocality] = useState([]);
+    const {register, handleSubmit, formState: { errors, isValid },  } = useForm({mode: "all"});
     const {token} = useContext(AuthContext);
+
+    const localities = fairLocality.map(locality => ({
+        value: locality,
+        label: locality
+    }));
+
+    useEffect(() => {
+        setActualFairLocality(localities);
+    }, [])
+
+    const selectOptions = [
+        {value: 'Santa Ana', label: 'Santa Ana'},
+        {value: 'Hatillo', label: 'Hatillo'},
+        {value: 'Zarcero', label: 'Zarcero'},
+    ]
 
     const onSubmit = async (data) => {
         const formData = new FormData();
         formData.append('name', data.name);
         formData.append('date', data.date);
+        formData.append('category', data.category);
         formData.append('fair', fairParticipationChecked);
+        if (fairParticipationChecked){
+            const fairLocalityValues = actualFairLocality.map(option => option.value);
+            formData.append('fairLocality', fairLocalityValues.join(' - '));
+        }
         try{
             axios.put(`${URL_API}/${id}`, formData, {
                 headers: {
@@ -54,11 +76,11 @@ function EditProfile ({props}) {
                 <div className='form-group'>
                     <label htmlFor="category">Categoría </label>
                     <select type="select" id='category' className='form-control'
-                        defaultValue={category === "agriculture" ? "agriculture" : category === "smallIndustry" ?
-                        "smallIndustry" : "Nulo"}
+                        defaultValue={category ? category : ""}
                         {...register('category', {required: {value: true, message: 'Por favor seleccione una opción'}})}>
-                        <option value={"agriculture"}>Agricultura</option>
-                        <option value={"smallIndustry"}>Pequeña Industria</option>
+                        <option value={"Agricultura"}>Agricultura</option>
+                        <option value={"Pequeña Industria"}>Pequeña Industria</option>
+                        <option value={"AgroIndustria"}>AgroIndustria</option>
                     </select>
                     {errors.category && <p className='error-text'>{errors.category.message}</p>}
                 </div>
@@ -69,23 +91,19 @@ function EditProfile ({props}) {
                         className='form-check-input'
                         type="checkbox"
                         checked={fairParticipationChecked}
-                        onClick={(e) => {setFairParticipationChecked(e.target.checked);}}
+                        onClick={(e) => {setFairParticipationChecked(!fairParticipationChecked);}}
                         {...register('fairParticipation')}
                     />
                 </div>
                 {fairParticipationChecked &&
                     <div className='form-group'>
                         <label htmlFor="fairLocality">Localidad de la feria </label>
-                        <select required defaultValue={fairLocality === "Hatillo" ?
-                            "Hatillo" : fairLocality === "Santa Ana" ?
-                            "Santa Ana" : "Nulo"} type="select" id='fairLocality' 
-                            className='form-control' {...register('fairLocality')}>
-                            <option value={"Santa Ana"}>Santa Ana </option>
-                            <option value={"Hatillo"}>Hatillo</option>
-                        </select>
+                        <Select options={selectOptions} closeMenuOnSelect={false} 
+                            isMulti defaultValue={localities}
+                            onChange={(selected) => setActualFairLocality(selected)}/>
                     </div>
                 }
-                <button type="submit" className='btn'>Enviar</button>
+                <button disabled={!isValid || !(actualFairLocality.length > 0)} type="submit" className='btn'>Enviar</button>
             </form>
         </>
     )
