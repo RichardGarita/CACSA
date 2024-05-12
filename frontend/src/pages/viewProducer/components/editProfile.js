@@ -4,6 +4,7 @@ import axios from "axios";
 import {useForm} from 'react-hook-form';
 import {AuthContext} from '../../../utils/authContext';
 import {ToastContainer, toast} from 'react-toastify';
+import { options } from "../../../utils/localities";
 import BASE_URL from "../../../utils/apiConfig";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -25,12 +26,6 @@ function EditProfile ({props}) {
         setActualFairLocality(localities);
     }, [])
 
-    const selectOptions = [
-        {value: 'Santa Ana', label: 'Santa Ana'},
-        {value: 'Hatillo', label: 'Hatillo'},
-        {value: 'Zarcero', label: 'Zarcero'},
-    ]
-
     const onSubmit = async (data) => {
         const formData = new FormData();
         formData.append('name', data.name);
@@ -39,7 +34,7 @@ function EditProfile ({props}) {
         formData.append('fair', fairParticipationChecked);
         if (fairParticipationChecked){
             const fairLocalityValues = actualFairLocality.map(option => option.value);
-            formData.append('fairLocality', fairLocalityValues.join(' - '));
+            formData.append('fairLocality', fairLocalityValues.join(', '));
         }
         try{
             axios.put(`${URL_API}/${id}`, formData, {
@@ -98,12 +93,12 @@ function EditProfile ({props}) {
                 {fairParticipationChecked &&
                     <div className='form-group'>
                         <label htmlFor="fairLocality">Localidad de la feria </label>
-                        <Select options={selectOptions} closeMenuOnSelect={false} 
+                        <Select options={options} closeMenuOnSelect={false} 
                             isMulti defaultValue={localities}
                             onChange={(selected) => setActualFairLocality(selected)}/>
                     </div>
                 }
-                <button disabled={!isValid || !(actualFairLocality.length > 0)} type="submit" className='btn'>Enviar</button>
+                <button disabled={!isValid || !(fairParticipationChecked ? (actualFairLocality.length > 0) : true)} type="submit" className='btn'>Enviar</button>
             </form>
         </>
     )

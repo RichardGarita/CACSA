@@ -19,6 +19,7 @@ const AddProducer = () => {
     const [formStep, setFormStep] = useState(0);
     const [fairParticipationChecked, setFairParticipationChecked] = useState(false);
     const [droppedFiles, setDroppedFiles] = useState([]);
+    const [actualFairLocality, setActualFairLocality] = useState([]);
 
     const {token} = useContext(AuthContext);
     const navigate = useNavigate();
@@ -43,7 +44,8 @@ const AddProducer = () => {
           roles.push('permits', 'memos');
           formData.append('images', data.permits[0]);
           formData.append('images', data.memos[0]);
-          formData.append('fairLocality', data.fairLocality);
+          const fairLocalityValues = actualFairLocality.map(option => option.value);
+            formData.append('fairLocality', fairLocalityValues.join(', '));
         }
 
         formData.append('fair', fairParticipationChecked);
@@ -113,6 +115,8 @@ const AddProducer = () => {
                 droppedFiles={droppedFiles}
                 MAX_STEPS={MAX_STEPS}
                 isValid={isValid}
+                actualFairLocality={actualFairLocality}
+                setActualFairLocality={setActualFairLocality}
             />
         </div>
     );

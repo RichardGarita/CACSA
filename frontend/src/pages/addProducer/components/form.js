@@ -1,12 +1,14 @@
 import React, {useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import Select from 'react-select';
 import DropZone from "../../../utils/dropZone";
 import ButtonsSection from "./buttonsSection";
 import Modal from "../../../utils/modal";
+import { options } from "../../../utils/localities";
 
 function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipationChecked, 
-            setFairParticipationChecked, setDroppedFiles, droppedFiles, MAX_STEPS, isValid }) {
+            setFairParticipationChecked, setDroppedFiles, droppedFiles, MAX_STEPS, isValid, actualFairLocality, setActualFairLocality }) {
     
     const removeFile = (index) => {
         setDroppedFiles(files => files.filter((_, fileIndex) => fileIndex !== index));
@@ -118,10 +120,8 @@ function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipa
                         <div>
                         <div className='form-group'>
                             <label htmlFor="fairLocality">Localidad de la feria </label>
-                            <select required type="select" id='fairLocality' className='form-control' {...register('fairLocality')}>
-                                <option value={"Santa Ana"}>Santa Ana </option>
-                                <option value={"Hatillo"}>Hatillo</option>
-                            </select>
+                            <Select options={options} closeMenuOnSelect={false} id="fairLocality"
+                                isMulti onChange={(selected) => setActualFairLocality(selected)}/>
                         </div>
                         <div className='form-group'>
                             <label htmlFor="permits">Foto de los permisos: </label>
@@ -151,6 +151,9 @@ function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipa
                     setFormStep={setFormStep} 
                     setDroppedFiles={setDroppedFiles} 
                     isValid={isValid}
+                    fairParticipationChecked={fairParticipationChecked}
+                    actualFairLocality={actualFairLocality}
+                    setActualFairLocality={setActualFairLocality}
                 />
 
                 {formStep === 3 && droppedFiles.length >0 && (

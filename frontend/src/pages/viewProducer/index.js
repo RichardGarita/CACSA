@@ -46,7 +46,7 @@ function ViewProducer () {
         }).then((response) => {
             setData(response.data);
             setEditProps({name: response.data.name, date: response.data.date, 
-                id, fair: response.data.fair, category: response.data.category, fairLocality: response.data.fairLocality.split(' - ')});
+                id, fair: response.data.fair, category: response.data.category, fairLocality: response.data.fairLocality.split(', ')});
         }).catch((error) => {
             if(error.response && error.response.status === 401) {
                 toast.info('Sesión Expirada', {

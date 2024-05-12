@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function ButtonsSection ({MAX_STEPS, formStep, setFormStep, setDroppedFiles, isValid}) {
+function ButtonsSection ({MAX_STEPS, formStep, setFormStep, setDroppedFiles, isValid, 
+                            actualFairLocality, fairParticipationChecked, setActualFairLocality}) {
 
     const completeFormStep = () => {
         setFormStep(cur => cur + 1);
@@ -9,6 +10,7 @@ function ButtonsSection ({MAX_STEPS, formStep, setFormStep, setDroppedFiles, isV
 
     const returnFormStep = () => {
         setDroppedFiles([]);
+        setActualFairLocality([]);
         setFormStep(cur => cur - 1);
     }
 
@@ -31,7 +33,7 @@ function ButtonsSection ({MAX_STEPS, formStep, setFormStep, setDroppedFiles, isV
             )
         } else {
             return (
-                <button disabled={!isValid} type="button" className='btn continue' onClick={completeFormStep}>Continuar</button>
+                <button disabled={!isValid || !(fairParticipationChecked ? (actualFairLocality.length > 0) : true)} type="button" className='btn continue' onClick={completeFormStep}>Continuar</button>
             )
         }
     }
@@ -41,7 +43,7 @@ function ButtonsSection ({MAX_STEPS, formStep, setFormStep, setDroppedFiles, isV
             {renderPrevButton()}
             {renderNextButton()}
             {(formStep === MAX_STEPS - 1) && (
-                <button disabled={!isValid} type="submit" className='btn continue'>Finalizar</button>
+                <button disabled={!isValid || !(fairParticipationChecked ? (actualFairLocality.length > 0) : true)} type="submit" className='btn continue'>Finalizar</button>
             )}
         </div>
     )
