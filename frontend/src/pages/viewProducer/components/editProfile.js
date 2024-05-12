@@ -93,7 +93,7 @@ function EditProfile ({props}) {
                 {fairParticipationChecked &&
                     <div className='form-group'>
                         <label htmlFor="fairLocality">Localidad de la feria </label>
-                        <Select options={options} closeMenuOnSelect={false} 
+                        <Select options={options} closeMenuOnSelect={false} id="fairLocality"
                             isMulti defaultValue={localities}
                             onChange={(selected) => setActualFairLocality(selected)}/>
                     </div>
