@@ -35,6 +35,8 @@ function EditProfile ({props}) {
         if (fairParticipationChecked){
             const fairLocalityValues = actualFairLocality.map(option => option.value);
             formData.append('fairLocality', fairLocalityValues.join(', '));
+        } else {
+            formData.append('fairLocality', 'No participa');
         }
         try{
             axios.put(`${URL_API}/${id}`, formData, {

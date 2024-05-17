@@ -46,6 +46,8 @@ const AddProducer = () => {
           formData.append('images', data.memos[0]);
           const fairLocalityValues = actualFairLocality.map(option => option.value);
             formData.append('fairLocality', fairLocalityValues.join(', '));
+        } else {
+          formData.append('fairLocality', 'No participa');
         }
 
         formData.append('fair', fairParticipationChecked);
