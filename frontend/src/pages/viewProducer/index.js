@@ -8,13 +8,14 @@ import EditProfile from './components/editProfile';
 import AddFile from './components/addFile';
 import EditImages from './components/editImages';
 import { AuthContext } from '../../utils/authContext';
+import { convertToLocaleDateTime } from '../../utils/dateConverter';
 import Modal from '../../utils/modal';
 import BASE_URL from '../../utils/apiConfig';
 import "react-toastify/dist/ReactToastify.css";
 import '../../styles/ViewProducer.css';
 
 const URL_API = `${BASE_URL}producer`;
-const URL_IMAGES = `${BASE_URL}producer/images/latest`;
+const URL_IMAGES = `${URL_API}/images/latest`;
 
 function ViewProducer () {
 
@@ -28,6 +29,7 @@ function ViewProducer () {
     const [actualComponent, setActualComponent] = useState('Image');
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState(<></>);
+    const [lastLog, setLastLog] = useState("");
 
     const {token} = useContext(AuthContext);
 
@@ -68,6 +70,23 @@ function ViewProducer () {
         })
     }, [id, navigate, token]);
 
+    useEffect(() => {
+        axios.get(`${URL_API}/${data.identification}/log`, {
+            headers: {
+                'access-token': token
+            }
+        }).then((response) => {
+            setLastLog(convertToLocaleDateTime(response.data.log.updatedAt));
+        }).catch((error) => {
+            console.error(error);
+            toast.error(
+                'Algo salió mal. Por favor, intente de nuevo', {
+                    autoClose: 1000
+                }
+            )
+        })
+    }, [data, token])
+
     const getImage = async (role) => {
         if (!images[role]) {
             await axios.get(`${URL_IMAGES}/${id}?role=${role}`, {
@@ -96,6 +115,7 @@ function ViewProducer () {
                 titulo={"Actualizar Productor"}
             />
             <div className='left-menu'>
+                <small className='last-log'><em>Última edición: {lastLog}</em></small>
                 <div className='edit-profile'>
                     <h4>Productor</h4>
                     <FontAwesomeIcon className='edit-icon' icon={faUserPen}

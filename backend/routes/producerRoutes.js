@@ -50,6 +50,8 @@ router.get('/', jwtHelper.verifyToken, producerController.getAll);
 router.get('/:id', jwtHelper.verifyToken, producerController.getOne);
 router.get('/images/latest/:id', jwtHelper.verifyToken, producerController.getOneProducerImage);
 
+router.get('/:id/log', jwtHelper.verifyToken, producerController.getLastLog);
+
 /**
 * @swagger
 * /api/productor/images/all/{id}:

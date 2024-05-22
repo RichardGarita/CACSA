@@ -1,19 +1,28 @@
 var GCS = require('../services/gcs');
 var Producer = require('../models/producers');
+var ProducerService = require('../services/producers');
 var Image = require('../models/images');
+var Log = require('../models/logs');
+var User = require('../models/users');
 const { v4: uuidv4 } = require('uuid');
-const User = require('../models/users');
 
 async function create(req, res) {
     try {
         // Procesar los datos del formulario
         const { name, date, identification, roles, fair, category, fairLocality } = req.body;
-        if (!name || !date || !identification || !roles || !category || !fair || (!fair && !fairLocality) ) {
+        const userId = req.decoded.id;
+        if (!userId || !name || !date || !identification || !roles || !category || !fair || (!fair && !fairLocality) ) {
             res.status(400).json({ error: 'Todos los campos son necesarios' });
             return;
         }
         const images = req.files;
         const rolesArray = JSON.parse(roles);
+
+        const user = await User.findByPk(userId);
+        if (!user) {
+            res.status(401).json({ error: 'No se encontró el usuario' });
+            return;
+        }
 
         const existed = await Producer.findOne({where: {identification}})
         if (existed) {
@@ -43,6 +52,13 @@ async function create(req, res) {
                 await Image.create({producerId: producer.id, path: imageName, role});
             }
         }
+
+        await Log.create({
+            editorName: user.userName, 
+            producerIdentification: producer.identification,
+            producerName: producer.name,
+            process: 'Creación del productor'
+        })
         // Responder al frontend con la URL de las imágenes o un mensaje de confirmación
         res.status(200).json({ message: 'Imágenes subidas correctamente' });
     } catch (error) {
@@ -114,6 +130,27 @@ async function getProducerRoleImages (req, res){
             }
         }
         res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+async function getLastLog(req, res){
+    try {
+        const id = req.params.id;
+        if (!id) {
+            res.status(400).json({ error: 'Todos los campos son necesarios' });
+            return;
+        }
+
+        const log = await ProducerService.getLastLog(id);
+
+        if(log) { 
+            res.status(200).json({log});
+        } else {
+            res.status(204).json({error: 'No hay bitácoras para el productor'});
+        }
+
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -218,6 +255,7 @@ async function deleteOne(req, res) {
         const producer = await Producer.findByPk(id);
         if (producer) {
             await producer.destroy();
+            await GCS.deleteFolder(`${id}/`);
             res.status(200).json({ message: 'Productor eliminado correctamente' });
         } else {
             res.status(404).json({error: 'No se encontró el recurso'});
@@ -226,17 +264,6 @@ async function deleteOne(req, res) {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
-
-async function getOneImage(req, res){
-    const path = req.query.path;
-    try {
-        const url = await GCS.getFile(path);
-        res.status(200).json({url})
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-
 }
 
 module.exports = {
@@ -249,4 +276,5 @@ module.exports = {
     addImages,
     deleteImage,
     deleteOne,
+    getLastLog,
 }
