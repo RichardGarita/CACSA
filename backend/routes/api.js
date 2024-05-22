@@ -11,4 +11,7 @@ router.use('/user', userRoutes);
 const producerRoutes = require('./producerRoutes');
 router.use('/producer', producerRoutes);
 
+const logsRoutes = require('./logs');
+router.use('/log', logsRoutes);
+
 module.exports = router;

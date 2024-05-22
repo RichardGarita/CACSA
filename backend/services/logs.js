@@ -26,6 +26,16 @@ async function createLog(userId, producerId, process) {
     }
 }
 
+async function getAll () {
+    try {
+        const logs = await Log.findAll();
+        return logs;
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     createLog,
+    getAll
 }

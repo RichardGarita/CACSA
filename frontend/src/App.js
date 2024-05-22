@@ -6,6 +6,7 @@ import ViewProducer from './pages/viewProducer';
 import Login from './pages/login';
 import Index from './pages/index';
 import ViewUsers from './pages/users';
+import ViewLogs from './pages/logs';
 import NotFound from './pages/notFound';
 import { AuthContext } from './utils/authContext';
 import 'bootstrap/dist/css/bootstrap.css'
@@ -33,6 +34,7 @@ function App() {
               <Route path='*' element={<NotFound/>}/>
               <Route path='/' element={<Index/>}/>
               <Route path='/users' element={<ViewUsers/>}/>
+              <Route path='/logs' element={<ViewLogs/>}/>
               <Route path='/producer/:id' element={<ViewProducer/>}/>
               <Route path='/newProducer' element={<AddProducer/>}/>
             </Routes>

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {ToastContainer, toast} from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faArrowRightFromBracket, faUserPen } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faArrowRightFromBracket, faUserPen, faBook } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { AuthContext } from '../../utils/authContext';
 import Modal from '../../utils/modal';
@@ -66,16 +66,22 @@ function Header () {
                             <p className='d-inline'><strong>Nombre de usuario: </strong></p>
                             <p className='d-inline'>{data.userName}</p>
                         </section>
+                        {data.admin === true && (
+                            <>
+                                <section className='link'>
+                                    <FontAwesomeIcon className='me-2' icon={faUserPen} />
+                                    <a href={'/users'}>Ver usuarios</a>
+                                </section>
+                                <section className='link'>
+                                    <FontAwesomeIcon className='me-2' icon={faBook} />
+                                    <a href={'/logs'}>Ver bitácoras</a>
+                                </section>
+                            </>
+                        )}
                         <section className='link'>
                             <FontAwesomeIcon className='me-2' icon={faArrowRightFromBracket} />
                             <p onClick={() => signOut()}>Cerrar Sesión</p>
                         </section>
-                        {data.admin === true && (
-                            <section className='link'>
-                                <FontAwesomeIcon className='me-2' icon={faUserPen} />
-                                <a href={'/users'}>Ver usuarios</a>
-                            </section>
-                        )}
                     </>
                 }
             />
