@@ -71,20 +71,22 @@ function ViewProducer () {
     }, [id, navigate, token]);
 
     useEffect(() => {
-        axios.get(`${URL_API}/${data.identification}/log`, {
-            headers: {
-                'access-token': token
-            }
-        }).then((response) => {
-            setLastLog(convertToLocaleDateTime(response.data.log.updatedAt));
-        }).catch((error) => {
-            console.error(error);
-            toast.error(
-                'Algo salió mal. Por favor, intente de nuevo', {
-                    autoClose: 1000
+        if (data.identification) {
+            axios.get(`${URL_API}/${data.identification}/log`, {
+                headers: {
+                    'access-token': token
                 }
-            )
-        })
+            }).then((response) => {
+                setLastLog(convertToLocaleDateTime(response.data.log.updatedAt));
+            }).catch((error) => {
+                console.error(error);
+                toast.error(
+                    'Algo salió mal. Por favor, intente de nuevo', {
+                        autoClose: 1000
+                    }
+                )
+            })
+        }
     }, [data, token])
 
     const getImage = async (role) => {

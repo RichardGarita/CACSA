@@ -2,7 +2,7 @@ var GCS = require('../services/gcs');
 var Producer = require('../models/producers');
 var ProducerService = require('../services/producers');
 var Image = require('../models/images');
-var Log = require('../models/logs');
+var Log = require('../services/logs');
 var User = require('../models/users');
 const { v4: uuidv4 } = require('uuid');
 
@@ -17,12 +17,6 @@ async function create(req, res) {
         }
         const images = req.files;
         const rolesArray = JSON.parse(roles);
-
-        const user = await User.findByPk(userId);
-        if (!user) {
-            res.status(401).json({ error: 'No se encontró el usuario' });
-            return;
-        }
 
         const existed = await Producer.findOne({where: {identification}})
         if (existed) {
@@ -53,12 +47,7 @@ async function create(req, res) {
             }
         }
 
-        await Log.create({
-            editorName: user.userName, 
-            producerIdentification: producer.identification,
-            producerName: producer.name,
-            process: 'Creación del productor'
-        })
+        await Log.createLog(userId, producer.id, 'Creación del productor');
         // Responder al frontend con la URL de las imágenes o un mensaje de confirmación
         res.status(200).json({ message: 'Imágenes subidas correctamente' });
     } catch (error) {
@@ -160,15 +149,19 @@ async function editOne(req, res){
     try {
         const id = req.params.id;
         const {name, date, category, fair, fairLocality} = req.body;
-        if (!id || !name || !date || !category || !(fair === true ? fairLocality : true)){
+        const userId = req.decoded.id;
+        if (!userId || !id || !name || !date || !category || !(fair === true ? fairLocality : true)){
             res.status(400).json({ error: 'No se encontraron los campos' });
             return;
         }
+
         const updateValues = {name, date, category, fair};
         if (fair) {
             updateValues.fairLocality = fairLocality;
         }
         await Producer.update(updateValues, {where: {id: id}});
+
+        await Log.createLog(userId, id, 'Edición del perfil');
         res.status(200).json({message: 'Productor actualizado'});
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -180,7 +173,8 @@ async function addImages(req, res){
     try {
         const {id, role} = req.body;
         const images = req.files;
-        if (!id || !role || !images) {
+        const userId = req.decoded.id;
+        if (!userId || !id || !role || !images) {
             res.status(400).json({error: "No se encontraron los campos necesarios"});
             return;
         }
@@ -205,6 +199,7 @@ async function addImages(req, res){
             }
         }
         // Responder al frontend con la URL de las imágenes o un mensaje de confirmación
+        await Log.createLog(userId, id, 'Se agregaron imágenes');
         res.status(200).json({ message: 'Imágenes subidas correctamente' });
 
     } catch (error) {
@@ -215,12 +210,14 @@ async function addImages(req, res){
 async function deleteImage(req, res) {
     try {
         const id = req.params.id;
-        if (!id) {
+        const userId = req.decoded.id;
+        if (!userId || !id) {
             res.status(400).json({error: "No se encontraron los campos necesarios"});
             return;
         }
 
         const image = await Image.findByPk(id);
+        const producerId = image.producerId;
         if (!image) {
             res.status(402).json({error: 'No se encontró el recurso'});
             return;
@@ -230,6 +227,7 @@ async function deleteImage(req, res) {
 
         await image.destroy();
 
+        await Log.createLog(userId, producerId, 'Se eliminaron imágenes');
         res.status(200).json({ message: 'Imágen eliminada correctamente' });
 
     } catch (error) {
@@ -241,13 +239,14 @@ async function deleteOne(req, res) {
     try {
         const id = req.params.id;
         const admin = req.decoded.admin;
+        const userId = req.decoded.id;
 
         if (!id) {
             res.status(400).json({error: "No se encontraron los campos necesarios"});
             return;
         }
 
-        if (!admin) {
+        if (!admin || !userId) {
             res.status(401).json({error: "No está autorizado"});
             return;
         }
@@ -256,6 +255,7 @@ async function deleteOne(req, res) {
         if (producer) {
             await producer.destroy();
             await GCS.deleteFolder(`${id}/`);
+            await Log.createLog(userId, id, 'Eliminación de productor');
             res.status(200).json({ message: 'Productor eliminado correctamente' });
         } else {
             res.status(404).json({error: 'No se encontró el recurso'});
