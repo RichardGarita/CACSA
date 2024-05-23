@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faArrowRightFromBracket, faUserPen, faBook } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
@@ -44,7 +44,6 @@ function Header () {
 
     return (
         <nav className='header'>
-            <ToastContainer/>
             <Link to={'/'} className='logo'>
                 <img src='/cacsa-logo.png' alt='Logo de CACSA. Volver al Inicio'></img>
             </Link>

@@ -3,7 +3,7 @@ import Select from 'react-select';
 import axios from "axios";
 import {useForm} from 'react-hook-form';
 import {AuthContext} from '../../../utils/authContext';
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import { options } from "../../../utils/localities";
 import BASE_URL from "../../../utils/apiConfig";
 import "react-toastify/dist/ReactToastify.css";
@@ -56,7 +56,6 @@ function EditProfile ({props}) {
 
     return (
         <>
-            <ToastContainer/>
             <form className="edit-form" onSubmit={handleSubmit(onSubmit)}>
                 <div className='form-group'>
                     <label htmlFor="name">Nombre de la persona: </label>

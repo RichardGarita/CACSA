@@ -4,7 +4,7 @@ import FilterLog from "./components/filter";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../utils/authContext";
 import { convertToLocaleDateTime } from "../../utils/dateConverter";
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import ClipLoader from "react-spinners/ClipLoader";
 import BASE_URL from "../../utils/apiConfig";
 import "react-toastify/dist/ReactToastify.css";
@@ -65,7 +65,6 @@ export default function ViewLogs () {
 
     return (
         <>
-            <ToastContainer/>
             <h2>Bitácora</h2>
             <div className="search-section">
                 <FilterLog elements={logs} setElements={setFilteredLogs}/>               

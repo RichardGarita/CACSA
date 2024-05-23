@@ -15,43 +15,26 @@ async function create(req, res) {
             res.status(400).json({ error: 'Todos los campos son necesarios' });
             return;
         }
+        const data = { name, date, identification, roles, fair, category, fairLocality };
         const images = req.files;
-        const rolesArray = JSON.parse(roles);
-
-        const existed = await Producer.findOne({where: {identification}})
-        if (existed) {
-            res.status(402).json({ error: 'Ya existe el productor' });
-            return;
-        }
-
-        const producer = await Producer.create({name, date, identification, fair, category, fairLocality});
-        if (!producer){
-            res.status(501).json({ error: 'Falló al crear el productor' });
-            return;
-        }
-
-        // Iterar sobre las imágenes recibidas
-        for (let i = 0; i < images.length; i++) {
-            const image = images[i];
-            if (image) {
-                // Generar un nombre único para la imagen en GCS
-                const imageName = `${producer.id}/${uuidv4()}_${image.originalname}`;
-
-                const role = i < rolesArray.length ? rolesArray[i] : 'Other';
-                
-                // Subir el archivo a GCS
-                await GCS.uploadFile(image.buffer, imageName);
-
-                // Save the images information on the database
-                await Image.create({producerId: producer.id, path: imageName, role});
-            }
-        }
-
-        await Log.createLog(userId, producer.id, 'Creación del productor');
-        // Responder al frontend con la URL de las imágenes o un mensaje de confirmación
-        res.status(200).json({ message: 'Imágenes subidas correctamente' });
+        
+        const result = await ProducerService.create(data, userId, images);
+        res.status(200).json(result);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        switch (error.message) {
+            default:
+                res.status(500).json({ error: error.message });
+                break;
+            case 'Todos los campos son necesarios':
+                res.status(400).json({ error: error.message });
+                break;
+            case 'Ya existe el productor':
+                res.status(402).json({ error: error.message });
+                break;
+            case 'Falló al crear el productor':
+                res.status(501).json({error: error.message});
+                break;
+        }
     }
 }
 
@@ -141,7 +124,15 @@ async function getLastLog(req, res){
         }
 
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        switch (error.message) {
+            default:
+                res.status(500).json({ error: error.message });
+                break;
+            case 'Todos los campos son necesarios':
+                res.status(400).json({ error: error.message});
+                break;
+        }
+        
     }
 }
 

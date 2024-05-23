@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash, faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../utils/authContext";
 import axios from "axios";
@@ -56,7 +56,6 @@ export default function AddUser () {
 
     return (
         <>
-            <ToastContainer/>
             <FontAwesomeIcon className="add-icon" onClick={() => setShowModal(true)} icon={faUserPlus}/>
             <Modal
                 showModal={showModal}

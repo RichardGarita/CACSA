@@ -3,7 +3,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import {AuthContext} from '../../../utils/authContext';
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import DropZone from "../../../utils/dropZone";
 import Modal from "../../../utils/modal";
 import BASE_URL from "../../../utils/apiConfig";
@@ -66,7 +66,6 @@ function AddFile ({id, role}) {
 
     return (
         <>
-            <ToastContainer/>
             <div className="add-image">
                 <DropZone setDroppedFiles={setDroppedFiles} />
 

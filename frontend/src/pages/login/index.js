@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { AuthContext } from "../../utils/authContext";
@@ -45,7 +45,6 @@ function Login () {
 
     return (
         <div className="login">
-            <ToastContainer/>
             <figure className="login-logo">
                 <img src="cacsa-logo.png" alt="Logo de CACSA"></img>
             </figure>

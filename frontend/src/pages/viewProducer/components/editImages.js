@@ -3,7 +3,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import {AuthContext} from '../../../utils/authContext';
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import Modal from "../../../utils/modal";
 import BASE_URL from "../../../utils/apiConfig";
 import "react-toastify/dist/ReactToastify.css";
@@ -64,7 +64,6 @@ function EditImages ({id, role}) {
 
     return (
         <div className="row dropped-images p-1" >
-            <ToastContainer/>
             <Modal
                 showModal={showModal}
                 setShowModal={setShowModal}

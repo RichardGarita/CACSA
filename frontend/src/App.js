@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import Header from './components/header';
 import AddProducer from './pages/addProducer';
 import ViewProducer from './pages/viewProducer';
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <div className="App">
+      <ToastContainer/>
         {!token ? (
           <>
             <Routes>

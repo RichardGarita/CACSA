@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../utils/authContext';
 import { useNavigate } from 'react-router-dom';
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import Form from './components/form';
 import Progress from './components/progress';
 import axios from 'axios';
@@ -100,7 +100,6 @@ const AddProducer = () => {
   
     return (
         <div className='add-producer'>
-            <ToastContainer/>
             <Progress
                 formStep={formStep}
                 MAX_STEPS={MAX_STEPS}

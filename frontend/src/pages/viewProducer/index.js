@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserPen, faFileCirclePlus, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import EditProfile from './components/editProfile';
 import AddFile from './components/addFile';
 import EditImages from './components/editImages';
@@ -109,7 +109,6 @@ function ViewProducer () {
 
     return (
         <div className='view-producer'>
-            <ToastContainer/>
             <Modal
                 showModal={showModal}
                 setShowModal={setShowModal}

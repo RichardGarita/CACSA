@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPen, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../../utils/authContext";
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import axios from "axios";
 import Modal from "../../../utils/modal";
 import BASE_URL from "../../../utils/apiConfig";
@@ -56,7 +56,6 @@ export default function EditUser({user}) {
 
     return (
         <>
-            <ToastContainer/>
             <FontAwesomeIcon className="edit-icon" icon={faUserPen} onClick={() => setShowModal(true)}/>
 
             <Modal

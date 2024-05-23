@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus, faFilter } from "@fortawesome/free-solid-svg-icons";
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import ClipLoader from "react-spinners/ClipLoader";
 import { AuthContext } from "../../utils/authContext";
 import { useNavigate } from "react-router-dom";
@@ -74,7 +74,6 @@ function Index () {
 
     return (
         <>
-            <ToastContainer/>
             <h2>Emisión de Carnet</h2>
             <div className="search-section">
                 <FontAwesomeIcon className="filter-icon" onClick={() => setShowFilters(!showFilters)} icon={faFilter}/>

@@ -6,7 +6,7 @@ import FilterUser from "./components/filter";
 import AddUser from "./components/addUser";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../utils/authContext";
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import ClipLoader from "react-spinners/ClipLoader";
 import BASE_URL from "../../utils/apiConfig";
 import '../../styles/Users.css'
@@ -68,7 +68,6 @@ export default function ViewUsers () {
 
     return (
         <>
-            <ToastContainer/>
             <h2>Usuarios</h2>
             <div className="search-section">
                 <FilterUser elements={users} setElements={setFilteredUsers}/>     
