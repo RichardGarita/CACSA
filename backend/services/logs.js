@@ -4,14 +4,11 @@ var Producer = require('../models/producers');
 
 async function createLog(userId, producerId, process) {
     try {
-        if (!userId || !producerId)
-            return false;
-
         const user = await User.findByPk(userId);
         const producer = await Producer.findByPk(producerId);
 
         if (!user || !producer)
-            return false;
+            throw new Error('No se encontró el recurso');
 
         await Log.create({
             editorName: user.userName, 
@@ -20,26 +17,25 @@ async function createLog(userId, producerId, process) {
             process: process
         })
 
-        return true;
+        return {message: 'Bitácora agregada exitosamente'};
     } catch (error) {
-        throw error;
+        throw new Error(error.message);
     }
 }
 
 async function getAll () {
     try {
-        const logs = await Log.findAll();
+        const logs = await Log.findAll({
+            order: [['updatedAt', 'DESC']]
+        });
         return logs;
     } catch (error) {
-        throw error;
+        throw new Error(error.message);
     }
 }
 
 async function getLastLog(id){
     try {
-        if (!id)
-            return false;
-
         const log = await Log.findOne({
             where: { producerIdentification: id },
             order: [['updatedAt', 'DESC']],
@@ -47,7 +43,7 @@ async function getLastLog(id){
         });
         return log;
     } catch (error) {
-        throw error;
+        throw new Error(error.message);
     }
 }
 

@@ -184,9 +184,9 @@ async function deleteOne(id, userId) {
     try {
         const producer = await Producer.findByPk(id);
         if (producer) {
+            await Log.createLog(userId, id, 'Eliminación de productor');
             await producer.destroy();
             await GCS.deleteFolder(`${id}/`);
-            await Log.createLog(userId, id, 'Eliminación de productor');
             return { message: 'Recurso eliminado correctamente' };
         } else {
             throw new Error('No se encontró el recurso');

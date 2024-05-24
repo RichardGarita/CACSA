@@ -19,7 +19,7 @@ async function uploadFile(fileBuffer, fileName) {
         
         return filePath;
     } catch (error) {
-        throw error;
+        throw new Error(error.message);
     }
 }
 
@@ -39,7 +39,7 @@ async function getFile(fileName){
 
         return signedUrl;
     } catch (error) {
-        throw error;
+        throw new Error(error.message);
     }
 }
 
@@ -52,7 +52,7 @@ async function deleteFile (fileName) {
     try {
         await bucket.file(fileName).delete();
     } catch (error) {
-        throw error;
+        throw new Error(error.message);
     }
 }
 
@@ -74,7 +74,7 @@ async function deleteFolder (folderPath) {
 
         return true; // Éxito
     } catch (error) {
-        throw error;
+        throw new Error(error.message);
     }
 }
 
