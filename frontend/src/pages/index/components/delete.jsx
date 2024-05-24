@@ -48,6 +48,7 @@ function DeleteProducer ({id}) {
                     });
                 } else {
                     toast.info('Sesión expirada', {
+                        toastId: 'expiredSession',
                         autoClose: 1500,
                         onClose: () => {
                             localStorage.removeItem('token');

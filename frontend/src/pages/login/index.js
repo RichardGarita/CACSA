@@ -23,7 +23,7 @@ function Login () {
             }}).then((response) => {
                 localStorage.setItem('token', response.data.token);
                 toast.success('Se ha inciado sesión correctamente', {
-                    autoClose: 2000,
+                    autoClose: 1500,
                     onClose: () => {
                         signIn();
                     }
@@ -32,12 +32,12 @@ function Login () {
         } catch (error) {
             if (error.response && error.response.status === 404) {
                 toast.error('Usuario o contraseña incorrectas', {
-                    autoClose: 2000,
+                    autoClose: 1500,
                 });
               } else {
                 console.error('Error al enviar el formulario:', error);
                 toast.error('Algo salió mal, intenta de nuevo', {
-                    autoClose: 2000,
+                    autoClose: 1500,
                 });
               }
         }

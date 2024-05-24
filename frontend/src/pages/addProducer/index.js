@@ -87,6 +87,7 @@ const AddProducer = () => {
           });
         } else if (error.response && error.response.status === 401) {
           toast.info('Sesión Expirada', {
+            toastId: 'expiredSession',
             autoClose: 1500,
             onClose: () => {
               navigate('/');

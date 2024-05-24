@@ -47,7 +47,8 @@ function Index () {
                 if (error.response && error.response.status === 401) {
                     localStorage.removeItem('token');
                     toast.info('Sesión expirada', {
-                        autoClose: 2000,
+                        toastId: 'expiredSession',
+                        autoClose: 1500,
                         onClose: () => {
                             window.location.reload();
                         }
@@ -55,7 +56,7 @@ function Index () {
                 } else {
                     console.error(error);
                     toast.error('Hubo un error al tratar de obtener los productores. Intente de nuevo', {
-                        autoClose: 2000,
+                        autoClose: 1500,
                     });
                 }
             })

@@ -29,7 +29,7 @@ function EditImages ({id, role}) {
         }).catch((error) => {
             console.error(error);
             toast.error('Error al obtener las imágenes del productor', {
-                autoClose: 2000,
+                autoClose: 1500,
             });
         })
     }, [ROLE_URL, token]);
@@ -45,7 +45,7 @@ function EditImages ({id, role}) {
                 }
             }).then(() => {
                 toast.success('Imágen borrada efectivamente', {
-                    autoClose: 2000,
+                    autoClose: 1500,
                     onClose: () => {
                         setImages(prevImages => prevImages.filter(image => image.id !== id));
                         setShowModal(false);
@@ -54,13 +54,13 @@ function EditImages ({id, role}) {
             }).catch ((error) => {
                 console.error(error);
                 toast.error('Error al borrar la imágen. Intente de nuevo', {
-                    autoClose: 2000, 
+                    autoClose: 1500, 
                 });
             }) 
         } catch (error) {
             console.error(error);
             toast.error('Error al borrar la imágen. Intente de nuevo', {
-                autoClose: 2000, 
+                autoClose: 1500, 
             });
         }
     }

@@ -24,7 +24,7 @@ export default function DeleteUser ({id}) {
             }
         }).then(() => {
             toast.success('Usuario eliminado', {
-                autoClose: 2000,
+                autoClose: 1500,
                 onClose: () => {
                     window.location.reload();
                 }
@@ -32,14 +32,15 @@ export default function DeleteUser ({id}) {
         }).catch(error => {
             if (error.response && error.response.status === 401) {
                 toast.info('Sesión expirada', {
-                    autoClose: 2000,
+                    toastId: 'expiredSession',
+                    autoClose: 1500,
                     onClose: () => {
                         navigate('/');
                     }
                 });
             } else {
                 toast.error('Error Inesperado', {
-                    autoClose: 2000
+                    autoClose: 1500
                 });
                 console.error(error);
             }

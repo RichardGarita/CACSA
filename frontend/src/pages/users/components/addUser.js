@@ -27,7 +27,7 @@ export default function AddUser () {
             }
         }).then(() => {
             toast.success('Usuario agregado', {
-                autoClose: 2000,
+                autoClose: 1500,
                 onClose: () => {
                     setShowModal(false);
                     window.location.reload();
@@ -36,18 +36,19 @@ export default function AddUser () {
         }).catch((error) => {
             if (error.response && error.response.status === 401) {
                 toast.info('Sesión Expirada', {
-                    autoClose: 2000,
+                    toastId: 'expiredSession',
+                    autoClose: 1500,
                     onClose: () => {
                         navigate('/');
                     }
                 });
             } else if (error.response && error.response.status === 402) {
                 toast.warning('Ya existe el usuario', {
-                    autoClose: 2000,
+                    autoClose: 1500,
                 });
             } else {
                 toast.error('Error Inesperado', {
-                    autoClose: 2000,
+                    autoClose: 1500,
                 });
                 console.error(error);
             }

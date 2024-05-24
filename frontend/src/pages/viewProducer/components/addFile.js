@@ -43,7 +43,7 @@ function AddFile ({id, role}) {
               }
             }).then(() => {
                 toast.success('Imágenes subidas correctamente', {
-                    autoClose: 2000,
+                    autoClose: 1500,
                     onClose: () => {
                         window.location.reload();
                     }   
@@ -52,15 +52,15 @@ function AddFile ({id, role}) {
           } catch (error) {
             if (error.response && error.response.status === 400) {
               toast.warning('Todos los campos son obligatorios', {
-                autoClose: 2000,
+                autoClose: 1500,
               });
             } else if (error.response && error.response.status === 404) {
                 toast.error('No se encontró el productor', {
-                    autoClose: 2000,
+                    autoClose: 1500,
                 });
             } else {
               toast.error('Error inesperado. Intente de nuevo', {
-                autoClose: 2000,
+                autoClose: 1500,
               })
               console.error('Error al enviar el formulario:', error);
             }

@@ -45,7 +45,7 @@ function EditProfile ({props}) {
                     'Content-Type': 'application/json'
                 }}).then(() => {
                 toast.success('Productor actualizado', {
-                    autoClose: 2000,
+                    autoClose: 1500,
                     onClose: () => window.location.reload()
                 });
             });

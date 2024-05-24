@@ -29,11 +29,15 @@ function Header () {
             setData(response.data.user);
         }).catch(error => {
             if (error.response && error.response.status === 401){
-                toast.info('Sesión expirada', {
+                toast.info('Sesión expirada header', {
+                    toastId: 'expiredSession',
                     autoClose: 1500,
                     onClose: () => {
                         localStorage.removeItem('token');
-                        navigate('/');
+                        if (window.location.pathname === '/')
+                            window.location.reload();
+                        else
+                            navigate('/');
                     }
                 });
             } else if (error.response && error.response.status !== 404)

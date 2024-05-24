@@ -32,7 +32,7 @@ export default function EditUser({user}) {
             }
         }).then(() => {
             toast.success('Usuario actualizado', {
-                autoClose: 2000,
+                autoClose: 1500,
                 onClose: () => {
                     setShowModal(false);
                     window.location.reload();
@@ -41,7 +41,8 @@ export default function EditUser({user}) {
         }).catch (error => {
             if (error.response && error.response.status === 401) {
                 toast.info('Sesión Expirada', {
-                    autoClose: 2000,
+                    toastId: 'expiredSession',
+                    autoClose: 1500,
                     onClose: () => {
                         navigate('/');
                     }

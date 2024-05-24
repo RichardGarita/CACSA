@@ -45,7 +45,8 @@ export default function ViewUsers () {
         }).catch(error => {
             if (error.response && error.response.status === 401) {
                 toast.info('Sesión expirada', {
-                    autoClose: 2000,
+                    toastId: 'expiredSession',
+                    autoClose: 1500,
                     onClose: () => {
                         localStorage.removeItem('token');
                         navigate('/');
@@ -53,7 +54,7 @@ export default function ViewUsers () {
                 });
             }
             toast.error('Error al obtener los usuarios', {
-                autoClose: 2000,
+                autoClose: 1500,
             });
             console.error(error);
         })

@@ -53,7 +53,8 @@ function ViewProducer () {
         }).catch((error) => {
             if(error.response && error.response.status === 401) {
                 toast.info('Sesión Expirada', {
-                    autoClose: 2000,
+                    toastId: 'expiredSession',
+                    autoClose: 1500,
                     onClose: () => {
                         localStorage.removeItem('token');
                         navigate('/');
@@ -64,7 +65,7 @@ function ViewProducer () {
             } else {
                 console.error(error);
                 toast.error('Algo salió mal. Intente de nuevo', {
-                    autoClose: 2000,
+                    autoClose: 1500,
                 });
             }
         })
