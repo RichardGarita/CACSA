@@ -74,7 +74,7 @@ const AddProducer = () => {
           }
         }).then(() => {
             toast.success('Imágenes subidas correctamente', {
-              autoClose: 2000,
+              autoClose: 1500,
               onClose: () => {
                 navigate('/');
               }
@@ -83,17 +83,20 @@ const AddProducer = () => {
       } catch (error) {
         if (error.response && error.response.status === 402) {
           toast.warning('El productor ya existe', {
-            autoClose: 2000,
+            autoClose: 1500,
           });
         } else if (error.response && error.response.status === 401) {
           toast.info('Sesión Expirada', {
-            autoClose: 2000,
+            autoClose: 1500,
             onClose: () => {
               navigate('/');
             }
           });
         } else {
           console.error('Error al enviar el formulario:', error);
+          toast.error('Error inesperado. Intente de nuevo más tarde', {
+            autoClose: 1500,
+          });
         }
       }
     };

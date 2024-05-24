@@ -18,6 +18,9 @@ function DeleteProducer ({id}) {
     const navigate = useNavigate();
 
     const handleDelete = () => {
+        toast.info('Eliminando productor. Por favor espere.', {
+            autoClose: 1500,
+        })
         axios.delete(`${DELETE_URL}${id}`, {
             headers: {
                 'access-token': token

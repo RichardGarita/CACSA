@@ -33,6 +33,9 @@ function AddFile ({id, role}) {
         formData.append('role', role);
 
         try {
+            toast.info('Añadiendo las imágenes. Espere por favor.', {
+                autoClose: 1500
+            });
             await axios.post(URL_API, formData, {
               headers: {
                 'access-token': token,

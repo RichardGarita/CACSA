@@ -36,6 +36,9 @@ function EditImages ({id, role}) {
 
     const deleteImage = async (id) => {
         try {
+            toast.info('Eliminando la imágen. Espere por favor.', {
+                autoClose: 1500
+            });
             axios.delete(`${DELETE_URL}/${id}`, {
                 headers: {
                     'access-token': token

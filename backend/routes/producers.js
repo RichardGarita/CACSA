@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer'); // Importa Multer
 const router = express.Router();
-const producerController = require('../controllers/producerController');
+const producerController = require('../controllers/producers');
 const jwtHelper = require('../utils/jwtHelper');
 
 // Configuración de Multer

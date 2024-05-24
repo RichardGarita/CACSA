@@ -8,7 +8,7 @@ const userRoutes = require('./usersRoutes');
 router.use('/user', userRoutes);
 
 // Rutas para el manejo de perfiles de productores
-const producerRoutes = require('./producerRoutes');
+const producerRoutes = require('./producers');
 router.use('/producer', producerRoutes);
 
 const logsRoutes = require('./logs');
