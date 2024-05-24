@@ -26,12 +26,16 @@ function Header () {
                 'access-token': token,
             }
         }).then(response => {
-            setData(response.data);
+            setData(response.data.user);
         }).catch(error => {
-            if (error.response && error.response.status !== 401)
-            toast.error('Error inesperado. Intente de nuevo', {
-                autoClose: 2000,
-            });
+            if (error.response && error.response.status !== 404)
+                toast.error('Error inesperado. Intente de nuevo', {
+                    autoClose: 1500,
+                });
+            else
+                toast.error('No se encontró el usuario. Por favor, reinicie la sesión', {
+                    autoClose: 1500,
+                }); 
             console.error(error);
         })
     }, [id, token])

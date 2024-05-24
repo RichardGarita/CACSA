@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController');
+const userController = require('../controllers/users');
 const jwtHelper = require('../utils/jwtHelper');
 
 router.get('/', jwtHelper.verifyToken, userController.getAllUsers);

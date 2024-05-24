@@ -30,7 +30,7 @@ function Login () {
                 });
             })
         } catch (error) {
-            if (error.response && error.response.status === 402) {
+            if (error.response && error.response.status === 404) {
                 toast.error('Usuario o contraseña incorrectas', {
                     autoClose: 2000,
                 });

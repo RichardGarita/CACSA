@@ -4,7 +4,7 @@ const router = express.Router();
 // Rutas
 
 // Rutas para el manejo de usuarios
-const userRoutes = require('./usersRoutes');
+const userRoutes = require('./users');
 router.use('/user', userRoutes);
 
 // Rutas para el manejo de perfiles de productores
