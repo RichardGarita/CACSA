@@ -47,19 +47,19 @@ function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipa
                         <div className='form-group'>
                             <label htmlFor="idScreenShot" className='form-label'>Foto de la cédula: </label>
                             <input type='file' id="idScreenShot" className='form-control'
-                                {...register('idScreenShot', {required: {value: true, message: 'Por favor seleccione un archivo'}})} />
+                                accept="image/*" {...register('idScreenShot', {required: {value: true, message: 'Por favor seleccione un archivo'}})} />
                             {errors.idScreenShot && <p className='error-text'>{errors.idScreenShot.message}</p>}
                         </div>
                         <div className='form-group'>
                             <label htmlFor="fairPass">Foto del carnet de ferias: </label>
                             <input type="file" id="fairPass" className='form-control'
-                                {...register('fairPass', {required: {value: true, message: 'Por favor seleccione un archivo'}})} />
+                                accept="image/*" {...register('fairPass', {required: {value: true, message: 'Por favor seleccione un archivo'}})} />
                             {errors.fairPass && <p className='error-text'>{errors.fairPass.message}</p>}
                         </div>
                         <div className='form-group'>
                             <label htmlFor="foodHandling">Foto del carnet de manipulación de alimentos: </label>
                             <input type="file" id="foodHandling" className='form-control'
-                                {...register('foodHandling', {required: {value: true, message: 'Por favor seleccione un archivo'}})} />
+                                accept="image/*" {...register('foodHandling', {required: {value: true, message: 'Por favor seleccione un archivo'}})} />
                             {errors.foodHandling && <p className='error-text'>{errors.foodHandling.message}</p>}
                         </div>
                     </section>
@@ -81,23 +81,23 @@ function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipa
                         <div className='form-group'>
                             <label htmlFor="profilePic">Foto de la persona: </label>
                             <input type="file" id="profilePic" className='form-control'
-                                {...register('profilePic', {required: {value: true, message: 'Por favor seleccione un archivo'}})} />
+                                accept="image/*" {...register('profilePic', {required: {value: true, message: 'Por favor seleccione un archivo'}})} />
                             {errors.profilePic && <p className='error-text'>{errors.profilePic.message}</p>}
                         </div>
                         <div className='form-group'>
                             <label htmlFor="propertyTitle">Foto del título de propiedad, contrato de arrendamiento o plano: </label>
                             <input type="file" id="propertyTitle" className='form-control'
-                                {...register('propertyTitle')} />
+                                accept="image/*" {...register('propertyTitle')} />
                         </div>
                         <div className='form-group'>
                             <label htmlFor="products">Foto de los productos: </label>
                             <input type="file" id="products" className='form-control'
-                                {...register('products')} />
+                                accept="image/*" {...register('products')} />
                         </div>
                         <div className='form-group'>
                             <label htmlFor="inspection">Foto de la inspección: </label>
                             <input type="file" id="inspection" className='form-control'
-                                {...register('inspection')} />
+                                accept="image/*" {...register('inspection')} />
                         </div>
                     </section>
                 )}
@@ -126,12 +126,12 @@ function Form({ onSubmit, formStep, setFormStep, register, errors, fairParticipa
                         <div className='form-group'>
                             <label htmlFor="permits">Foto de los permisos: </label>
                             <input type="file" id="permits" className='form-control'
-                                {...register('permits')} />
+                                accept="image/*" {...register('permits')} />
                         </div>
                         <div className='form-group'>
                             <label htmlFor="memos">Foto de los memos: </label>
                             <input type="file" id="memos" className='form-control'
-                                {...register('memos')} />
+                                accept="image/*" {...register('memos')} />
                         </div>
                         </div>
                     }

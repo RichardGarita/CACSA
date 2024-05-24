@@ -1,13 +1,12 @@
 var Producer = require('../services/producers');
 
-async function create(req, res) {
+async function create(req, res, next) {
     try {
         // Procesar los datos del formulario
         const { name, date, identification, roles, fair, category, fairLocality } = req.body;
         const userId = req.decoded.id;
         if (!userId || !name || !date || !identification || !roles || !category || !fair || (!fair && !fairLocality) ) {
-            res.status(400).json({ error: 'No se encontraron los campos obligatorios' });
-            return;
+            throw new Error('No se encontraron los campos obligatorios');
         }
         const data = { name, date, identification, roles, fair, category, fairLocality };
         const images = req.files;
@@ -15,89 +14,63 @@ async function create(req, res) {
         const result = await Producer.create(data, userId, images);
         res.status(200).json(result);
     } catch (error) {
-        switch (error.message) {
-            default:
-                res.status(500).json({ error: error.message });
-                break;
-            case 'Ya existe el recurso':
-                res.status(402).json({ error: error.message });
-                break;
-            case 'Falló al crear el recurso':
-                res.status(501).json({error: error.message});
-                break;
-        }
+        next(error);
     }
 }
 
-async function getAll(req, res){
+async function getAll(req, res, next){
     try {
         const producers = await Producer.getAll();
         res.status(200).json(producers);
     } catch(error) {
-        res.status(500).json({error: error.message});
+        next(error);
     }
 }
 
-async function getOne(req, res){
+async function getOne(req, res, next){
     const id = req.params.id;
     try {
         const producer = await Producer.getOne(id);
         res.status(200).json(producer);
     } catch (error) {
-        if (error.message === 'No se encontró el recurso')
-            res.status(404).json({error: error.message});
-        else
-            res.status(501).json({error: error.message});
+        next(error);
     }
 }
 
-async function getOneProducerImage(req, res){
+async function getOneProducerImage(req, res, next){
     const id = req.params.id;
     const role = req.query.role;
     try {
         if (!id || !role ) {
-            res.status(400).json({ error: 'No se encontraron los campos obligatorios' });
-            return;
+            throw new Error('No se encontraron los campos obligatorios' );
         }
         const url = await Producer.getOneImage(id, role);
         res.status(200).json({url});
     } catch (error) {
-        switch (error.message) {
-            default:
-                res.status(500).json({ error: error.message });
-                break;
-            case 'No se encontró el recurso':
-                res.status(404).json({ error: error.message });
-                break;
-            case 'Respuesta vacía':
-                res.status(204).json({ error: error.message });
-                break;
-        }
+        next(error);
     }
 
 }
 
-async function getProducerRoleImages (req, res){
+async function getProducerRoleImages (req, res, next){
     try {
         const id = req.params.id;
         const role = req.query.role;
         if (!id || !role) {
-            res.status(400).json({ error: 'No se encontraron los campos obligatorios' });
-            return;
+            throw new Error('No se encontraron los campos obligatorios' );
         }
         const images = await Producer.getRoleImages(id, role);
         res.status(200).json(images);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 }
 
-async function getLastLog(req, res){
+async function getLastLog(req, res, next){
     try {
         const id = req.params.id;
         if (!id) {
-            res.status(400).json({ error: 'No se encontraron los campos obligatorios' });
-            return;
+            throw new Error('No se encontraron los campos obligatorios' );
         }
 
         const log = await Producer.getLastLog(id);
@@ -109,18 +82,17 @@ async function getLastLog(req, res){
         }
 
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 }
 
-async function editOne(req, res){
+async function editOne(req, res,next){
     try {
         const id = req.params.id;
         const {name, date, category, fair, fairLocality} = req.body;
         const userId = req.decoded.id;
         if (!userId || !id || !name || !date || !category || !(fair === true ? fairLocality : true)){
-            res.status(400).json({ error: 'No se encontraron los campos obligatorios' });
-            return;
+            throw new Error('No se encontraron los campos obligatorios' );
         }
 
         const data = {name, date, category, fair, fairLocality};
@@ -128,38 +100,33 @@ async function editOne(req, res){
         const response = await Producer.editOne(data, id, userId);
         res.status(200).json(response);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 }
 
-async function addImages(req, res){
+async function addImages(req, res, next){
     try {
         const {id, role} = req.body;
         const images = req.files;
         const userId = req.decoded.id;
         if (!userId || !id || !role || !images) {
-            res.status(400).json({error: "No se encontraron los campos obligatorios"});
-            return;
+            throw new Error('No se encontraron los campos obligatorios' );
         }
         
         const response = await Producer.addImages(id, role, images, userId);
         res.status(200).json(response);
 
     } catch (error) {
-        if (error.message === 'No se encontró el recurso')
-            res.status(404).json({error: error.message});
-        else
-            res.status(500).json({error: error.message});
+        next(error);
     }
 }
 
-async function deleteImage(req, res) {
+async function deleteImage(req, res, next) {
     try {
         const id = req.params.id;
         const userId = req.decoded.id;
         if (!userId || !id) {
-            res.status(400).json({error: "No se encontraron los campos obligatorios"});
-            return;
+            throw new Error('No se encontraron los campos obligatorios' );
         }
 
         const response = await Producer.deleteImage(id, userId);
@@ -167,37 +134,29 @@ async function deleteImage(req, res) {
         res.status(200).json(response);
 
     } catch (error) {
-        if (error.message === 'No se encontró el recurso')
-            res.status(404).json({ error: error.message });
-        else
-            res.status(500).json({ error: error.message });
+        next(error);
     }
 }
 
-async function deleteOne(req, res) {
+async function deleteOne(req, res, next) {
     try {
         const id = req.params.id;
         const admin = req.decoded.admin;
         const userId = req.decoded.id;
 
         if (!id) {
-            res.status(400).json({error: "No se encontraron los campos obligatorios"});
-            return;
+            throw new Error('No se encontraron los campos obligatorios' );
         }
 
         if (!admin || !userId) {
-            res.status(401).json({error: "No está autorizado"});
-            return;
+            throw new Error('No está autorizado');
         }
 
         const response = await Producer.deleteOne(id, userId);
 
         res.status(200).json(response);
     } catch (error) {
-        if (error.message === 'No se encontró el recurso')
-            res.status(404).json({ error: error.message });
-        else
-            res.status(500).json({ error: error.message });
+        next(error);
     }
 }
 

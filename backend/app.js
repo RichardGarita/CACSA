@@ -5,10 +5,6 @@ const cors = require('cors'); // Importa el middleware cors
 const swaggerUI = require('swagger-ui-express');
 const swaggerSpec = require('./utils/swagger');
 const apiRouter = require('./routes/api'); // Importa el archivo de rutas principal desde la carpeta rutas
-//Middleware para manejo de imagenes
-const multer = require('multer');
-const storage = multer.memoryStorage(); // Almacenar archivos en memoria RAM
-const upload = multer({ storage: storage });
 
 // Middleware para el manejo de solicitudes JSON
 app.use(express.json());

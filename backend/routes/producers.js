@@ -1,11 +1,9 @@
 const express = require('express');
-const multer = require('multer'); // Importa Multer
 const router = express.Router();
 const producerController = require('../controllers/producers');
+const errHandler = require('../middlewares/errorHandler');
 const jwtHelper = require('../utils/jwtHelper');
-
-// Configuración de Multer
-const upload = multer(); // Utiliza la configuración predeterminada de Multer para almacenar los archivos en memoria
+const upload = require('../config/multer'); // Configuración de Multer
 
 router.post('/', jwtHelper.verifyToken, upload.array('images'), producerController.create)
 router.post('/images', jwtHelper.verifyToken, upload.array('images'), producerController.addImages);
@@ -132,6 +130,8 @@ router.delete('/:id', jwtHelper.verifyToken, producerController.deleteOne);
 *         description: Error del servidor.
 */
 router.delete('/images/:id', jwtHelper.verifyToken, producerController.deleteImage);
+
+router.use(errHandler);
 
 
 module.exports = router;

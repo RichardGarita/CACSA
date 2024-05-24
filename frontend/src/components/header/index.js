@@ -28,7 +28,15 @@ function Header () {
         }).then(response => {
             setData(response.data.user);
         }).catch(error => {
-            if (error.response && error.response.status !== 404)
+            if (error.response && error.response.status === 401){
+                toast.info('Sesión expirada', {
+                    autoClose: 1500,
+                    onClose: () => {
+                        localStorage.removeItem('token');
+                        navigate('/');
+                    }
+                });
+            } else if (error.response && error.response.status !== 404)
                 toast.error('Error inesperado. Intente de nuevo', {
                     autoClose: 1500,
                 });
