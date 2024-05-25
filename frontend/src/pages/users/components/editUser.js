@@ -75,11 +75,11 @@ export default function EditUser({user}) {
                             </div>
 
                             <div className='form-group'>
-                                <label htmlFor="userName">Nombre de usuario:</label>
-                                <input type="text" className='form-control' id="userName"
-                                    {...register('userName', {required: {value: true, message: 'Por favor ingrese un nombre de usuario'}})}
-                                    defaultValue={user.userName} />
-                                {errors.userName && <p className='error-text'>{errors.userName.message}</p>}
+                                <label htmlFor="email">Correo electrónico:</label>
+                                <input type="text" className='form-control' id="email" placeholder="correo@ejemplo.com"
+                                    {...register('email', {required: {value: true, message: 'Por favor ingrese un correo'}})}
+                                    defaultValue={user.email} />
+                                {errors.email && <p className='error-text'>{errors.email.message}</p>}
                             </div>
 
                             <div className='form-group'>

@@ -2,12 +2,12 @@ var UserService = require('../services/users');
 const jwt = require('../utils/jwtHelper');
 
 async function loginUser(req, res, next) {
-    const {userName, password} = req.body;
-    if (!userName || !password) {
+    const {email, password} = req.body;
+    if (!email || !password) {
         throw new Error('No se encontraron los campos obligatorios');
     }
     try {
-        const token = await UserService.loginUser(userName, password);
+        const token = await UserService.loginUser(email, password);
         res.status(200).json({token});
     } catch (error) {
         next(error);
@@ -29,11 +29,11 @@ async function getProfile(req, res, next) {
 
 async function editUser(req, res, next){
     try {
-        const {id, name, userName, password} = req.body;
-        if(!id || !name || !userName || !password) {
+        const {id, name, email, password} = req.body;
+        if(!id || !name || !email || !password) {
             throw new Error('No se encontraron los campos obligatorios');
         }
-        const data = {id, name, userName, password};
+        const data = {id, name, email, password};
         const response = await UserService.editOne(data);
         res.status(200).json(response);
     } catch (error) {
@@ -64,12 +64,12 @@ async function deleteUser (req, res, next) {
 
 async function addUser (req, res, next) {
     try {
-        const {name, userName, password} = req.body;
-        if(!name || !userName || !password) {
+        const {name, email, password} = req.body;
+        if(!name || !email || !password) {
             throw new Error('No se encontraron los campos obligatorios');
         }
 
-        const response = await UserService.create(name, userName, password);
+        const response = await UserService.create(name, email, password);
         res.status(200).json(response);
     } catch (error) {
         next(error);

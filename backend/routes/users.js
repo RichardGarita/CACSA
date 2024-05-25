@@ -42,7 +42,7 @@ router.get('/:id', jwtHelper.verifyToken, userController.getProfile);
 *           schema:
 *             type: object
 *             properties:
-*               userName:
+*               email:
 *                 type: string
 *               password:
 *                 type: string

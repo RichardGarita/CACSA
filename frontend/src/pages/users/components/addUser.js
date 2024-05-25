@@ -71,10 +71,15 @@ export default function AddUser () {
                             {errors.name && <p className='error-text'>{errors.name.message}</p>}
                         </div>
                         <div className='form-group'>
-                            <label htmlFor="name">Nombre de usuario:</label>
-                            <input type="text" className='form-control' id="userName" placeholder="Nombre de Usuario"
-                                {...register('userName', {required: {value: true, message: 'Por favor ingrese un nombre de usuario'}})}/>
-                            {errors.userName && <p className='error-text'>{errors.userName.message}</p>}
+                            <label htmlFor="name">Correo electrónico:</label>
+                            <input type="email" className='form-control' id="email" placeholder="correo@ejemplo.com"
+                                {...register('email', {required: {value: true, message: 'Por favor ingrese un correo electrónico'},
+                                    pattern: {
+                                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                        message: 'El correo debe tener un formato válido'
+                                    }
+                                })}/>
+                            {errors.email && <p className='error-text'>{errors.email.message}</p>}
                         </div>
                         <div className='form-group'>
                             <label htmlFor="password">Contraseña:</label>

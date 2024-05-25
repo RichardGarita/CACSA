@@ -1,11 +1,11 @@
 var User = require('../models/users');
 const jwt = require('../utils/jwtHelper');
 
-async function loginUser(userName, password) {
+async function loginUser(email, password) {
     try {
         const user = await User.findOne({
             where: {
-              userName: userName,
+              email: email,
               password: password
             }
           });
@@ -23,7 +23,7 @@ async function loginUser(userName, password) {
 
 async function getProfile(id) {
     try {
-        const user = await User.findByPk(id, {attributes: ['name', 'userName', 'admin']});
+        const user = await User.findByPk(id, {attributes: ['name', 'email', 'admin']});
         if (user)
             return user;
         else 
@@ -35,8 +35,8 @@ async function getProfile(id) {
 
 async function editOne(data){
     try {
-        const {id, name, userName, password} = data;
-        await User.update({name, userName, password}, {where: {id}});
+        const {id, name, email, password} = data;
+        await User.update({name, email, password}, {where: {id}});
         return {message: 'Usuario actualizado'};
     } catch (error) {
         throw new Error (error.message);
@@ -58,14 +58,14 @@ async function deleteOne (id) {
     }
 }
 
-async function create (name, userName, password) {
+async function create (name, email, password) {
     try {
-        const existed = await User.findOne({where: {userName: userName}});
+        const existed = await User.findOne({where: {email: email}});
         if (existed) {
             throw new Error ('Ya existe el recurso');
         }
 
-        const user = await User.create({name, userName, password, admin: false});
+        const user = await User.create({name, email, password, admin: false});
         if (!user){
             throw new Error ('Falló al crear el recurso');
         }

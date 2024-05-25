@@ -11,7 +11,7 @@ async function createLog(userId, producerId, process) {
             throw new Error('No se encontró el recurso');
 
         await Log.create({
-            editorName: user.userName, 
+            editorName: user.email, 
             producerIdentification: producer.identification,
             producerName: producer.name,
             process: process

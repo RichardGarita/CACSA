@@ -29,7 +29,7 @@ function Header () {
             setData(response.data.user);
         }).catch(error => {
             if (error.response && error.response.status === 401){
-                toast.info('Sesión expirada header', {
+                toast.info('Sesión expirada', {
                     toastId: 'expiredSession',
                     autoClose: 1500,
                     onClose: () => {
@@ -78,24 +78,26 @@ function Header () {
                 content={
                     <>
                         <section className='d-inline'>
-                            <p className='d-inline'><strong>Nombre de usuario: </strong></p>
-                            <p className='d-inline'>{data.userName}</p>
+                            <p className='d-inline'><strong>Correo electrónico: </strong></p>
+                            <p className='d-inline'>{data.email}</p>
                         </section>
-                        {data.admin === true && (
-                            <>
-                                <section className='link'>
-                                    <FontAwesomeIcon className='me-2' icon={faUserPen} />
-                                    <a href={'/users'}>Ver usuarios</a>
-                                </section>
-                                <section className='link'>
-                                    <FontAwesomeIcon className='me-2' icon={faBook} />
-                                    <a href={'/logs'}>Ver bitácoras</a>
-                                </section>
-                            </>
-                        )}
-                        <section className='link'>
-                            <FontAwesomeIcon className='me-2' icon={faArrowRightFromBracket} />
-                            <p onClick={() => signOut()}>Cerrar Sesión</p>
+                        <section className='mt-2'>
+                            {data.admin === true && (
+                                <>
+                                    <section className='link'>
+                                        <FontAwesomeIcon className='me-2' icon={faUserPen} />
+                                        <a href={'/users'}>Ver usuarios</a>
+                                    </section>
+                                    <section className='link'>
+                                        <FontAwesomeIcon className='me-2' icon={faBook} />
+                                        <a href={'/logs'}>Ver bitácoras</a>
+                                    </section>
+                                </>
+                            )}
+                            <section className='link'>
+                                <FontAwesomeIcon className='me-2' icon={faArrowRightFromBracket} />
+                                <p onClick={() => signOut()}>Cerrar Sesión</p>
+                            </section>
                         </section>
                     </>
                 }

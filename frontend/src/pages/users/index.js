@@ -79,7 +79,7 @@ export default function ViewUsers () {
                     <thead>
                         <tr>
                             <td>Nombre</td>
-                            <td>Nombre de usuario</td>
+                            <td>Correo electrónico</td>
                             <td>Administrador</td>
                             <td>Acciones</td>
                         </tr>
@@ -88,7 +88,7 @@ export default function ViewUsers () {
                         {currentUsers.map((user, index) => (
                             <tr key={index}>
                                 <td>{user.name}</td>
-                                <td>{user.userName}</td>
+                                <td>{user.email}</td>
                                 <td>{user.admin ? 'Sí': 'No'}</td>
                                 <td>
                                     <EditUser user={user}/>

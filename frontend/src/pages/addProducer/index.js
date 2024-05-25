@@ -73,7 +73,7 @@ const AddProducer = () => {
             'Content-Type': 'multipart/form-data'
           }
         }).then(() => {
-            toast.success('Imágenes subidas correctamente', {
+            toast.success('Productor creado correctamente', {
               autoClose: 1500,
               onClose: () => {
                 navigate('/');

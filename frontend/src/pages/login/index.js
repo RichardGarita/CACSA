@@ -50,10 +50,10 @@ function Login () {
             </figure>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='form-group'>
-                    <label htmlFor="userName">Nombre de usuario: </label>
-                    <input type="text" className='form-control' autoComplete="username" id="userName" placeholder="Nombre de Usuario"
-                    {...register('userName', {required: {value: true, message: 'Por favor escriba el nombre'}})} />
-                    {errors.userName && <p className='error-text'>{errors.userName.message}</p>}
+                    <label htmlFor="email">Correo electrónico: </label>
+                    <input type="email" className='form-control' autoComplete="email" id="email" placeholder="correo@ejemplo.com"
+                    {...register('email', {required: {value: true, message: 'Por favor escriba el correo'}})} />
+                    {errors.email && <p className='error-text'>{errors.email.message}</p>}
                 </div>
 
                 <div className='form-group'>

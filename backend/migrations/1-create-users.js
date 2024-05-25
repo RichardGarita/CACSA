@@ -1,7 +1,5 @@
 'use strict';
 
-const { type } = require('jquery');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -18,9 +16,10 @@ module.exports = {
         collate: 'SQL_Latin1_General_CP1_CS_AS', // Configura la colación como case sensitive
         charset: 'utf8' // Define el conjunto de caracteres de la columna
       },
-      userName: {
+      email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
         collate: 'SQL_Latin1_General_CP1_CS_AS', // Configura la colación como case sensitive
         charset: 'utf8' // Define el conjunto de caracteres de la columna
       },
