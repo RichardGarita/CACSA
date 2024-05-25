@@ -17,6 +17,12 @@ module.exports = {
         collate: 'SQL_Latin1_General_CP1_CS_AS',
         charset: 'utf8'
       },
+      producerId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        collate: 'SQL_Latin1_General_CP1_CS_AS',
+        charset: 'utf8'
+      },
       producerIdentification: {
         type: Sequelize.STRING,
         collate: 'SQL_Latin1_General_CP1_CS_AS',

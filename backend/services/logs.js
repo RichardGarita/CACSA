@@ -11,7 +11,8 @@ async function createLog(userId, producerId, process) {
             throw new Error('No se encontró el recurso');
 
         await Log.create({
-            editorName: user.email, 
+            editorName: user.email,
+            producerId: producer.id,
             producerIdentification: producer.identification,
             producerName: producer.name,
             process: process
@@ -37,7 +38,7 @@ async function getAll () {
 async function getLastLog(id){
     try {
         const log = await Log.findOne({
-            where: { producerIdentification: id },
+            where: { producerId: id },
             order: [['updatedAt', 'DESC']],
             limit: 1
         });

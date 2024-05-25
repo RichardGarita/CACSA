@@ -73,7 +73,7 @@ function ViewProducer () {
 
     useEffect(() => {
         if (data.identification) {
-            axios.get(`${URL_API}/${data.identification}/log`, {
+            axios.get(`${URL_API}/${id}/log`, {
                 headers: {
                     'access-token': token
                 }
