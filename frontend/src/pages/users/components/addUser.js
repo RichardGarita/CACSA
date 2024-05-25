@@ -39,6 +39,7 @@ export default function AddUser () {
                     toastId: 'expiredSession',
                     autoClose: 1500,
                     onClose: () => {
+                        localStorage.removeItem('token');
                         navigate('/');
                     }
                 });

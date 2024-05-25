@@ -1,5 +1,6 @@
 import React, {useState, useContext} from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import {AuthContext} from '../../../utils/authContext';
@@ -17,6 +18,8 @@ function AddFile ({id, role}) {
     const [modalContent, setModalContent] = useState(<></>)
 
     const {token} = useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     const removeFile = (index) => {
         setDroppedFiles(files => files.filter((_, fileIndex) => fileIndex !== index));
@@ -50,7 +53,20 @@ function AddFile ({id, role}) {
                 });
             });
           } catch (error) {
-            if (error.response && error.response.status === 400) {
+            if (error.response && error.response.status === 401) {
+                toast.info('Sesión Expirada', {
+                  toastId: 'expiredSession',
+                  autoClose: 1500,
+                  onClose: () => {
+                    localStorage.removeItem('token');
+                    navigate('/');
+                  }
+                })
+            } else if (error.response && error.response.status === 422) {
+                toast.error('Sólo imágenes son soportadas', {
+                    autoClose: 1500,
+                });
+            } else if(error.response && error.response.status === 400) {
               toast.warning('Todos los campos son obligatorios', {
                 autoClose: 1500,
               });
@@ -59,10 +75,10 @@ function AddFile ({id, role}) {
                     autoClose: 1500,
                 });
             } else {
-              toast.error('Error inesperado. Intente de nuevo', {
-                autoClose: 1500,
-              })
-              console.error('Error al enviar el formulario:', error);
+                console.error('Error al enviar el formulario:', error);
+                toast.error('Error inesperado. Intente de nuevo', {
+                    autoClose: 1500,
+                })
             }
           }
     }

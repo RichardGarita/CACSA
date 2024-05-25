@@ -35,6 +35,7 @@ export default function DeleteUser ({id}) {
                     toastId: 'expiredSession',
                     autoClose: 1500,
                     onClose: () => {
+                        localStorage.removeItem('token');
                         navigate('/');
                     }
                 });

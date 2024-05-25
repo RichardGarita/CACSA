@@ -1,15 +1,23 @@
 import React, {useCallback} from "react";
 import {useDropzone} from 'react-dropzone'
+import { toast } from "react-toastify";
 
 function DropZone({setDroppedFiles}) {
     const onDrop = useCallback(acceptedFiles => {
         if(acceptedFiles?.length) {
-            setDroppedFiles(previousDroppedFiles => [
-                ...previousDroppedFiles,
-                ...acceptedFiles.map(file => 
-                    Object.assign(file, {preview: URL.createObjectURL(file)})
-                )
-            ])
+            const imageFiles = acceptedFiles.filter(file => file.type.startsWith('image/'));
+
+            if (acceptedFiles.length !== imageFiles?.length)
+                toast.info('Sólo se permiten imágenes', {autoClose:1500});
+
+            if (imageFiles?.length) {
+                setDroppedFiles(previousDroppedFiles => [
+                    ...previousDroppedFiles,
+                    ...imageFiles.map(file => 
+                        Object.assign(file, {preview: URL.createObjectURL(file)})
+                    )
+                ])
+            }
         }
     }, [setDroppedFiles])
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})

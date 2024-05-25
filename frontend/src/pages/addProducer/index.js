@@ -90,8 +90,13 @@ const AddProducer = () => {
             toastId: 'expiredSession',
             autoClose: 1500,
             onClose: () => {
+              localStorage.removeItem('token');
               navigate('/');
             }
+          });
+        } else if (error.response && error.response.status === 422){
+          toast.error('Sólo imágenes son soportadas', {
+            autoClose: 1500,
           });
         } else {
           console.error('Error al enviar el formulario:', error);

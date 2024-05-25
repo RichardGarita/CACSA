@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import {AuthContext} from '../../../utils/authContext';
@@ -18,6 +19,8 @@ function EditImages ({id, role}) {
     const {token} = useContext(AuthContext);
     const ROLE_URL = `${URL_API}/images/all/${id}?role=${role}`;
     const DELETE_URL = `${URL_API}/images`;
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(ROLE_URL, {
@@ -59,9 +62,21 @@ function EditImages ({id, role}) {
             }) 
         } catch (error) {
             console.error(error);
-            toast.error('Error al borrar la imágen. Intente de nuevo', {
-                autoClose: 1500, 
-            });
+            if (error.response && error.response.status === 401) {
+                toast.info('Sesión Expirada', {
+                  toastId: 'expiredSession',
+                  autoClose: 1500,
+                  onClose: () => {
+                    localStorage.removeItem('token');
+                    navigate('/');
+                  }
+                })
+            } else {
+               toast.error('Error al borrar la imágen. Intente de nuevo', {
+                    autoClose: 1500, 
+                }); 
+            }
+            
         }
     }
 

@@ -1,6 +1,7 @@
 import React, {useState, useContext, useEffect} from "react";
 import Select from 'react-select';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {useForm} from 'react-hook-form';
 import {AuthContext} from '../../../utils/authContext';
 import {toast} from 'react-toastify';
@@ -16,6 +17,8 @@ function EditProfile ({props}) {
     const [actualFairLocality, setActualFairLocality] = useState([]);
     const {register, handleSubmit, formState: { errors, isValid },  } = useForm({mode: "all"});
     const {token} = useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     const localities = fairLocality.map(locality => ({
         value: locality,
@@ -51,6 +54,19 @@ function EditProfile ({props}) {
             });
         } catch (error) {
             console.error('Error al enviar el formulario:', error);
+            if (error.response && error.response.status === 401) {
+                toast.info('Sesión Expirada', {
+                  toastId: 'expiredSession',
+                  autoClose: 1500,
+                  onClose: () => {
+                    localStorage.removeItem('token');
+                    navigate('/');
+                  }
+                })
+            } else {
+                toast.error('Error inesperado. Intente de nuevo', {autoClose: 1500})
+            }
+            
         }
     }
 
