@@ -1,12 +1,11 @@
 const Log = require('../services/logs');
 
-async function getAll(req, res) {
+async function getAll(req, res, next) {
     try {
         const admin = req.decoded.admin;
 
         if (!admin) {
-            res.status(401).json({error: "No está autorizado"});
-            return;
+            throw new Error('No está autorizado');
         }
 
         const logs = await Log.getAll();
@@ -14,7 +13,7 @@ async function getAll(req, res) {
         res.status(200).json({logs});
 
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 }
 

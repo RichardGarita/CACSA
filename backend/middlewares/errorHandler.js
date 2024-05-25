@@ -1,5 +1,6 @@
 // middlewares/errorHandler.js
 function errorHandler(err, req, res, next) {
+    console.error(err);
     let statusCode = 500;
     let message = err.message;
 

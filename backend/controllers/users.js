@@ -1,113 +1,87 @@
-var User = require('../models/users');
 var UserService = require('../services/users');
 const jwt = require('../utils/jwtHelper');
 
-async function loginUser(req, res) {
+async function loginUser(req, res, next) {
     const {userName, password} = req.body;
     if (!userName || !password) {
-        res.status(400).json({ error: 'No se encontraron los campos obligatorios' });
-        return;
+        throw new Error('No se encontraron los campos obligatorios');
     }
     try {
         const token = await UserService.loginUser(userName, password);
         res.status(200).json({token});
     } catch (error) {
-        if (error.message === 'No se encontró el recurso')
-            res.status(404).json({ error: error.message });
-        else
-            res.status(500).json({ error: error.message });
+        next(error);
     }
 }
 
-async function getProfile(req, res) {
+async function getProfile(req, res, next) {
     try {
         const id = req.params.id;
         if (!id) {
-            res.status(400).json({message: 'No se encontraron los campos obligatorios'});
-            return;
+            throw new Error('No se encontraron los campos obligatorios');
         }
         const user = await UserService.getProfile(id);
         res.status(200).json({user});
     } catch (error) {
-        if (error.message === 'No se encontró el recurso')
-            res.status(404).json({error: error.message});
-        else
-            res.status(500).json({ error: error.message });
+        next(error);
     }
 }
 
-async function editUser(req, res){
+async function editUser(req, res, next){
     try {
         const {id, name, userName, password} = req.body;
         if(!id || !name || !userName || !password) {
-            res.status(400).json({message: 'No se encontraron los campos obligatorios'});
-            return;
+            throw new Error('No se encontraron los campos obligatorios');
         }
         const data = {id, name, userName, password};
         const response = await UserService.editOne(data);
         res.status(200).json(response);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 }
 
-async function deleteUser (req, res) {
+async function deleteUser (req, res, next) {
     try {
         const id = req.params.id;
         const admin = req.decoded.admin;
 
         if(!id) {
-            res.status(400).json({message: 'No se encontraron los campos obligatorios'});
-            return;
+            throw new Error('No se encontraron los campos obligatorios');
         }
 
         if (!admin) {
-            res.status(401).json({error: "No está autorizado"});
-            return;
+            throw new Error('No está autorizado');
         }
 
         const response = await UserService.deleteOne(id);
         res.status(200).json(response);
 
     } catch (error) {
-        if (error.message === 'No se encontró el recurso')
-            res.status(404).json({ error: error.message });
-        else
-            res.status(500).json({ error: error.message });
+        next(error);
     }
 }
 
-async function addUser (req, res) {
+async function addUser (req, res, next) {
     try {
         const {name, userName, password} = req.body;
         if(!name || !userName || !password) {
-            res.status(400).json({error: 'No se encontraron los campos obligatorios'});
-            return;
+            throw new Error('No se encontraron los campos obligatorios');
         }
 
         const response = await UserService.create(name, userName, password);
         res.status(200).json(response);
     } catch (error) {
-        switch (error.message){
-            default:
-                res.status(500).json({ error: error.message });
-                break;
-            case 'Ya existe el recurso':
-                res.status(402).json({ error: error.message });
-                break;
-            case 'Falló al crear el recurso':
-                res.status(501).json({ error: error.message });
-                break;
-        }
+        next(error);
     }
 }
 
-async function getAllUsers(req, res) {
+async function getAllUsers(req, res, next) {
     try {
         const usuarios = await UserService.getAll();
         res.status(200).json(usuarios);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 }
 
