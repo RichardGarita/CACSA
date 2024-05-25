@@ -18,6 +18,8 @@ const Producer = sequelize.define('Producer', {
     },
     get() {
       const encryptedValue = this.getDataValue('identification');
+      if (!encryptedValue)
+        return null;
       return decrypt(encryptedValue);
     }
   },
@@ -53,13 +55,6 @@ const Producer = sequelize.define('Producer', {
     defaultValue: DataTypes.NOW
   }
 }, {
-  hooks: {
-    beforeUpdate: async (producer) => {
-      if (producer.changed('identification')) {
-        producer.identification = encrypt(producer.identification);
-      }
-    }
-  }
 });
 
 module.exports = Producer;

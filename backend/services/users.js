@@ -5,12 +5,14 @@ async function loginUser(email, password) {
     try {
         const user = await User.findOne({
             where: {
-              email: email,
-              password: password
+              email: email
             }
           });
+
+        if (!user)
+            throw new Error('No se encontró el recurso');
         
-        if (user){
+        if (user && await user.validatePassword(password)){
             const token = jwt.generateToken(user);
             return token;
         }
