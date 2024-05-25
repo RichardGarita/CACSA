@@ -68,7 +68,7 @@ export default function EditUser({user}) {
                     <>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className='form-group'>
-                                <label htmlFor="name">Nombre:</label>
+                                <label htmlFor="name">Nombre<small className="text-danger">*</small></label>
                                 <input type="text" className='form-control' id="name"
                                     {...register('name', {required: {value: true, message: 'Por favor ingrese un nombre'}})}
                                     defaultValue={user.name} />
@@ -76,7 +76,7 @@ export default function EditUser({user}) {
                             </div>
 
                             <div className='form-group'>
-                                <label htmlFor="email">Correo electrónico:</label>
+                                <label htmlFor="email">Correo electrónico<small className="text-danger">*</small></label>
                                 <input type="text" className='form-control' id="email" placeholder="correo@ejemplo.com"
                                     {...register('email', {required: {value: true, message: 'Por favor ingrese un correo'}})}
                                     defaultValue={user.email} />
@@ -84,7 +84,7 @@ export default function EditUser({user}) {
                             </div>
 
                             <div className='form-group'>
-                                <label htmlFor="password">Contraseña:</label>
+                                <label htmlFor="password">Contraseña<small className="text-danger">*</small></label>
                                 <div className="input-group">
                                     <input type={showPassword ? 'text' : 'password'} className='form-control' id="password"
                                         {...register('password', {required: {value: true, message: 'Por favor ingrese una contraseña'}})}

@@ -74,19 +74,19 @@ function EditProfile ({props}) {
         <>
             <form className="edit-form" onSubmit={handleSubmit(onSubmit)}>
                 <div className='form-group'>
-                    <label htmlFor="name">Nombre de la persona: </label>
+                    <label htmlFor="name">Nombre de la persona<small className="text-danger">*</small></label>
                     <input type="text" placeholder="Nombre de la persona" id='name' className='form-control' autoComplete="name"
                         defaultValue={name} {...register('name', {required: {value: true, message: 'Por favor escriba el nombre'}})} />
                     {errors.name && <p className='error-text'>{errors.name.message}</p>}
                 </div>
                 <div className='form-group'>
-                    <label htmlFor="date">Fecha de expiración del carnet: </label>
+                    <label htmlFor="date">Fecha de expiración del carnet<small className="text-danger">*</small></label>
                     <input type="date" className='form-control' id="date"
                         defaultValue={date} {...register('date', {required: {value: true, message: 'Por favor seleccione una fecha'}})} />
                     {errors.date && <p className='error-text'>{errors.date.message}</p>}
                 </div>
                 <div className='form-group'>
-                    <label htmlFor="category">Categoría </label>
+                    <label htmlFor="category">Categoría<small className="text-danger">*</small></label>
                     <select type="select" id='category' className='form-control'
                         defaultValue={category ? category : ""}
                         {...register('category', {required: {value: true, message: 'Por favor seleccione una opción'}})}>
@@ -109,7 +109,7 @@ function EditProfile ({props}) {
                 </div>
                 {fairParticipationChecked &&
                     <div className='form-group'>
-                        <label htmlFor="fairLocality">Localidad de la feria </label>
+                        <label htmlFor="fairLocality">Localidad de la feria<small className="text-danger">*</small></label>
                         <Select options={options} closeMenuOnSelect={false} id="fairLocality"
                             isMulti defaultValue={localities}
                             onChange={(selected) => setActualFairLocality(selected)}/>

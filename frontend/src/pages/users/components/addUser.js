@@ -66,13 +66,13 @@ export default function AddUser () {
                 content={
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className='form-group'>
-                            <label htmlFor="name">Nombre:</label>
+                            <label htmlFor="name">Nombre<small className="text-danger">*</small></label>
                             <input type="text" className='form-control' id="name" placeholder="Nombre"
                                 {...register('name', {required: {value: true, message: 'Por favor ingrese un nombre'}})}/>
                             {errors.name && <p className='error-text'>{errors.name.message}</p>}
                         </div>
                         <div className='form-group'>
-                            <label htmlFor="name">Correo electrónico:</label>
+                            <label htmlFor="name">Correo electrónico<small className="text-danger">*</small></label>
                             <input type="email" className='form-control' id="email" placeholder="correo@ejemplo.com"
                                 {...register('email', {required: {value: true, message: 'Por favor ingrese un correo electrónico'},
                                     pattern: {
@@ -83,7 +83,7 @@ export default function AddUser () {
                             {errors.email && <p className='error-text'>{errors.email.message}</p>}
                         </div>
                         <div className='form-group'>
-                            <label htmlFor="password">Contraseña:</label>
+                            <label htmlFor="password">Contraseña<small className="text-danger">*</small></label>
                             <div className="input-group">
                                 <input type={showPassword ? 'text' : 'password'} className='form-control' id="password" placeholder="Contraseña"
                                     {...register('password', {required: {value: true, message: 'Por favor ingrese una contraseña'},
