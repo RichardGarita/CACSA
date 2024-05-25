@@ -4,7 +4,7 @@ import { faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import Select from 'react-select';
 import { options } from "../../../utils/localities";
 
-function Filter ({elements, setElements, option, range}) {
+function Filter ({elements, setElements, option}) {
     const [selectedArrayOptions, setSelectedArrayOptions] = useState([]);
     const [startRange, setStartRange] = useState('');
     const [endRange, setEndRange] = useState('');

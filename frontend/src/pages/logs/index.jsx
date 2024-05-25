@@ -1,6 +1,9 @@
 import React, {useState, useEffect, useContext} from "react";
 import axios from "axios";
-import FilterLog from "./components/filter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import SearchLog from "./components/search";
+import FilterLogs from "./components/filter";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../utils/authContext";
 import { convertToLocaleDateTime } from "../../utils/dateConverter";
@@ -17,6 +20,9 @@ export default function ViewLogs () {
     const [totalPages, setTotalPages] = useState(0);
     const [currentLogs, setCurrentLogs] = useState([]);
     const [filteredLogs, setFilteredLogs] = useState([]);
+    const [searchedLogs, setSearchedLogs] = useState([]);
+
+    const [showFilters, setShowFilters] = useState(false);
 
     const [loading, setLoading] = useState(true);
 
@@ -37,6 +43,7 @@ export default function ViewLogs () {
         }).then((response) => {
             setLogs(response.data.logs);
             setFilteredLogs(response.data.logs);
+            setSearchedLogs(response.data.logs);
             setTotalPages(Math.ceil(response.data.logs.length / logsPerPage));
             setLoading(false);
         }).catch(error => {
@@ -60,15 +67,19 @@ export default function ViewLogs () {
     useEffect(() => {
         const startIndex = (currentPage - 1) * logsPerPage;
         const endIndex = startIndex + logsPerPage;
-        setCurrentLogs(filteredLogs.slice(startIndex, endIndex));
-        setTotalPages(Math.ceil(filteredLogs.length / logsPerPage));
-    }, [currentPage, filteredLogs, logsPerPage]);
+        setCurrentLogs(searchedLogs.slice(startIndex, endIndex));
+        setTotalPages(Math.ceil(searchedLogs.length / logsPerPage));
+    }, [currentPage, searchedLogs, logsPerPage]);
 
     return (
         <>
             <h2>Bitácora</h2>
             <div className="search-section">
-                <FilterLog elements={logs} setElements={setFilteredLogs}/>               
+                <FontAwesomeIcon className="filter-icon" onClick={() => setShowFilters(!showFilters)} icon={faFilter}/>
+                <SearchLog elements={filteredLogs} setElements={setSearchedLogs}/>  
+            </div>
+            <div className={`col-9 mx-auto d-flex mb-2 ${showFilters ? '' : 'd-none'}`}>
+                <FilterLogs elements={logs} setElements={setFilteredLogs}/>
             </div>
             {!loading ? (
                 <table className="table table-striped table-hover w-75 mx-auto">
@@ -76,6 +87,7 @@ export default function ViewLogs () {
                         <tr>
                             <td>Editor</td>
                             <td>Productor editado</td>
+                            <td>Cédula</td>
                             <td>Fecha</td>
                             <td>Realizado</td>
                         </tr>
@@ -85,6 +97,7 @@ export default function ViewLogs () {
                             <tr key={index}>
                                 <td>{log.editorName}</td>
                                 <td>{log.producerName}</td>
+                                <td>{log.producerIdentification}</td>
                                 <td>{convertToLocaleDateTime(log.updatedAt)}</td>
                                 <td>{log.process}</td>
                             </tr>
