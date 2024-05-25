@@ -5,7 +5,7 @@ import Header from './components/header';
 import AddProducer from './pages/addProducer';
 import ViewProducer from './pages/viewProducer';
 import Login from './pages/login';
-import Index from './pages/index';
+import Index from './pages/index/index';
 import ViewUsers from './pages/users';
 import ViewLogs from './pages/logs';
 import NotFound from './pages/notFound';
