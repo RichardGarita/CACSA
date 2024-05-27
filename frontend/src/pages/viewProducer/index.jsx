@@ -7,6 +7,7 @@ import {toast} from 'react-toastify';
 import EditProfile from './components/editProfile';
 import AddFile from './components/addFile';
 import EditImages from './components/editImages';
+import GenerateReport from './components/generateReport';
 import { AuthContext } from '../../utils/authContext';
 import { convertToLocaleDateTime } from '../../utils/dateConverter';
 import Modal from '../../utils/modal';
@@ -126,6 +127,7 @@ function ViewProducer () {
                             setModalContent(<EditProfile props={editProps}/>);
                         }}
                     />
+                    <GenerateReport data={data ? data : {}} producerId={id}/>
                 </div>
                 <div className='profile-data'>
                     <p>Nombre:</p>
