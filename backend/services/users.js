@@ -1,4 +1,5 @@
 var User = require('../models/users');
+var Email = require('./email');
 const jwt = require('../utils/jwtHelper');
 
 async function loginUser(email, password) {
@@ -39,6 +40,7 @@ async function editOne(data){
     try {
         const {id, name, email, password} = data;
         await User.update({name, email, password}, {where: {id}});
+        Email.sendEditNotification(email);
         return {message: 'Usuario actualizado'};
     } catch (error) {
         throw new Error (error.message);
@@ -53,7 +55,10 @@ async function deleteOne (id) {
             throw new Error('No se encontró el recurso');
         }
 
+        const email = user.email;
+        const name = user.name;
         await user.destroy();
+        Email.sendDeleteNotification(email, name);
         return { message: 'Usuario eliminada correctamente' };
     } catch (error) {
         throw new Error(error.message);
@@ -71,6 +76,8 @@ async function create (name, email, password) {
         if (!user){
             throw new Error ('Falló al crear el recurso');
         }
+
+        Email.sendTemporaryPassword(email, password, name);
 
         return { message: 'Usuario agregado correctamente' };
     } catch (error) {

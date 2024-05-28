@@ -18,10 +18,6 @@ export default function GenerateReport({data, producerId}) {
 
     const [images, setImages] = useState({});
 
-    const roles = ['idScreenShot', 'foodHandling', 'fairPass', 'propertyTitle', 'products', 'inspection',
-        'profilePic', 'permits', 'memos', 'Other'
-    ];
-
     const getImages = async () => {
         await axios.get(`${URL_API}/${producerId}/report`, {
             headers: {
@@ -51,7 +47,7 @@ export default function GenerateReport({data, producerId}) {
     useEffect(() => {
         if (producerId)
             getImages();
-    }, [producerId])
+    }, [producerId]);
     
 
     const genDoc = async () => {

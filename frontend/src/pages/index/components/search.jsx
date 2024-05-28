@@ -8,7 +8,8 @@ function Search ({elements, setElements}) {
         if(elements.length > 0) {
             setElements(elements.filter(element => 
                 element[selectedOption].toLowerCase().includes(searchValue.toLowerCase())));
-        }
+        } else
+            setElements([]);
     }, [elements, searchValue, selectedOption, setElements])
 
     return (
