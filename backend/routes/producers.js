@@ -45,6 +45,7 @@ router.get('/', jwtHelper.verifyToken, producerController.getAll);
 *         description: Error del servidor.
 */
 router.get('/:id', jwtHelper.verifyToken, producerController.getOne);
+router.get('/:id/report', jwtHelper.verifyToken, producerController.getImagesReport);
 router.get('/images/latest/:id', jwtHelper.verifyToken, producerController.getOneProducerImage);
 
 router.get('/:id/log', jwtHelper.verifyToken, producerController.getLastLog);

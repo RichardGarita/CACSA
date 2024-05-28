@@ -160,6 +160,19 @@ async function deleteOne(req, res, next) {
     }
 }
 
+async function getImagesReport(req, res, next){
+    try {
+        const id = req.params.id;
+        if (!id)
+            throw new Error('No se encontraron los campos obligatorios' );
+
+        const response = await Producer.getImagesReport(id);
+        res.status(200).json(response);
+    } catch(error) {
+        next(error);
+    }
+}
+
 module.exports = {
     create,
     getAll,
@@ -171,4 +184,5 @@ module.exports = {
     deleteImage,
     deleteOne,
     getLastLog,
+    getImagesReport,
 }

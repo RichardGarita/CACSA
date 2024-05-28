@@ -4,6 +4,10 @@ var Image = require('../models/images');
 var Log = require('../services/logs');
 const { v4: uuidv4 } = require('uuid');
 
+const DEFAULT_ROLES = ['idScreenShot', 'foodHandling', 'fairPass', 'propertyTitle', 'products', 'inspection',
+    'profilePic', 'permits', 'memos', 'Other'
+];
+
 async function create(data, userId, images) {
     try {
         // Procesar los datos del formulario
@@ -197,6 +201,20 @@ async function deleteOne(id, userId) {
     }
 }
 
+async function getImagesReport(producerId){
+    try {
+        const response = {};
+        for (let role of DEFAULT_ROLES) {
+            const image = await Image.findOne({where: {producerId, role}});
+            if (image)
+                response[role] = true;
+        }
+        return response;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
 module.exports = {
     create,
     getAll,
@@ -208,4 +226,5 @@ module.exports = {
     addImages,
     deleteImage,
     deleteOne,
+    getImagesReport,
 }
