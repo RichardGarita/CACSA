@@ -28,11 +28,17 @@ async function getProfile(req, res, next) {
 
 async function editUser(req, res, next){
     try {
-        const {id, name, email, password} = req.body;
-        if(!id || !name || !email || !password) {
+        const {id, name, email} = req.body;
+        const admin = req.decoded.admin;
+
+        if (!admin) {
+            throw new Error('No está autorizado');
+        }
+
+        if(!id || !name || !email) {
             throw new Error('No se encontraron los campos obligatorios');
         }
-        const data = {id, name, email, password};
+        const data = {id, name, email};
         const response = await User.editOne(data);
         res.status(200).json(response);
     } catch (error) {
@@ -83,6 +89,12 @@ async function addUser (req, res, next) {
 
 async function getAllUsers(req, res, next) {
     try {
+        const admin = req.decoded.admin;
+
+        if (!admin) {
+            throw new Error('No está autorizado');
+        }
+
         const usuarios = await User.getAll();
         res.status(200).json(usuarios);
     } catch (error) {
@@ -92,7 +104,6 @@ async function getAllUsers(req, res, next) {
 
 async function changeTempPassword(req, res, next) {
     try {
-        console.log(req.body);
         const {password} = req.body;
         const id = req.decoded.id;
 
@@ -106,6 +117,26 @@ async function changeTempPassword(req, res, next) {
     }
 }
 
+async function recoverPassword(req, res, next) {
+    try {
+        const {id} = req.body;
+        const admin = req.decoded.admin;
+
+        if (!admin) {
+            throw new Error('No está autorizado');
+        }
+
+        if(!id) {
+            throw new Error('No se encontraron los campos obligatorios');
+        }
+
+        const result = await User.recoverPassword(id);
+        res.status(200).json(result);
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     loginUser,
     getAllUsers,
@@ -113,5 +144,6 @@ module.exports = {
     editUser,
     deleteUser,
     addUser,
-    changeTempPassword
+    changeTempPassword,
+    recoverPassword
 };

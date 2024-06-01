@@ -39,8 +39,8 @@ async function getProfile(id) {
 
 async function editOne(data){
     try {
-        const {id, name, email, password} = data;
-        await User.update({name, email, password}, {where: {id}});
+        const {id, name, email} = data;
+        await User.update({name, email}, {where: {id}});
         Email.sendEditNotification(email);
         return {message: 'Usuario actualizado'};
     } catch (error) {
@@ -90,7 +90,7 @@ async function create (name, email) {
 
 async function getAll() {
     try {
-        const usuarios = await User.findAll({raw:true});
+        const usuarios = await User.findAll({attributes:['email', 'name', 'admin', 'id'], raw:true});
         return usuarios;
     } catch (error) {
         throw new Error(error.message);
@@ -106,6 +106,20 @@ async function changeTempPassword(id, password){
     }
 }
 
+async function recoverPassword(id){
+    try {
+        const user = await User.findByPk(id, {attributes: ['email', 'name']});
+        if (!user)
+            throw new Error('No se encontró el recurso');
+        const password = uuidv4();
+        await User.update({password, temp: true}, {where: {id}});
+        Email.sendRecoveringPassword(user.email, user.name, password);
+        return {message: 'Se reestableció la contraseña'};
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
 module.exports = {
     loginUser,
     getProfile,
@@ -113,5 +127,6 @@ module.exports = {
     deleteOne,
     create,
     getAll,
-    changeTempPassword
+    changeTempPassword,
+    recoverPassword
 }

@@ -107,8 +107,48 @@ async function sendDeleteNotification(to, userName) {
     </body>
     </html>
   `;
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: to,
+      subject: subject,
+      html: htmlBody
+    });
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
 
-  console.log(`${process.env.EMAIL_USER}\n\n\n\n`);
+async function sendRecoveringPassword(to, userName, password){
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
+  const subject = 'Reestablecimiento de contraseña';
+  const htmlBody = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Reestablecimiento de contraseña</title>
+    </head>
+    <body>
+      <h2>Hola ${userName},</h2>
+      <p>El administrador ha solicitado que se reestablezca la contraseña de tu cuenta.</p>
+      <p>Aquí está su contraseña temporal:</p>
+      <p><strong>Contraseña Temporal:</strong> ${password}</p>
+      <p>Usa la contraseña temporal para acceder a tu cuenta y crear una nueva contraseña.<p/>
+      <p>Si esto es inesperado, contacta al administrador.</p>
+      <br></br>
+      <strong>Este es un correo generado automáticamente, por favor no contestar.</strong>
+    </body>
+    </html>
+  `;
+
   try {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -125,4 +165,5 @@ module.exports = {
     sendTemporaryPassword,
     sendEditNotification,
     sendDeleteNotification,
+    sendRecoveringPassword
 };

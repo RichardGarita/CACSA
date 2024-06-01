@@ -4,6 +4,7 @@ import EditUser from "./components/editUser";
 import DeleteUser from "./components/deleteUser";
 import FilterUser from "./components/filter";
 import AddUser from "./components/addUser";
+import RecoverPassword from "./components/recoverPassword";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../utils/authContext";
 import {toast} from 'react-toastify';
@@ -43,6 +44,7 @@ export default function ViewUsers () {
             setTotalPages(Math.ceil(response.data.length / usersPerPage));
             setLoading(false);
         }).catch(error => {
+            console.error(error);
             if (error.response && error.response.status === 401) {
                 toast.info('Sesión expirada', {
                     toastId: 'expiredSession',
@@ -52,11 +54,11 @@ export default function ViewUsers () {
                         navigate('/');
                     }
                 });
+            } else {
+                toast.error('Error al obtener los usuarios', {
+                    autoClose: 1500,
+                });
             }
-            toast.error('Error al obtener los usuarios', {
-                autoClose: 1500,
-            });
-            console.error(error);
         })
     }, [navigate, token])
 
@@ -92,6 +94,7 @@ export default function ViewUsers () {
                                 <td>{user.admin ? 'Sí': 'No'}</td>
                                 <td>
                                     <EditUser user={user}/>
+                                    <RecoverPassword user={user}/>
                                     {!user.admin && (
                                         <DeleteUser id={user.id}/>
                                     )}

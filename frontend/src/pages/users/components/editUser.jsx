@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPen, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faUserPen } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../../utils/authContext";
 import {toast} from 'react-toastify';
 import axios from "axios";
@@ -14,7 +14,6 @@ const URL_API = `${BASE_URL}user`;
 
 export default function EditUser({user}) {
     const [showModal, setShowModal] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
 
     const {token} = useContext(AuthContext);
     const navigate = useNavigate();
@@ -81,23 +80,6 @@ export default function EditUser({user}) {
                                     {...register('email', {required: {value: true, message: 'Por favor ingrese un correo'}})}
                                     defaultValue={user.email} />
                                 {errors.email && <p className='error-text'>{errors.email.message}</p>}
-                            </div>
-
-                            <div className='form-group'>
-                                <label htmlFor="password">Contraseña<small className="text-danger">*</small></label>
-                                <div className="input-group">
-                                    <input type={showPassword ? 'text' : 'password'} className='form-control' id="password"
-                                        {...register('password', {required: {value: true, message: 'Por favor ingrese una contraseña'}})}
-                                        defaultValue={user.password} />
-                                    <div className="input-group-addon">
-                                        { showPassword ?
-                                            <FontAwesomeIcon className="show-icon" icon={faEye} onClick={() => setShowPassword(false)}/>
-                                            :
-                                            <FontAwesomeIcon className="show-icon" icon={faEyeSlash} onClick={() => setShowPassword(true)}/>
-                                        }
-                                    </div>
-                                </div>
-                                {errors.password && <p className='error-text'>{errors.password.message}</p>}
                             </div>
                             <button disabled={!isValid} type="submit" className="btn edit-button">Confirmar</button>
                         </form>

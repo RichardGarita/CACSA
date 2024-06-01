@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import {toast} from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../utils/authContext";
@@ -14,7 +14,6 @@ const URL_API = `${BASE_URL}user`;
 
 export default function AddUser () {
     const {register, handleSubmit, formState: { errors, isValid },  } = useForm({mode: "all"});
-    const [showPassword, setShowPassword] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
     const navigate = useNavigate();
@@ -81,26 +80,6 @@ export default function AddUser () {
                                     }
                                 })}/>
                             {errors.email && <p className='error-text'>{errors.email.message}</p>}
-                        </div>
-                        <div className='form-group'>
-                            <label htmlFor="password">Contraseña<small className="text-danger">*</small></label>
-                            <div className="input-group">
-                                <input type={showPassword ? 'text' : 'password'} className='form-control' id="password" placeholder="Contraseña"
-                                    {...register('password', {required: {value: true, message: 'Por favor ingrese una contraseña'},
-                                    pattern: {
-                                        value: /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/,
-                                        message: "La contraseña contener minúsculas, mayúsculas, números y signos especiales"
-                                    },
-                                    minLength: { value: 8, message: 'La contraseña debe tener al menos 8 caracteres' }})}/>
-                                <div className="input-group-addon">
-                                    { showPassword ?
-                                        <FontAwesomeIcon className="show-icon" icon={faEye} onClick={() => setShowPassword(false)}/>
-                                        :
-                                        <FontAwesomeIcon className="show-icon" icon={faEyeSlash} onClick={() => setShowPassword(true)}/>
-                                    }
-                                </div>
-                            </div>
-                            {errors.password && <p className='error-text'>{errors.password.message}</p>}
                         </div>
                         <button type="submit" disabled={!isValid} className="btn edit-button">Confirmar</button>
                     </form>
