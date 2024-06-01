@@ -9,12 +9,13 @@ import Index from './pages/index/index';
 import ViewUsers from './pages/users';
 import ViewLogs from './pages/logs';
 import NotFound from './pages/notFound';
+import ChangeTemporaryPassword from './pages/tempPassword';
 import { AuthContext } from './utils/authContext';
 import 'bootstrap/dist/css/bootstrap.css'
 import './styles/App.css';
 
 function App() {
-  const {loading, token} = useContext(AuthContext);
+  const {loading, token, temp} = useContext(AuthContext);
 
   if(loading)
     return <h1>Cargando...</h1>
@@ -31,15 +32,25 @@ function App() {
           </>
         ):
           <>
-            <Header/>
-            <Routes>
-              <Route path='*' element={<NotFound/>}/>
-              <Route path='/' element={<Index/>}/>
-              <Route path='/users' element={<ViewUsers/>}/>
-              <Route path='/logs' element={<ViewLogs/>}/>
-              <Route path='/producer/:id' element={<ViewProducer/>}/>
-              <Route path='/newProducer' element={<AddProducer/>}/>
-            </Routes>
+            {temp ? (
+              <>
+                <Routes>
+                  <Route path='*' element={<ChangeTemporaryPassword/>}/>
+                </Routes>
+              </>
+            ): (
+              <>
+                <Header/>
+                <Routes>
+                  <Route path='*' element={<NotFound/>}/>
+                  <Route path='/' element={<Index/>}/>
+                  <Route path='/users' element={<ViewUsers/>}/>
+                  <Route path='/logs' element={<ViewLogs/>}/>
+                  <Route path='/producer/:id' element={<ViewProducer/>}/>
+                  <Route path='/newProducer' element={<AddProducer/>}/>
+                </Routes>
+              </>
+            )}
           </>
         }
     </div>

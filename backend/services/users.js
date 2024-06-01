@@ -1,6 +1,7 @@
 var User = require('../models/users');
 var Email = require('./email');
 const jwt = require('../utils/jwtHelper');
+const { v4: uuidv4 } = require('uuid');
 
 async function loginUser(email, password) {
     try {
@@ -65,19 +66,21 @@ async function deleteOne (id) {
     }
 }
 
-async function create (name, email, password) {
+async function create (name, email) {
     try {
         const existed = await User.findOne({where: {email: email}});
         if (existed) {
             throw new Error ('Ya existe el recurso');
         }
 
-        const user = await User.create({name, email, password, admin: false});
+        const tempPassword = uuidv4();
+
+        const user = await User.create({name, email, password: tempPassword, admin: false, temp: true});
         if (!user){
             throw new Error ('Falló al crear el recurso');
         }
 
-        Email.sendTemporaryPassword(email, password, name);
+        Email.sendTemporaryPassword(email, tempPassword, name);
 
         return { message: 'Usuario agregado correctamente' };
     } catch (error) {
@@ -94,6 +97,15 @@ async function getAll() {
     }
 }
 
+async function changeTempPassword(id, password){
+    try {
+        await User.update({password, temp: false}, {where: {id}});
+        return { message: 'Imágenes subidas correctamente' };
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
 module.exports = {
     loginUser,
     getProfile,
@@ -101,4 +113,5 @@ module.exports = {
     deleteOne,
     create,
     getAll,
+    changeTempPassword
 }
