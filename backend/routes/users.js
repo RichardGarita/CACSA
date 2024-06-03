@@ -64,6 +64,8 @@ router.put('/', jwtHelper.verifyToken, userController.editUser);
 
 router.put('/temp', jwtHelper.verifyToken, userController.changeTempPassword);
 
+router.put('/recover', jwtHelper.verifyToken, userController.recoverPassword);
+
 router.delete('/:id', jwtHelper.verifyToken, userController.deleteUser);
 
 module.exports = router;

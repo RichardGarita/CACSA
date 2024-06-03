@@ -8,6 +8,8 @@
 #Private files
 .env
 gcsKeyFile.json
+.gcloudignore
+app.yaml
 
 # testing
 /coverage
