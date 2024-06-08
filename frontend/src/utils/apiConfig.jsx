@@ -1,2 +1,2 @@
-const BASE_URL = 'http://localhost:4223/api/'; // URL del backend
+const BASE_URL = 'https://cacsa-testing.uc.r.appspot.com/api/'; // URL del backend
 export default BASE_URL;

@@ -10,6 +10,7 @@
 gcsKeyFile.json
 .gcloudignore
 app.yaml
+/config/config.json
 
 # testing
 /coverage
