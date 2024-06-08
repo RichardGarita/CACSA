@@ -91,11 +91,11 @@ export default function ViewUsers () {
                             <tr key={index}>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
-                                <td>{user.admin ? 'Sí': 'No'}</td>
+                                <td>{user.admin === '1' ? 'Sí': 'No'}</td>
                                 <td>
                                     <EditUser user={user}/>
                                     <RecoverPassword user={user}/>
-                                    {!user.admin && (
+                                    {user.admin !== '1' && (
                                         <DeleteUser id={user.id}/>
                                     )}
                                 </td>
