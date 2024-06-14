@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ClipLoader from "react-spinners/ClipLoader";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../utils/authContext";
 import axios from 'axios';
@@ -10,6 +11,7 @@ import BASE_URL from "../../utils/apiConfig";
 const URL_API = `${BASE_URL}user/temp`;
 
 export default function ChangeTemporaryPassword () {
+    const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const {register, handleSubmit, getValues, formState: { errors, isValid },  } = useForm({mode: "all"});
@@ -17,7 +19,8 @@ export default function ChangeTemporaryPassword () {
     const { token } = useContext(AuthContext);
 
     const onSubmit = async (data) => {
-        axios.put(URL_API, {password: data.password}, {
+        setLoading(true);
+        await axios.put(URL_API, {password: data.password}, {
             headers: {
                 'access-token': token
             }
@@ -25,6 +28,7 @@ export default function ChangeTemporaryPassword () {
             toast.success('Se cambió la contraseña. Inicie sesión de nuevo, por favor', {
                 autoClose: 1500,
                 onClose: () => {
+                    console.log(loading);
                     localStorage.removeItem('token');
                     window.location.reload();
                 }
@@ -45,6 +49,7 @@ export default function ChangeTemporaryPassword () {
                 })
             }
         })
+        setLoading(false);
     }
 
     return (
@@ -99,6 +104,11 @@ export default function ChangeTemporaryPassword () {
                         <button type="submit" disabled={!isValid} className="btn edit-button">Confirmar</button>
                     </div>
                 </form>
+                {loading && (
+                    <div className="loading-overlay">
+                        <ClipLoader loading={loading} size={150} color="blue" />
+                    </div>
+                )}
             </div>
         </>
     )
