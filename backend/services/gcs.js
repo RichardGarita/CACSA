@@ -27,6 +27,7 @@ async function uploadFile(fileBuffer, fileName) {
 
 async function getFile(fileName){
     const projectId = process.env.PROJECT_ID;
+    const keyFileContentBase64 = process.env.KEY_FILE_CONTENT;
     const keyFileContent = Buffer.from(keyFileContentBase64, 'base64').toString('utf-8');
     const storage = new Storage({projectId, credentials: keyFileContent, autoRetry: false});
     const bucket = storage.bucket(process.env.BUCKET_NAME);
@@ -47,6 +48,7 @@ async function getFile(fileName){
 
 async function deleteFile (fileName) {
     const projectId = process.env.PROJECT_ID;
+    const keyFileContentBase64 = process.env.KEY_FILE_CONTENT;
     const keyFileContent = Buffer.from(keyFileContentBase64, 'base64').toString('utf-8');
     const storage = new Storage({projectId, credentials: keyFileContent, autoRetry: false});
     const bucket = storage.bucket(process.env.BUCKET_NAME);
@@ -60,6 +62,7 @@ async function deleteFile (fileName) {
 
 async function deleteFolder (folderPath) {
     const projectId = process.env.PROJECT_ID;
+    const keyFileContentBase64 = process.env.KEY_FILE_CONTENT;
     const keyFileContent = Buffer.from(keyFileContentBase64, 'base64').toString('utf-8');
     const storage = new Storage({projectId, credentials: keyFileContent, autoRetry: false});
     const bucket = storage.bucket(process.env.BUCKET_NAME);
