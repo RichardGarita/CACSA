@@ -1,11 +1,13 @@
 require('dotenv').config();
 const {Storage} = require('@google-cloud/storage');
+const { Buffer } = require('buffer');
 const path = require('path');
 
 async function uploadFile(fileBuffer, fileName) {
     const projectId = process.env.PROJECT_ID;
-    const keyFilename = path.join(__dirname, process.env.KEY_FILE_NAME);
-    const storage = new Storage({projectId, keyFilename, autoRetry: false});
+    const keyFileContentBase64 = process.env.KEY_FILE_CONTENT;
+    const keyFileContent = Buffer.from(keyFileContentBase64, 'base64').toString('utf-8');
+    const storage = new Storage({projectId, credentials: keyFileContent, autoRetry: false});
     const bucket = storage.bucket(process.env.BUCKET_NAME);
 
     try {
@@ -25,8 +27,8 @@ async function uploadFile(fileBuffer, fileName) {
 
 async function getFile(fileName){
     const projectId = process.env.PROJECT_ID;
-    const keyFilename = path.join(__dirname, process.env.KEY_FILE_NAME);
-    const storage = new Storage({projectId, keyFilename, autoRetry: false});
+    const keyFileContent = Buffer.from(keyFileContentBase64, 'base64').toString('utf-8');
+    const storage = new Storage({projectId, credentials: keyFileContent, autoRetry: false});
     const bucket = storage.bucket(process.env.BUCKET_NAME);
 
     try {
@@ -45,8 +47,8 @@ async function getFile(fileName){
 
 async function deleteFile (fileName) {
     const projectId = process.env.PROJECT_ID;
-    const keyFilename = path.join(__dirname, process.env.KEY_FILE_NAME);
-    const storage = new Storage({projectId, keyFilename, autoRetry: false});
+    const keyFileContent = Buffer.from(keyFileContentBase64, 'base64').toString('utf-8');
+    const storage = new Storage({projectId, credentials: keyFileContent, autoRetry: false});
     const bucket = storage.bucket(process.env.BUCKET_NAME);
 
     try {
@@ -58,8 +60,8 @@ async function deleteFile (fileName) {
 
 async function deleteFolder (folderPath) {
     const projectId = process.env.PROJECT_ID;
-    const keyFilename = path.join(__dirname, process.env.KEY_FILE_NAME);
-    const storage = new Storage({projectId, keyFilename, autoRetry: false});
+    const keyFileContent = Buffer.from(keyFileContentBase64, 'base64').toString('utf-8');
+    const storage = new Storage({projectId, credentials: keyFileContent, autoRetry: false});
     const bucket = storage.bucket(process.env.BUCKET_NAME);
 
     try {
