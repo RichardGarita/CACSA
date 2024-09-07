@@ -1,4 +1,4 @@
-var GCS = require('../services/gcs');
+var FirebaseStorage = require('../services/firebaseStorage');
 var Producer = require('../models/producers');
 var Image = require('../models/images');
 var Log = require('../services/logs');
@@ -28,13 +28,13 @@ async function create(data, userId, images) {
         for (let i = 0; i < images.length; i++) {
             const image = images[i];
             if (image) {
-                // Generar un nombre único para la imagen en GCS
+                // Generar un nombre único para la imagen en Firebase Storage
                 const imageName = `${producer.id}/${uuidv4()}_${image.originalname}`;
 
                 const role = i < rolesArray.length ? rolesArray[i] : 'Other';
                 
-                // Subir el archivo a GCS
-                await GCS.uploadFile(image.buffer, imageName);
+                // Subir el archivo a Firebase Storage
+                await FirebaseStorage.uploadFile(image.buffer, imageName);
 
                 // Save the images information on the database
                 await Image.create({producerId: producer.id, path: imageName, role});
@@ -80,7 +80,7 @@ async function getOneImage(id, role){
         const image = await Image.findOne({where: {producerId: id, updatedAt: newest}});
 
         if(image) {
-            const url = await GCS.getFile(image.path);
+            const url = await FirebaseStorage.getFile(image.path);
             return url;
         } else {
             throw new Error('Respuesta vacía');
@@ -97,7 +97,7 @@ async function getRoleImages (id, role){
         var response = [];
         if (images) {
             for (let image of images) {
-                const url = await GCS.getFile(image.path);
+                const url = await FirebaseStorage.getFile(image.path);
                 response = [...response, {url, id: image.id}];
             }
         }
@@ -145,11 +145,11 @@ async function addImages(id, role, images, userId){
         for (let i = 0; i < images.length; i++) {
             const image = images[i];
             if (image) {
-                // Generar un nombre único para la imagen en GCS
+                // Generar un nombre único para la imagen en Firebase Storage
                 const imageName = `${id}/${uuidv4()}_${image.originalname}`;
                 
-                // Subir el archivo a GCS
-                await GCS.uploadFile(image.buffer, imageName);
+                // Subir el archivo a Firebase Storage
+                await FirebaseStorage.uploadFile(image.buffer, imageName);
 
                 // Save the images information on the database
                 await Image.create({producerId: id, path: imageName, role});
@@ -173,7 +173,7 @@ async function deleteImage(id, userId) {
             throw new Error('No se encontró el recurso');
         }
 
-        await GCS.deleteFile(image.path);
+        await FirebaseStorage.deleteFile(image.path);
 
         await image.destroy();
 
@@ -190,7 +190,7 @@ async function deleteOne(id, userId) {
         if (producer) {
             await Log.createLog(userId, id, 'Eliminación de productor');
             await producer.destroy();
-            await GCS.deleteFolder(`${id}/`);
+            await FirebaseStorage.deleteFolder(`${id}/`);
             return { message: 'Recurso eliminado correctamente' };
         } else {
             throw new Error('No se encontró el recurso');

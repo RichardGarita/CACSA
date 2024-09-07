@@ -8,6 +8,7 @@
 #Private files
 .env
 gcsKeyFile.json
+fbKeyFile.json
 .gcloudignore
 app.yaml
 /config/config.json

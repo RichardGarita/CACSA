@@ -91,13 +91,14 @@ function EditImages ({id, role}) {
             {images.map((image, index) => (
                 <div key={index} className="col-3">
                     <div className="card added-image">
-                        <img src={image.url[0]} alt=''
-                            onLoad={() => {URL.revokeObjectURL(image.url[0])}} className="card-img"
+                        <img src={image.url} alt=''
+                            onLoad={() => {URL.revokeObjectURL(image.url)}} className="card-img"
                             onClick={() => {
                                 setShowModal(true);
                                 setModalSize('xl')
                                 setModalContent(
-                                    <img src={image.url[0]} alt='' onLoad={() => {URL.revokeObjectURL(image.url[0])}} className="card-img"/>
+                                    <><img src={image.url} alt='' onLoad={() => {URL.revokeObjectURL(image.url)}} className="card-img"/>
+                                    <p>{image.url}</p></>
                                 )
                             }}/>
                         <FontAwesomeIcon icon={faCircleXmark} aria-hidden="true"
